@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import tkinter as tk
+import Interface_Tela_Produtos
 
 class Tela_Login:
     def __init__(self):
@@ -58,7 +59,7 @@ class Tela_Login:
         
         #Botão Login
         self.enter_login = tk.Button(self.window)
-        self.enter_login.configure(text=" Login ")
+        self.enter_login.configure(text=" Login ", command=self.pagina_1)
         self.enter_login.grid(row=2, column=4, columnspan=6)
         self.enter_login.configure(font="Courier 25 bold")
         
@@ -103,12 +104,29 @@ class Tela_Login:
         
         #Botão Cadastro
         self.enter_cadastro = tk.Button(self.window)
-        self.enter_cadastro.configure(text=" Cadastro ")
+        self.enter_cadastro.configure(text=" Cadastro ", command=self.pagina_1)
         self.enter_cadastro.grid(row=6, column=4, columnspan=6)
         self.enter_cadastro.configure(font="Courier 25 bold")        
         
     def iniciar(self):
         self.window.mainloop()
+        
+    def pagina_1(self):
+        self.login.grid_forget()
+        self.login_user.grid_forget()
+        self.login_senha.grid_forget()
+        self.login_user_cx.grid_forget()
+        self.login_senha_cx.grid_forget()
+        self.enter_login.grid_forget()
+        self.cadastro.grid_forget()
+        self.cadastro_user.grid_forget()
+        self.cadastro_user_cx.grid_forget()
+        self.cadastro_email.grid_forget()
+        self.cadastro_email_cx.grid_forget()
+        self.cadastro_senha.grid_forget()
+        self.cadastro_senha_cx.grid_forget()
+        self.enter_cadastro.grid_forget()
+        self.Interface_Tela_Produtos.__init__()
         
     
 

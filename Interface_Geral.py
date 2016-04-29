@@ -219,10 +219,10 @@ class Tela_Login:
         self.botao_meuproduto_3.configure(text=" Protoboard \n Valor: R$30,00 \n Troca: Arduino (mais volta minha!!) ",command=self.s2e3)
         self.botao_meuproduto_3.configure(font="Courier 15 bold")
         
-        #Botao Confirmar
+        #Botao confirmar
         self.botao_confirmar=tk.Button(self.window)
-        self.botao_confirmar.grid(row=6,column=0,stiky="nsew")
-        self.botao_confirmar.configure(text="Confirmar", font="Courier 15 bold",command=self.s2e2)
+        self.botao_confirmar.grid(row=6, column=0, sticky="nsew")
+        self.botao_confirmar.configure(text="confirmar", font="Courier 15 bold",command=self.s2e2 )
         
     def terceira_pagina(self):
         #Botao Slogan

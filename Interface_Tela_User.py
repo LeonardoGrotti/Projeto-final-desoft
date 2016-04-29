@@ -104,6 +104,11 @@ class Tela_User:
         self.botao_produto_3.configure(text=" Protoboard \n Valor: R$30,00 \n Troca: Arduino (mais volta minha!!) ")
         self.botao_produto_3.configure(font="Courier 15 bold")
         
+      
+        
+        
+        
+        
     def iniciar(self):
         self.window.mainloop()
         

@@ -2,6 +2,8 @@ import tkinter as tk
 
 class Tela_Login:
     def __init__(self):
+        #importa classe Armazenamento
+        self.am = Armazenamento()
         #Interface
         self.window = tk.Tk()
         self.window.title("Troca e Venda")
@@ -19,6 +21,34 @@ class Tela_Login:
         self.window.columnconfigure(3, minsize=200, weight=1)
         self.window.columnconfigure(4, minsize=200, weight=1)
         self.window.columnconfigure(5, minsize=200, weight=1)
+        
+        #Criando selfs de cadastrar
+        self.preco = ""
+        self.preco_st = tk.StringVar()
+        
+        self.troca = ""
+        self.troca_st = tk.StringVar()
+        
+        self.descricao = ""
+        self.descricao_st = tk.StringVar()
+        
+        self.produto = ""
+        self.produto_st = tk.StringVar()
+        
+        self.senha_cad = ""
+        self.senha_cad_st = tk.StringVar()
+        
+        self.senha_log = ""
+        self.senha_log_st = tk.StringVar()
+                
+        self.email = ""
+        self.email_st = tk.StringVar()
+        
+        self.user_cad = ""
+        self.user_cad_st = tk.StringVar()
+        
+        self.user_log = ""
+        self.user_log_st = tk.StringVar()
         
         #Label Slogan
         self.slogan = tk.Label(self.window)
@@ -41,7 +71,7 @@ class Tela_Login:
         #Entery Login User
         self.login_user_cx = tk.Entry(self.window)
         self.login_user_cx.grid(row=1, column=1, columnspan=3, sticky="w")
-        self.login_user_cx.configure(font="Courier 25 bold")
+        self.login_user_cx.configure(font="Courier 25 bold", textvariable = self.user_log_st)
         
         
         #Label Login Senha
@@ -53,7 +83,7 @@ class Tela_Login:
         #Entery Login Senha
         self.login_senha_cx = tk.Entry(self.window)
         self.login_senha_cx.grid(row=2, column=1, columnspan=3, sticky="w")
-        self.login_senha_cx.configure(font="Courier 25 bold")
+        self.login_senha_cx.configure(font="Courier 25 bold", textvariable = self.senha_log_st)
         
         #Botão Login
         self.enter_login = tk.Button(self.window)
@@ -76,7 +106,7 @@ class Tela_Login:
         #Entery Cadastro User
         self.cadastro_user_cx = tk.Entry(self.window)
         self.cadastro_user_cx.grid(row=4, column=1, columnspan=3, sticky="w")
-        self.cadastro_user_cx.configure(font="Courier 25 bold")
+        self.cadastro_user_cx.configure(font="Courier 25 bold" , textvariable = self.user_cad_st)
         
         #Label Cadastro Email
         self.cadastro_email = tk.Label(self.window)
@@ -87,7 +117,7 @@ class Tela_Login:
         #Entery Cadastro Email
         self.cadastro_email_cx = tk.Entry(self.window)
         self.cadastro_email_cx.grid(row=5, column=1, columnspan=3, sticky="w")
-        self.cadastro_email_cx.configure(font="Courier 25 bold")
+        self.cadastro_email_cx.configure(font="Courier 25 bold" , textvariable = self.email_st)
         
         #Label Cadastro Senha
         self.cadastro_senha = tk.Label(self.window)
@@ -98,7 +128,7 @@ class Tela_Login:
         #Entery Cadastro Senha
         self.cadastro_senha_cx = tk.Entry(self.window)
         self.cadastro_senha_cx.grid(row=6, column=1, columnspan=3, sticky="w")
-        self.cadastro_senha_cx.configure(font="Courier 25 bold")
+        self.cadastro_senha_cx.configure(font="Courier 25 bold" , textvariable = self.senha_cad_st)
         
         #Botão Cadastro
         self.enter_cadastro = tk.Button(self.window)
@@ -116,7 +146,7 @@ class Tela_Login:
          #Botao Nome do Usuario
         self.user_name = tk.Button(self.window)
         self.user_name.grid(row=0, column=4, columnspan=6, sticky="nse")
-        self.user_name.configure(text=" Nome User ",command=self.s1e2)
+        self.user_name.configure(text= self.user_log,command=self.s1e2)
         self.user_name.configure(font="Courier 30 bold")
         
         #Label Feed produtos
@@ -153,7 +183,7 @@ class Tela_Login:
          #Botao Nome do Usuario
         self.user_name = tk.Button(self.window)
         self.user_name.grid(row=0, column=4, columnspan=6, sticky="nse")
-        self.user_name.configure(text=" Nome User ",command=self.s2e2)
+        self.user_name.configure(text= self.user_log,command=self.s2e2)
         self.user_name.configure(font="Courier 30 bold")
         
         #Label Cadastrar Produtos
@@ -171,7 +201,7 @@ class Tela_Login:
         #Entery Nome produto
         self.nome_produto_cx = tk.Entry(self.window)
         self.nome_produto_cx.grid(row=3, column=1, columnspan=3, sticky="w")
-        self.nome_produto_cx.configure(font="Courier 25 bold")
+        self.nome_produto_cx.configure(font="Courier 25 bold" , textvariable = self.produto_st)
         
         #Label Preco produto
         self.preco_produto = tk.Label(self.window)
@@ -182,7 +212,7 @@ class Tela_Login:
         #Entery Preco Produto
         self.preco_produto_cx = tk.Entry(self.window)
         self.preco_produto_cx.grid(row=4, column=1, columnspan=3, sticky="w")
-        self.preco_produto_cx.configure(font="Courier 25 bold")
+        self.preco_produto_cx.configure(font="Courier 25 bold" , textvariable = self.preco_st)
         
         #Label Troca Produto
         self.troca_produto = tk.Label(self.window)
@@ -193,7 +223,7 @@ class Tela_Login:
         #Entery Troca Produto
         self.troca_produto_cx = tk.Entry(self.window)
         self.troca_produto_cx.grid(row=5, column=1, columnspan=3, sticky="w")
-        self.troca_produto_cx.configure(font="Courier 25 bold")
+        self.troca_produto_cx.configure(font="Courier 25 bold" , textvariable = self.troca_st)
         
         #Label Meus Produtos Anunciados
         self.meus_produtos_anun = tk.Label(self.window)
@@ -234,7 +264,7 @@ class Tela_Login:
          #Botao Nome do Usuario
         self.user_name = tk.Button(self.window)
         self.user_name.grid(row=0, column=4, columnspan=6, sticky="nse")
-        self.user_name.configure(text=" Nome User ",command=self.s3e2)
+        self.user_name.configure(text= self.user_log,command=self.s3e2)
         self.user_name.configure(font="Courier 30 bold")
         
         #Label Foto Produto
@@ -263,6 +293,13 @@ class Tela_Login:
     def iniciar(self):
         self.window.mainloop()
         
+    def nome_st (self):
+        self.user_log = self.user_log_st.get()
+        self.senha_log = self.senha_log_st.get()
+        self.user_cad = self.user_cad_st.get()
+        self.senha_cad = self.senha_cad_st.get()
+        self.email = self.email_st.get()
+        
     def limpar_0(self):
         self.slogan.grid_forget()
         self.login.grid_forget()
@@ -279,6 +316,8 @@ class Tela_Login:
         self.cadastro_senha.grid_forget()
         self.cadastro_senha_cx.grid_forget()
         self.enter_cadastro.grid_forget()
+        self.nome_st()
+        self.am.cadastro_geral()
         
     def limpar_1(self):
         self.slogan.grid_forget()
@@ -357,5 +396,22 @@ class Tela_Login:
         self.limpar_3()
         self.pagina_2()
 
+class Armazenamento:
+    def __init__(self):
+        #importando classe Tela Login
+        self.tela = Tela_Login()
+        # criando os dicionarios
+        self.user_dic = {}
+        self.lista_user = []
+        self.produto_dic = {}
+        self.lista_produto = []
+    
+        #criando asfunções de callback
+        def cadastro_geral(self):
+            self.lista_user.append(self.tela.email)
+            self.lista_user.append(self.tela.senha_cad)
+            self.user_dic[self.tela.user_cad]=self.lista_user
+            print(self.user_dic)
+            
 Site = Tela_Login()
 Site.iniciar()  

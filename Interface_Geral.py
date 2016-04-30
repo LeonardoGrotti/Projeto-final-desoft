@@ -2,8 +2,6 @@ import tkinter as tk
 
 class Tela_Login:
     def __init__(self):
-        #importa classe Armazenamento
-       # self.am = Armazenamento()
         #Interface
         self.window = tk.Tk()
         self.window.title("Troca e Venda")
@@ -22,7 +20,20 @@ class Tela_Login:
         self.window.columnconfigure(4, minsize=200, weight=1)
         self.window.columnconfigure(5, minsize=200, weight=1)
         
-        #Criando selfs de cadastrar
+        #Label Login Fail
+        self.login_fail = tk.Label()
+        self.login_fail.grid(row=1, column=4, sticky="nsew")
+        self.login_fail.configure(state="disabled")
+        
+        # criando armazenamento
+        self.user_dic = {}
+        self.lista_user = []
+        self.produto_dic = {}
+        self.lista_produto = []
+        
+        self.zero_pagina()
+        
+    def zero_pagina(self):
         self.preco = ""
         self.preco_st = tk.StringVar()
         
@@ -49,6 +60,8 @@ class Tela_Login:
         
         self.user_log = ""
         self.user_log_st = tk.StringVar()
+        
+        self.lista_user = []
         
         #Label Slogan
         self.slogan = tk.Label(self.window)
@@ -136,7 +149,12 @@ class Tela_Login:
          #Botao Nome do Usuario
         self.user_name = tk.Button(self.window)
         self.user_name.grid(row=0, column=4, columnspan=6, sticky="nse")
-        self.user_name.configure(text= self.user_log,command=self.s1e2, font="Courier 30 bold", bg = "red")
+        self.user_name.configure(command=self.s1e2, font="Courier 30 bold", bg = "red")
+        
+        #Botao Logout
+        self.botao_logout = tk.Button(self.window)
+        self.botao_logout.grid(row=6,column=6,sticky="s")
+        self.botao_logout.configure(text="Logout", command=self.s1e0,font="Courier 18 bold")
         
         #Label Feed produtos
         self.feed_produtos = tk.Label(self.window)
@@ -167,7 +185,12 @@ class Tela_Login:
          #Botao Nome do Usuario
         self.user_name = tk.Button(self.window)
         self.user_name.grid(row=0, column=4, columnspan=6, sticky="nse")
-        self.user_name.configure(text= self.user_log,command=self.s2e2, font="Courier 30 bold", bg = "red")
+        self.user_name.configure(command=self.s2e2, font="Courier 30 bold", bg = "red")
+        
+        #Botao Logout
+        self.botao_logout = tk.Button(self.window)
+        self.botao_logout.grid(row=6,column=6,sticky="s")
+        self.botao_logout.configure(text="Logout", command=self.s1e0,font="Courier 18 bold")
 
         #Label Cadastrar Produtos
         self.cadastrar_produtos = tk.Label(self.window)
@@ -238,7 +261,12 @@ class Tela_Login:
          #Botao Nome do Usuario
         self.user_name = tk.Button(self.window)
         self.user_name.grid(row=0, column=4, columnspan=6, sticky="nse")
-        self.user_name.configure(text= self.user_log,command=self.s3e2, font="Courier 30 bold", bg = "red")
+        self.user_name.configure(command=self.s3e2, font="Courier 30 bold", bg = "red")
+        
+        #Botao Logout
+        self.botao_logout = tk.Button(self.window)
+        self.botao_logout.grid(row=6,column=6,sticky="s")
+        self.botao_logout.configure(text="Logout", command=self.s1e0,font="Courier 18 bold")
         
         #Label Foto Produto
         self.foto_produto = tk.Label(self.window)
@@ -287,7 +315,7 @@ class Tela_Login:
         self.cadastro_senha_cx.grid_forget()
         self.enter_cadastro.grid_forget()
         self.nome_st()
-        #self.am.cadastro_geral()
+        self.cadastro_geral()
         
     def limpar_1(self):
         self.slogan.grid_forget()
@@ -296,6 +324,7 @@ class Tela_Login:
         self.botao_produto_1.grid_forget()
         self.botao_produto_2.grid_forget()
         self.botao_produto_3.grid_forget()
+        self.botao_logout.grid_forget()
         
     def limpar_2(self):
         self.slogan.grid_forget()
@@ -312,6 +341,7 @@ class Tela_Login:
         self.botao_meuproduto_2.grid_forget()
         self.botao_meuproduto_3.grid_forget()
         self.botao_confirmar.grid_forget()
+        self.botao_logout.grid_forget()
         
     def limpar_3(self):
         self.slogan.grid_forget()
@@ -320,9 +350,14 @@ class Tela_Login:
         self.descricao_produto.grid_forget()
         self.info_preco_produto.grid_forget()
         self.info_email_produto.grid_forget()
+        self.botao_logout.grid_forget()
+        
+    def pagina_0(self):
+        self.zero_pagina()
         
     def pagina_1(self):
        self.primeira_pagina()
+       self.login_fail.configure(text="",state="disabled",font = "Courier 18 bold")
         
     def pagina_2(self):
         self.segunda_pagina()
@@ -330,58 +365,90 @@ class Tela_Login:
     def pagina_3(self):
         self.terceira_pagina()
     
+    def login_incorreto(self):
+        self.limpar_1()
+        self.pagina_0()
+        self.login_fail.configure(text="Login incorreto",state="active",font = "Courier 18 bold")
+
+    def botao_user(self):
+        if self.user_log != "":
+            if self.verificar() == True:
+                self.user_name.configure(text= self.user_log)
+            else:
+                self.login_incorreto()
+        elif self.user_cad != "":
+            self.user_name.configure(text= self.user_cad)
+            
     def s0e1(self):
-        self.limpar_0()
-        self.pagina_1()
+            self.limpar_0()
+            self.pagina_1()
+            self.botao_user()
         
     def s1e1(self):
         self.limpar_1()
         self.pagina_1()
+        self.botao_user()
         
     def s1e2(self):
         self.limpar_1()
         self.pagina_2()
+        self.botao_user()
         
     def s1e3(self):
         self.limpar_1()
         self.pagina_3()
+        self.botao_user()
         
     def s2e1(self):
         self.limpar_2()
         self.pagina_1()
+        self.botao_user()
     
     def s2e2(self):
         self.limpar_2()
         self.pagina_2()
+        self.botao_user()
         
     def s2e3(self):
         self.limpar_2()
         self.pagina_3()
+        self.botao_user()
         
     def s3e1(self):
         self.limpar_3()
         self.pagina_1()
+        self.botao_user()
         
     def s3e2(self):
         self.limpar_3()
         self.pagina_2()
-
-class Armazenamento:
-    def __init__(self):
-        #importando classe Tela Login
-        self.tela = Tela_Login()
-        # criando os dicionarios
-        self.user_dic = {}
-        self.lista_user = []
-        self.produto_dic = {}
-        self.lista_produto = []
+        self.botao_user()
+        
+    def s1e0(self):
+        self.limpar_1()
+        self.pagina_0()
+        
+    def s2e0(self):
+        self.limpar_2()
+        self.pagina_0()
+        
+    def s3e0(self):
+        self.limpar_3()
+        self.pagina_0()
     
-        #criando asfunções de callback
-        def cadastro_geral(self):
-            self.lista_user.append(self.tela.email)
-            self.lista_user.append(self.tela.senha_cad)
-            self.user_dic[self.tela.user_cad]=self.lista_user
-            print(self.user_dic)
+    #criando asfunções de callback
+    def cadastro_geral(self):
+        if self.user_cad != "":
+            self.lista_user.append(self.senha_cad)
+            self.lista_user.append(self.email)
+            self.user_dic[self.user_cad] = self.lista_user
+        print(self.user_dic)
+        
+    def verificar(self):
+        if self.user_log in self.user_dic:
+            if self.user_dic[self.user_log][0]==self.senha_log:
+                return True
+        return False
             
 Site = Tela_Login()
 Site.iniciar()  

@@ -29,23 +29,10 @@ class Tela_Login:
         self.user_dic = {}
         self.lista_user = []
         self.produto_dic = {}
-        self.lista_produto = []
         
         self.zero_pagina()
         
     def zero_pagina(self):
-        self.preco = ""
-        self.preco_st = tk.StringVar()
-        
-        self.troca = ""
-        self.troca_st = tk.StringVar()
-        
-        self.descricao = ""
-        self.descricao_st = tk.StringVar()
-        
-        self.produto = ""
-        self.produto_st = tk.StringVar()
-        
         self.senha_cad = ""
         self.senha_cad_st = tk.StringVar()
         
@@ -177,6 +164,18 @@ class Tela_Login:
         self.botao_produto_3.configure(text=" Protoboard \n Valor: R$30,00 \n Troca: Arduino (mais volta minha!!) ",command=self.s1e3, font="Courier 15 bold")
         
     def segunda_pagina(self):
+        #criar stringvar
+        self.preco = ""
+        self.preco_st = tk.StringVar()
+        
+        self.troca = ""
+        self.troca_st = tk.StringVar()
+        
+        self.produto = ""
+        self.produto_st = tk.StringVar()
+        
+        self.lista_produto = []
+        
         #Botao Slogan
         self.slogan = tk.Button(self.window)
         self.slogan.grid(row=0, column=0, columnspan=3, sticky="nsw")
@@ -190,7 +189,7 @@ class Tela_Login:
         #Botao Logout
         self.botao_logout = tk.Button(self.window)
         self.botao_logout.grid(row=6,column=6,sticky="s")
-        self.botao_logout.configure(text="Logout", command=self.s1e0,font="Courier 18 bold")
+        self.botao_logout.configure(text="Logout", command=self.s2e0,font="Courier 18 bold")
 
         #Label Cadastrar Produtos
         self.cadastrar_produtos = tk.Label(self.window)
@@ -250,7 +249,7 @@ class Tela_Login:
         #Botao confirmar
         self.botao_confirmar=tk.Button(self.window)
         self.botao_confirmar.grid(row=6, column=0, sticky="nsew")
-        self.botao_confirmar.configure(text="confirmar", font="Courier 15 bold",command=self.s2e2 )
+        self.botao_confirmar.configure(text="confirmar", font="Courier 15 bold",command=self.s2e2_confirma)
         
     def terceira_pagina(self):
         #Botao Slogan
@@ -297,6 +296,31 @@ class Tela_Login:
         self.user_cad = self.user_cad_st.get()
         self.senha_cad = self.senha_cad_st.get()
         self.email = self.email_st.get()
+    
+    #Cadastramento do produto
+    def cadastro_produto_st(self):
+        self.produto = self.produto_st.get()
+        self.preco = self.preco_st.get()
+        self.troca = self.troca_st.get()
+        
+    def armazenamento_produto(self):
+        self.lista_produto.append(self.preco)
+        self.lista_produto.append(self.troca)
+        self.produto_dic[self.produto] = self.lista_produto
+        self.lista_user.append(self.produto_dic)
+        
+    #Criando asfunções de callback
+    def cadastro_geral(self):
+        if self.user_cad != "":
+            self.lista_user.append(self.senha_cad)
+            self.lista_user.append(self.email)
+            self.user_dic[self.user_cad] = self.lista_user
+        
+    def verificar(self):
+        if self.user_log in self.user_dic:
+            if self.user_dic[self.user_log][0]==self.senha_log:
+                return True
+        return False
         
     def limpar_0(self):
         self.slogan.grid_forget()
@@ -404,6 +428,16 @@ class Tela_Login:
         self.pagina_1()
         self.botao_user()
     
+    def s2e2_confirma(self):
+        if self.nome_produto != "":
+            self.cadastro_produto_st()
+            self.armazenamento_produto()
+        print(self.user_dic)
+        self.limpar_2()
+        self.pagina_2()
+        self.botao_user()
+        self.produto_dic = {}
+        
     def s2e2(self):
         self.limpar_2()
         self.pagina_2()
@@ -435,20 +469,6 @@ class Tela_Login:
     def s3e0(self):
         self.limpar_3()
         self.pagina_0()
-    
-    #criando asfunções de callback
-    def cadastro_geral(self):
-        if self.user_cad != "":
-            self.lista_user.append(self.senha_cad)
-            self.lista_user.append(self.email)
-            self.user_dic[self.user_cad] = self.lista_user
-        print(self.user_dic)
-        
-    def verificar(self):
-        if self.user_log in self.user_dic:
-            if self.user_dic[self.user_log][0]==self.senha_log:
-                return True
-        return False
             
 Site = Tela_Login()
 Site.iniciar()  

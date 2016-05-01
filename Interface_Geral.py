@@ -134,7 +134,7 @@ class Tela_Login:
         self.slogan.configure(text="Trade Market", command=self.s1e1,font="Courier 50 bold", bg="blue")
         
          #Botao Nome do Usuario
-        self.user_name = tk.Button(self.window)
+        self.user_name = tk.Button(self.window)     
         self.user_name.grid(row=0, column=4, columnspan=6, sticky="nse")
         self.user_name.configure(command=self.s1e2, font="Courier 30 bold", bg = "red")
         
@@ -234,7 +234,7 @@ class Tela_Login:
         #Botao Produto_1        
         self.botao_meuproduto_1 = tk.Button(self.window)
         self.botao_meuproduto_1.grid(row=3, column=3, columnspan=6, sticky="nsew")
-        self.botao_meuproduto_1.configure(text=" Livro de Calculo 1 \n Valor: R$60,00 \n Troca: Calculadora ",command=self.s2e3, font="Courier 15 bold")
+        self.botao_meuproduto_1.configure(text="", command=self.s2e3, font="Courier 15 bold")
         
         #Botao Produto_2        
         self.botao_meuproduto_2 = tk.Button(self.window)

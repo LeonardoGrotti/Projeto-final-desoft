@@ -20,6 +20,9 @@ class Tela_Login:
         self.window.columnconfigure(4, minsize=200, weight=1)
         self.window.columnconfigure(5, minsize=200, weight=1)
         
+        #Baita Variavel necessaria
+        self.A = -1
+        
         #Label Login Fail
         self.login_fail = tk.Label()
         self.login_fail.grid(row=1, column=4, sticky="nsew")
@@ -84,7 +87,7 @@ class Tela_Login:
         
         #Botão Login
         self.enter_login = tk.Button(self.window)
-        self.enter_login.configure(text=" Login ", command=self.s0e1, font="Courier 25 bold")
+        self.enter_login.configure(text=" Login ", command=self.s0e1_log, font="Courier 25 bold")
         self.enter_login.grid(row=2, column=4, columnspan=6)
         
         #Label Cadastro
@@ -124,16 +127,16 @@ class Tela_Login:
         
         #Botão Cadastro
         self.enter_cadastro = tk.Button(self.window)
-        self.enter_cadastro.configure(text=" Cadastro ", command=self.s0e1, font="Courier 25 bold")
+        self.enter_cadastro.configure(text=" Cadastro ", command=self.s0e1_cad, font="Courier 25 bold")
         self.enter_cadastro.grid(row=6, column=4, columnspan=6)  
         
     def primeira_pagina(self):
-         #Botao Slogan
+        #Botao Slogan
         self.slogan = tk.Button(self.window)
         self.slogan.grid(row=0, column=0, columnspan=3, sticky="nsw")
         self.slogan.configure(text="Trade Market", command=self.s1e1,font="Courier 50 bold", bg="blue")
         
-         #Botao Nome do Usuario
+        #Botao Nome do Usuario
         self.user_name = tk.Button(self.window)     
         self.user_name.grid(row=0, column=4, columnspan=6, sticky="nse")
         self.user_name.configure(command=self.s1e2, font="Courier 30 bold", bg = "red")
@@ -265,7 +268,7 @@ class Tela_Login:
         #Botao Logout
         self.botao_logout = tk.Button(self.window)
         self.botao_logout.grid(row=6,column=6,sticky="s")
-        self.botao_logout.configure(text="Logout", command=self.s1e0,font="Courier 18 bold")
+        self.botao_logout.configure(text="Logout", command=self.s3e0,font="Courier 18 bold")
         
         #Label Foto Produto
         self.foto_produto = tk.Label(self.window)
@@ -322,6 +325,16 @@ class Tela_Login:
                 return True
         return False
         
+    def cadastro_vazio(self):
+        self.limpar_1()
+        self.pagina_0()
+        self.login_fail.configure(text="Faltou dados",state="active",font = "Courier 18 bold")
+    
+    def login_incorreto(self):
+        self.limpar_1()
+        self.pagina_0()
+        self.login_fail.configure(text="Login incorreto",state="active",font = "Courier 18 bold")
+    
     def limpar_0(self):
         self.slogan.grid_forget()
         self.login.grid_forget()
@@ -388,25 +401,43 @@ class Tela_Login:
         
     def pagina_3(self):
         self.terceira_pagina()
-    
-    def login_incorreto(self):
-        self.limpar_1()
-        self.pagina_0()
-        self.login_fail.configure(text="Login incorreto",state="active",font = "Courier 18 bold")
 
-    def botao_user(self):
+    def botao_user_log(self):
         if self.user_log != "":
             if self.verificar() == True:
-                self.user_name.configure(text= self.user_log)
+                #self.user_name.configure(text= self.user_log)
+                self.A = 0
+                return self.A
             else:
                 self.login_incorreto()
-        elif self.user_cad != "":
+        elif self.user_log == "":
+            self.login_incorreto()
+            
+    def botao_user_cad(self):
+        if self.user_cad != "":
+            #self.user_name.configure(text= self.user_cad)
+            self.A = 1
+            return self.A
+        elif self.user_cad == "":
+            self.cadastro_vazio()
+            
+    def botao_user(self):
+        if self.A == 0:
+            self.user_name.configure(text= self.user_log)
+        elif self.A == 1:
             self.user_name.configure(text= self.user_cad)
             
-    def s0e1(self):
-            self.limpar_0()
-            self.pagina_1()
-            self.botao_user()
+    def s0e1_log(self):
+        self.limpar_0()
+        self.pagina_1()
+        self.botao_user_log()
+        self.botao_user()
+        
+    def s0e1_cad(self):
+        self.limpar_0()
+        self.pagina_1()
+        self.botao_user_cad()
+        self.botao_user()
         
     def s1e1(self):
         self.limpar_1()

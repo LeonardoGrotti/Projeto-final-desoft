@@ -32,6 +32,7 @@ class Tela_Login:
         self.user_dic = {}
         self.lista_user = []
         self.produto_dic = {}
+        self.lista_produto_total = []
         
         self.zero_pagina()
         
@@ -237,7 +238,7 @@ class Tela_Login:
         #Botao Produto_1        
         self.botao_meuproduto_1 = tk.Button(self.window)
         self.botao_meuproduto_1.grid(row=3, column=3, columnspan=6, sticky="nsew")
-        self.botao_meuproduto_1.configure(text="", command=self.s2e3, font="Courier 15 bold")
+        self.botao_meuproduto_1.configure(text="",command=self.s2e3, font="Courier 15 bold")
         
         #Botao Produto_2        
         self.botao_meuproduto_2 = tk.Button(self.window)
@@ -309,14 +310,17 @@ class Tela_Login:
     def armazenamento_produto(self):
         self.lista_produto.append(self.preco)
         self.lista_produto.append(self.troca)
+        #self.lista_produto_total.append(self.produto)
         self.produto_dic[self.produto] = self.lista_produto
-        self.lista_user.append(self.produto_dic)
+        #self.lista_user.append(self.produto_dic)
         
-    #Criando asfunções de callback
+    #Criando as funções de callback
     def cadastro_geral(self):
         if self.user_cad != "":
             self.lista_user.append(self.senha_cad)
             self.lista_user.append(self.email)
+            self.lista_user.append(self.lista_produto_total)
+            self.lista_user.append(self.produto_dic)
             self.user_dic[self.user_cad] = self.lista_user
         
     def verificar(self):
@@ -463,11 +467,19 @@ class Tela_Login:
         if self.nome_produto != "":
             self.cadastro_produto_st()
             self.armazenamento_produto()
+            if self.user_cad != "":
+                self.user_dic[self.user_cad][2].append(self.produto)
+                self.user_dic[self.user_cad][3][self.produto]=self.lista_produto
+            elif self.user_log != "":
+                self.user_dic[self.user_log][2].append(self.produto)
+                self.user_dic[self.user_log][3][self.produto]=self.lista_produto
         print(self.user_dic)
         self.limpar_2()
         self.pagina_2()
         self.botao_user()
         self.produto_dic = {}
+        self.lista_produto_total = []
+        self.set_botao()
         
     def s2e2(self):
         self.limpar_2()
@@ -500,6 +512,13 @@ class Tela_Login:
     def s3e0(self):
         self.limpar_3()
         self.pagina_0()
-            
+        
+    def set_botao(self):
+        if self.user_log != "":
+            if self.user_dic[self.user_log][2] != []:
+                self.botao_meuproduto_1.configure(text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(self.user_dic[self.user_log][2][0],self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][0],self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][1]))
+        elif self.user_cad != "":
+            if self.user_dic[self.user_cad][2] != []:
+                self.botao_meuproduto_1.configure(text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(self.user_dic[self.user_cad][2][0],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][0],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][1]))
 Site = Tela_Login()
 Site.iniciar()  

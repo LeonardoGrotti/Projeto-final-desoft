@@ -152,20 +152,47 @@ class Tela_Login:
         self.feed_produtos.grid(row=2, column=0, columnspan=3, sticky="nsw")
         self.feed_produtos.configure(text=" Feed Produtos", font="Courier 50 bold")
         
-        #Botao Produto_1        
-        self.botao_produto_1 = tk.Button(self.window)
-        self.botao_produto_1.grid(row=3, column=0, columnspan=3, sticky="nsew")
-        self.botao_produto_1.configure(text=" Livro de Calculo 1 \n Valor: R$60,00 \n Troca: Calculadora ",command=self.s1e3 , font="Courier 15 bold")
+        #Listbox e scrollbar
         
-        #Botao Produto_2        
-        self.botao_produto_2 = tk.Button(self.window)
-        self.botao_produto_2.grid(row=4, column=0, columnspan=3, sticky="nsew")
-        self.botao_produto_2.configure(text=" LCD 2X16 \n Valor: R$40,00 \n Troca: LM35 (sensor de temp) ",command=self.s1e3, font="Courier 15 bold")
+        self.frame_listbox_1 = tk.Frame(self.window)
+        self.frame_listbox_1.grid(row=3, rowspan = 5, column=0,columnspan=3, sticky="nswe")
+        self.frame_listbox_1.rowconfigure(0, minsize=280)
+        self.frame_listbox_1.rowconfigure(1, minsize=20)
+        self.frame_listbox_1.columnconfigure(0, minsize=580)
+        self.frame_listbox_1.columnconfigure(1, minsize=20)
         
-        #Botao Produto_3        
-        self.botao_produto_3 = tk.Button(self.window)
-        self.botao_produto_3.grid(row=5, column=0, columnspan=3, sticky="nsew")
-        self.botao_produto_3.configure(text=" Protoboard \n Valor: R$30,00 \n Troca: Arduino (mais volta minha!!) ",command=self.s1e3, font="Courier 15 bold")
+        self.listbox_1 = tk.Listbox(self.frame_listbox_1)
+        self.listbox_1.grid(row=0,column = 0, sticky="nwse")
+        self.listbox_1.configure( font="Courier 20 bold")
+        self.listbox_1.bind("<Double-Button-1>", self.s2e3)
+        
+        for item in range(10):
+            self.listbox_1.insert(tk.END, item)
+        
+        self.scrollbar_x_1 = tk.Scrollbar(self.frame_listbox_1, orient=tk.HORIZONTAL)
+        self.scrollbar_x_1.config(command=self.listbox_1.xview)
+        self.scrollbar_x_1.grid(row=1, column=0, sticky="nsew")
+        self.listbox_1.configure(yscrollcommand=self.scrollbar_x_1.set)
+        
+        self.scrollbar_y_1 = tk.Scrollbar(self.frame_listbox_1, orient=tk.VERTICAL)
+        self.scrollbar_y_1.config(command=self.listbox_1.yview)
+        self.scrollbar_y_1.grid(row=0, column=1, sticky="nsew")
+        self.listbox_1.configure(yscrollcommand=self.scrollbar_y_1.set)
+#        
+#        #Botao Produto_1        
+#        self.botao_produto_1 = tk.Button(self.window)
+#        self.botao_produto_1.grid(row=3, column=0, columnspan=3, sticky="nsew")
+#        self.botao_produto_1.configure(text="",command=self.s1e3 , font="Courier 15 bold")
+#        
+#        #Botao Produto_2        
+#        self.botao_produto_2 = tk.Button(self.window)
+#        self.botao_produto_2.grid(row=4, column=0, columnspan=3, sticky="nsew")
+#        self.botao_produto_2.configure(text=" LCD 2X16 \n Valor: R$40,00 \n Troca: LM35 (sensor de temp) ",command=self.s1e3, font="Courier 15 bold")
+#        
+#        #Botao Produto_3        
+#        self.botao_produto_3 = tk.Button(self.window)
+#        self.botao_produto_3.grid(row=5, column=0, columnspan=3, sticky="nsew")
+#        self.botao_produto_3.configure(text=" Protoboard \n Valor: R$30,00 \n Troca: Arduino (mais volta minha!!) ",command=self.s1e3, font="Courier 15 bold")
         
     def segunda_pagina(self):
         #criar stringvar
@@ -179,6 +206,33 @@ class Tela_Login:
         self.produto_st = tk.StringVar()
         
         self.lista_produto = []
+        
+        #Listbox e scrollbar
+        
+        self.frame_listbox = tk.Frame(self.window)
+        self.frame_listbox.grid(row=3, rowspan = 5, column=4,columnspan=6, sticky="nsew")
+        self.frame_listbox.rowconfigure(0, minsize=380)
+        self.frame_listbox.rowconfigure(1, minsize=20)
+        self.frame_listbox.columnconfigure(0, minsize=280)
+        self.frame_listbox.columnconfigure(1, minsize=20)
+        
+        self.listbox = tk.Listbox(self.frame_listbox)
+        self.listbox.grid(row=0,column = 0, sticky="nsew")
+        self.listbox.configure( font="Courier 15 bold")
+        self.listbox.bind("<Double-Button-1>", self.s2e3)
+        
+        for item in range(len(self.lista_produto)):
+            self.listbox.insert(tk.END, self.lista[item])
+        
+        self.scrollbar_x = tk.Scrollbar(self.frame_listbox, orient=tk.HORIZONTAL)
+        self.scrollbar_x.config(command=self.listbox.xview)
+        self.scrollbar_x.grid(row=1, column=0, sticky="nsew")
+        self.listbox.configure(yscrollcommand=self.scrollbar_x.set)
+        
+        self.scrollbar_y = tk.Scrollbar(self.frame_listbox, orient=tk.VERTICAL)
+        self.scrollbar_y.config(command=self.listbox.yview)
+        self.scrollbar_y.grid(row=0, column=1, sticky="nsew")
+        self.listbox.configure(yscrollcommand=self.scrollbar_y.set)
         
         #Botao Slogan
         self.slogan = tk.Button(self.window)
@@ -235,21 +289,21 @@ class Tela_Login:
         self.meus_produtos_anun.grid(row=2, column=3, columnspan=6, sticky="nsw")
         self.meus_produtos_anun.configure(text=" Meus Produtos Anunciados", font="Courier 30 bold")
         
-        #Botao Produto_1        
-        self.botao_meuproduto_1 = tk.Button(self.window)
-        self.botao_meuproduto_1.grid(row=3, column=3, columnspan=6, sticky="nsew")
-        self.botao_meuproduto_1.configure(text="",command=self.s2e3, font="Courier 15 bold")
-        
-        #Botao Produto_2        
-        self.botao_meuproduto_2 = tk.Button(self.window)
-        self.botao_meuproduto_2.grid(row=4, column=3, columnspan=6, sticky="nsew")
-        self.botao_meuproduto_2.configure(text=" LCD 2X16 \n Valor: R$40,00 \n Troca: LM35 (sensor de temp) ",command=self.s2e3, font="Courier 15 bold")
-        
-        #Botao Produto_3        
-        self.botao_meuproduto_3 = tk.Button(self.window)
-        self.botao_meuproduto_3.grid(row=5, column=3, columnspan=6, sticky="nsew")
-        self.botao_meuproduto_3.configure(text=" Protoboard \n Valor: R$30,00 \n Troca: Arduino (mais volta minha!!) ",command=self.s2e3, font="Courier 15 bold")
-        
+#        #Botao Produto_1        
+#        self.botao_meuproduto_1 = tk.Button(self.window)
+#        self.botao_meuproduto_1.grid(row=3, column=3, columnspan=6, sticky="nsew")
+#        self.botao_meuproduto_1.configure(text="",command=self.s2e3, font="Courier 15 bold")
+#        
+#        #Botao Produto_2        
+#        self.botao_meuproduto_2 = tk.Button(self.window)
+#        self.botao_meuproduto_2.grid(row=4, column=3, columnspan=6, sticky="nsew")
+#        self.botao_meuproduto_2.configure(text="",command=self.s2e3, font="Courier 15 bold")
+#        
+#        #Botao Produto_3        
+#        self.botao_meuproduto_3 = tk.Button(self.window)
+#        self.botao_meuproduto_3.grid(row=5, column=3, columnspan=6, sticky="nsew")
+#        self.botao_meuproduto_3.configure(text=" Protoboard \n Valor: R$30,00 \n Troca: Arduino (mais volta minha!!) ",command=self.s2e3, font="Courier 15 bold")
+#        
         #Botao confirmar
         self.botao_confirmar=tk.Button(self.window)
         self.botao_confirmar.grid(row=6, column=0, sticky="nsew")
@@ -362,9 +416,15 @@ class Tela_Login:
         self.slogan.grid_forget()
         self.user_name.grid_forget()
         self.feed_produtos.grid_forget()
-        self.botao_produto_1.grid_forget()
-        self.botao_produto_2.grid_forget()
-        self.botao_produto_3.grid_forget()
+        
+        self.frame_listbox_1.grid_forget()
+        self.listbox_1.grid_forget()
+        self.scrollbar_x_1.grid_forget()
+        self.scrollbar_y_1.grid_forget()
+        
+#        self.botao_produto_1.grid_forget()
+#        self.botao_produto_2.grid_forget()
+#        self.botao_produto_3.grid_forget()
         self.botao_logout.grid_forget()
         
     def limpar_2(self):
@@ -378,9 +438,13 @@ class Tela_Login:
         self.troca_produto.grid_forget()
         self.troca_produto_cx.grid_forget()
         self.meus_produtos_anun.grid_forget()
-        self.botao_meuproduto_1.grid_forget()
-        self.botao_meuproduto_2.grid_forget()
-        self.botao_meuproduto_3.grid_forget()
+        
+        self.frame_listbox.forget()
+        self.listbox.forget()
+        
+#        self.botao_meuproduto_1.grid_forget()
+#        self.botao_meuproduto_2.grid_forget()
+#        self.botao_meuproduto_3.grid_forget()
         self.botao_confirmar.grid_forget()
         self.botao_logout.grid_forget()
         
@@ -452,6 +516,7 @@ class Tela_Login:
         self.limpar_1()
         self.pagina_2()
         self.botao_user()
+        self.set_botao()
         
     def s1e3(self):
         self.limpar_1()
@@ -485,11 +550,13 @@ class Tela_Login:
         self.limpar_2()
         self.pagina_2()
         self.botao_user()
+        self.set_botao()
         
     def s2e3(self):
         self.limpar_2()
         self.pagina_3()
         self.botao_user()
+        
         
     def s3e1(self):
         self.limpar_3()
@@ -500,6 +567,7 @@ class Tela_Login:
         self.limpar_3()
         self.pagina_2()
         self.botao_user()
+        self.set_botao()
         
     def s1e0(self):
         self.limpar_1()
@@ -516,9 +584,15 @@ class Tela_Login:
     def set_botao(self):
         if self.user_log != "":
             if self.user_dic[self.user_log][2] != []:
-                self.botao_meuproduto_1.configure(text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(self.user_dic[self.user_log][2][0],self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][0],self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][1]))
+                self.botao_meuproduto_1.configure(
+                    text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(
+                        self.user_dic[self.user_log][2][0],
+                        self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][0],
+                        self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][1]))
+                #self.botao_meuproduto_2.configure(text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(self.user_dic[self.user_log][2][1],self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][0],self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][1]))
         elif self.user_cad != "":
             if self.user_dic[self.user_cad][2] != []:
                 self.botao_meuproduto_1.configure(text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(self.user_dic[self.user_cad][2][0],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][0],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][1]))
+                #self.botao_meuproduto_2.configure(text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(self.user_dic[self.user_cad][2][1],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][0],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][1]))
 Site = Tela_Login()
 Site.iniciar()  

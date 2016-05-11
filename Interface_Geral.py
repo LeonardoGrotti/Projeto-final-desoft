@@ -1,4 +1,4 @@
-mport tkinter as tk
+import tkinter as tk
 
 class Tela_Login:
     def __init__(self):
@@ -33,8 +33,12 @@ class Tela_Login:
         self.lista_user = []
         self.produto_dic = {}
         self.lista_produto_total = []
+        self.dic_prod_geral={}
+        self.lista_prod_geral=[]
+        self.lista_prod_todos=[]
         
         self.zero_pagina()
+        
         
     def zero_pagina(self):
         self.senha_cad = ""
@@ -165,9 +169,6 @@ class Tela_Login:
         self.listbox_1.grid(row=0,column = 0, sticky="nwse")
         self.listbox_1.configure( font="Courier 20 bold")
         self.listbox_1.bind("<Double-Button-1>", self.s2e3)
-        
-        for item in range(10):
-            self.listbox_1.insert(tk.END, item)
         
         self.scrollbar_x_1 = tk.Scrollbar(self.frame_listbox_1, orient=tk.HORIZONTAL)
         self.scrollbar_x_1.config(command=self.listbox_1.xview)
@@ -343,6 +344,7 @@ class Tela_Login:
             self.lista_user.append(self.lista_produto_total)
             self.lista_user.append(self.produto_dic)
             self.user_dic[self.user_cad] = self.lista_user
+            
         
     def verificar(self):
         if self.user_log in self.user_dic:
@@ -459,23 +461,25 @@ class Tela_Login:
         self.pagina_1()
         self.botao_user_log()
         self.botao_user()
+        self.entra_listbox_feed()
         
     def s0e1_cad(self):
         self.limpar_0()
         self.pagina_1()
         self.botao_user_cad()
         self.botao_user()
+        self.entra_listbox_feed()
         
     def s1e1(self):
         self.limpar_1()
         self.pagina_1()
         self.botao_user()
+        self.entra_listbox_feed()
         
     def s1e2(self):
         self.limpar_1()
         self.pagina_2()
         self.botao_user()
-        #self.set_botao()
         self.entra_listbox()
         
     def s1e3(self):
@@ -487,6 +491,7 @@ class Tela_Login:
         self.limpar_2()
         self.pagina_1()
         self.botao_user()
+        self.entra_listbox_feed()
     
     def s2e2_confirma(self):
         if self.nome_produto != "":
@@ -496,11 +501,18 @@ class Tela_Login:
                 if self.preco != "" or self.troca != "":
                     self.user_dic[self.user_cad][2].append(self.produto)
                     self.user_dic[self.user_cad][3][self.produto]=self.lista_produto
+                    self.lista_prod_geral=[self.preco, self.troca, self.user_cad]
+                    self.lista_prod_todos.append(self.produto)
             elif self.user_log != "":
                 if self.preco != "" or self.troca != "":
                     self.user_dic[self.user_log][2].append(self.produto)
                     self.user_dic[self.user_log][3][self.produto]=self.lista_produto
+                    self.lista_prod_geral=[self.preco, self.troca, self.user_log]
+                    self.lista_prod_todos.append(self.produto)
         print(self.user_dic)
+        self.lista_prod_geral=[self.preco, self.troca, self.user_log]
+        self.dic_prod_geral[self.produto]=self.lista_prod_geral
+        self.entra_listbox_feed()
         self.limpar_2()
         self.pagina_2()
         self.botao_user()
@@ -512,7 +524,6 @@ class Tela_Login:
         self.limpar_2()
         self.pagina_2()
         self.botao_user()
-        #self.set_botao()
         self.entra_listbox()
         
     def s2e3(self):
@@ -525,12 +536,12 @@ class Tela_Login:
         self.limpar_3()
         self.pagina_1()
         self.botao_user()
+        self.entra_listbox_feed()
         
     def s3e2(self):
         self.limpar_3()
         self.pagina_2()
         self.botao_user()
-       # self.set_botao()
         self.entra_listbox()
         
     def s1e0(self):
@@ -557,20 +568,11 @@ class Tela_Login:
                 if self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][0] != "" or self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][1] != "":
                     for i in range(len(self.user_dic[self.user_cad][2])):
                         self.listbox.insert(tk.END, self.user_dic[self.user_cad][2][i])
+                        
+    def entra_listbox_feed(self):
+        for i in range(len(self.lista_prod_todos)):
+            self.listbox_1.insert(tk.END, self.lista_prod_todos[i])
     
         
-#    def set_botao(self):
-#        if self.user_log != "":
-#            if self.user_dic[self.user_log][2] != []:
-#                self.botao_meuproduto_1.configure(
-#                    text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(
-#                        self.user_dic[self.user_log][2][0],
-#                        self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][0],
-#                        self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][1]))
-#                #self.botao_meuproduto_2.configure(text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(self.user_dic[self.user_log][2][1],self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][0],self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][1]))
-#        elif self.user_cad != "":
-#            if self.user_dic[self.user_cad][2] != []:
-#                self.botao_meuproduto_1.configure(text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(self.user_dic[self.user_cad][2][0],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][0],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][1]))
-#                #self.botao_meuproduto_2.configure(text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(self.user_dic[self.user_cad][2][1],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][0],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][1]))
 Site = Tela_Login()
-Site.iniciar()  
+Site.iniciar()    

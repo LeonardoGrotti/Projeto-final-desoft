@@ -1,11 +1,11 @@
-import tkinter as tk
+mport tkinter as tk
 
 class Tela_Login:
     def __init__(self):
         #Interface
         self.window = tk.Tk()
         self.window.title("Troca e Venda")
-        self.window.geometry("1300x700")
+        self.window.geometry("{0}x{1}".format(self.window.winfo_screenwidth(), self.window.winfo_screenheight()))
         self.window.rowconfigure(0, minsize=100, weight=1)
         self.window.rowconfigure(1, minsize=100, weight=1)
         self.window.rowconfigure(2, minsize=100, weight=1)
@@ -178,22 +178,7 @@ class Tela_Login:
         self.scrollbar_y_1.config(command=self.listbox_1.yview)
         self.scrollbar_y_1.grid(row=0, column=1, sticky="nsew")
         self.listbox_1.configure(yscrollcommand=self.scrollbar_y_1.set)
-#        
-#        #Botao Produto_1        
-#        self.botao_produto_1 = tk.Button(self.window)
-#        self.botao_produto_1.grid(row=3, column=0, columnspan=3, sticky="nsew")
-#        self.botao_produto_1.configure(text="",command=self.s1e3 , font="Courier 15 bold")
-#        
-#        #Botao Produto_2        
-#        self.botao_produto_2 = tk.Button(self.window)
-#        self.botao_produto_2.grid(row=4, column=0, columnspan=3, sticky="nsew")
-#        self.botao_produto_2.configure(text=" LCD 2X16 \n Valor: R$40,00 \n Troca: LM35 (sensor de temp) ",command=self.s1e3, font="Courier 15 bold")
-#        
-#        #Botao Produto_3        
-#        self.botao_produto_3 = tk.Button(self.window)
-#        self.botao_produto_3.grid(row=5, column=0, columnspan=3, sticky="nsew")
-#        self.botao_produto_3.configure(text=" Protoboard \n Valor: R$30,00 \n Troca: Arduino (mais volta minha!!) ",command=self.s1e3, font="Courier 15 bold")
-        
+              
     def segunda_pagina(self):
         #criar stringvar
         self.preco = ""
@@ -210,19 +195,16 @@ class Tela_Login:
         #Listbox e scrollbar
         
         self.frame_listbox = tk.Frame(self.window)
-        self.frame_listbox.grid(row=3, rowspan = 5, column=4,columnspan=6, sticky="nsew")
+        self.frame_listbox.grid(row=3, rowspan = 5, column=3,columnspan=5, sticky="nsew")
         self.frame_listbox.rowconfigure(0, minsize=380)
         self.frame_listbox.rowconfigure(1, minsize=20)
-        self.frame_listbox.columnconfigure(0, minsize=280)
+        self.frame_listbox.columnconfigure(0, minsize=580)
         self.frame_listbox.columnconfigure(1, minsize=20)
         
         self.listbox = tk.Listbox(self.frame_listbox)
         self.listbox.grid(row=0,column = 0, sticky="nsew")
-        self.listbox.configure( font="Courier 15 bold")
+        self.listbox.configure( font="Courier 30 bold")
         self.listbox.bind("<Double-Button-1>", self.s2e3)
-        
-        for item in range(len(self.lista_produto)):
-            self.listbox.insert(tk.END, self.lista[item])
         
         self.scrollbar_x = tk.Scrollbar(self.frame_listbox, orient=tk.HORIZONTAL)
         self.scrollbar_x.config(command=self.listbox.xview)
@@ -289,21 +271,6 @@ class Tela_Login:
         self.meus_produtos_anun.grid(row=2, column=3, columnspan=6, sticky="nsw")
         self.meus_produtos_anun.configure(text=" Meus Produtos Anunciados", font="Courier 30 bold")
         
-#        #Botao Produto_1        
-#        self.botao_meuproduto_1 = tk.Button(self.window)
-#        self.botao_meuproduto_1.grid(row=3, column=3, columnspan=6, sticky="nsew")
-#        self.botao_meuproduto_1.configure(text="",command=self.s2e3, font="Courier 15 bold")
-#        
-#        #Botao Produto_2        
-#        self.botao_meuproduto_2 = tk.Button(self.window)
-#        self.botao_meuproduto_2.grid(row=4, column=3, columnspan=6, sticky="nsew")
-#        self.botao_meuproduto_2.configure(text="",command=self.s2e3, font="Courier 15 bold")
-#        
-#        #Botao Produto_3        
-#        self.botao_meuproduto_3 = tk.Button(self.window)
-#        self.botao_meuproduto_3.grid(row=5, column=3, columnspan=6, sticky="nsew")
-#        self.botao_meuproduto_3.configure(text=" Protoboard \n Valor: R$30,00 \n Troca: Arduino (mais volta minha!!) ",command=self.s2e3, font="Courier 15 bold")
-#        
         #Botao confirmar
         self.botao_confirmar=tk.Button(self.window)
         self.botao_confirmar.grid(row=6, column=0, sticky="nsew")
@@ -416,15 +383,10 @@ class Tela_Login:
         self.slogan.grid_forget()
         self.user_name.grid_forget()
         self.feed_produtos.grid_forget()
-        
         self.frame_listbox_1.grid_forget()
         self.listbox_1.grid_forget()
         self.scrollbar_x_1.grid_forget()
         self.scrollbar_y_1.grid_forget()
-        
-#        self.botao_produto_1.grid_forget()
-#        self.botao_produto_2.grid_forget()
-#        self.botao_produto_3.grid_forget()
         self.botao_logout.grid_forget()
         
     def limpar_2(self):
@@ -437,14 +399,11 @@ class Tela_Login:
         self.preco_produto_cx.grid_forget()
         self.troca_produto.grid_forget()
         self.troca_produto_cx.grid_forget()
-        self.meus_produtos_anun.grid_forget()
-        
-        self.frame_listbox.forget()
-        self.listbox.forget()
-        
-#        self.botao_meuproduto_1.grid_forget()
-#        self.botao_meuproduto_2.grid_forget()
-#        self.botao_meuproduto_3.grid_forget()
+        self.meus_produtos_anun.grid_forget()        
+        self.frame_listbox.grid_forget()
+        self.listbox.grid_forget()
+        self.scrollbar_x.grid_forget()
+        self.scrollbar_y.grid_forget()
         self.botao_confirmar.grid_forget()
         self.botao_logout.grid_forget()
         
@@ -516,7 +475,8 @@ class Tela_Login:
         self.limpar_1()
         self.pagina_2()
         self.botao_user()
-        self.set_botao()
+        #self.set_botao()
+        self.entra_listbox()
         
     def s1e3(self):
         self.limpar_1()
@@ -533,24 +493,27 @@ class Tela_Login:
             self.cadastro_produto_st()
             self.armazenamento_produto()
             if self.user_cad != "":
-                self.user_dic[self.user_cad][2].append(self.produto)
-                self.user_dic[self.user_cad][3][self.produto]=self.lista_produto
+                if self.preco != "" or self.troca != "":
+                    self.user_dic[self.user_cad][2].append(self.produto)
+                    self.user_dic[self.user_cad][3][self.produto]=self.lista_produto
             elif self.user_log != "":
-                self.user_dic[self.user_log][2].append(self.produto)
-                self.user_dic[self.user_log][3][self.produto]=self.lista_produto
+                if self.preco != "" or self.troca != "":
+                    self.user_dic[self.user_log][2].append(self.produto)
+                    self.user_dic[self.user_log][3][self.produto]=self.lista_produto
         print(self.user_dic)
         self.limpar_2()
         self.pagina_2()
         self.botao_user()
         self.produto_dic = {}
         self.lista_produto_total = []
-        self.set_botao()
+        self.entra_listbox()
         
     def s2e2(self):
         self.limpar_2()
         self.pagina_2()
         self.botao_user()
-        self.set_botao()
+        #self.set_botao()
+        self.entra_listbox()
         
     def s2e3(self):
         self.limpar_2()
@@ -567,7 +530,8 @@ class Tela_Login:
         self.limpar_3()
         self.pagina_2()
         self.botao_user()
-        self.set_botao()
+       # self.set_botao()
+        self.entra_listbox()
         
     def s1e0(self):
         self.limpar_1()
@@ -581,18 +545,32 @@ class Tela_Login:
         self.limpar_3()
         self.pagina_0()
         
-    def set_botao(self):
+    def entra_listbox (self):
         if self.user_log != "":
             if self.user_dic[self.user_log][2] != []:
-                self.botao_meuproduto_1.configure(
-                    text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(
-                        self.user_dic[self.user_log][2][0],
-                        self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][0],
-                        self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][1]))
-                #self.botao_meuproduto_2.configure(text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(self.user_dic[self.user_log][2][1],self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][0],self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][1]))
-        elif self.user_cad != "":
+                if self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][0] != "" or self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][1] != "":
+                    for i in range(len(self.user_dic[self.user_log][2])):
+                        self.listbox.insert(tk.END, self.user_dic[self.user_log][2][i])
+                        
+        elif self.user_cad != "":   
             if self.user_dic[self.user_cad][2] != []:
-                self.botao_meuproduto_1.configure(text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(self.user_dic[self.user_cad][2][0],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][0],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][1]))
-                #self.botao_meuproduto_2.configure(text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(self.user_dic[self.user_cad][2][1],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][0],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][1]))
+                if self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][0] != "" or self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][1] != "":
+                    for i in range(len(self.user_dic[self.user_cad][2])):
+                        self.listbox.insert(tk.END, self.user_dic[self.user_cad][2][i])
+    
+        
+#    def set_botao(self):
+#        if self.user_log != "":
+#            if self.user_dic[self.user_log][2] != []:
+#                self.botao_meuproduto_1.configure(
+#                    text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(
+#                        self.user_dic[self.user_log][2][0],
+#                        self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][0],
+#                        self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][1]))
+#                #self.botao_meuproduto_2.configure(text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(self.user_dic[self.user_log][2][1],self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][0],self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][1]))
+#        elif self.user_cad != "":
+#            if self.user_dic[self.user_cad][2] != []:
+#                self.botao_meuproduto_1.configure(text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(self.user_dic[self.user_cad][2][0],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][0],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][1]))
+#                #self.botao_meuproduto_2.configure(text="Nome: {0} \n Preço: {1} \n Troca: {2}".format(self.user_dic[self.user_cad][2][1],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][0],self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][1]))
 Site = Tela_Login()
 Site.iniciar()  

@@ -168,7 +168,7 @@ class Tela_Login:
         self.listbox_1 = tk.Listbox(self.frame_listbox_1)
         self.listbox_1.grid(row=0,column = 0, sticky="nwse")
         self.listbox_1.configure( font="Courier 20 bold")
-        self.listbox_1.bind("<Double-Button-1>", self.s2e3)
+        self.listbox_1.bind("<Double-Button-1>", self.s1e3)
         
         self.scrollbar_x_1 = tk.Scrollbar(self.frame_listbox_1, orient=tk.HORIZONTAL)
         self.scrollbar_x_1.config(command=self.listbox_1.xview)
@@ -301,17 +301,17 @@ class Tela_Login:
         #Label Descrição Produto
         self.descricao_produto = tk.Label(self.window)
         self.descricao_produto.grid(row=2, column=3, columnspan=6, sticky="nsw")
-        self.descricao_produto.configure(text="Nome: LCD 2x16 \n \n Descrição: Ótimo estado", font="Courier 15 bold")
+        self.descricao_produto.configure(font="Courier 15 bold")
         
         #Label Preco Troca Produto
         self.info_preco_produto = tk.Label(self.window)
         self.info_preco_produto.grid(row=3, column=3, columnspan=6, sticky="nsw")
-        self.info_preco_produto.configure(text="Preço: R$60,00 \n \n Troca: Calculadora", font="Courier 15 bold")
+        self.info_preco_produto.configure( font="Courier 15 bold")
         
         #Label Email
         self.info_email_produto = tk.Label(self.window)
         self.info_email_produto.grid(row=4, column=3, columnspan=6, sticky="nsw")
-        self.info_email_produto.configure(text="Email: vendedor.exemplo@gmail.com", font="Courier 15 bold")
+        self.info_email_produto.configure( font="Courier 15 bold")
         
     def iniciar(self):
         self.window.mainloop()
@@ -482,10 +482,12 @@ class Tela_Login:
         self.botao_user()
         self.entra_listbox()
         
-    def s1e3(self):
+    def s1e3(self,event):
         self.limpar_1()
         self.pagina_3()
         self.botao_user()
+        self.listbox.curselection()
+        self.achar_produto_s1e3()
         
     def s2e1(self):
         self.limpar_2()
@@ -510,6 +512,7 @@ class Tela_Login:
                     self.lista_prod_geral=[self.preco, self.troca, self.user_log]
                     self.lista_prod_todos.append(self.produto)
         print(self.user_dic)
+        
         self.lista_prod_geral=[self.preco, self.troca, self.user_log]
         self.dic_prod_geral[self.produto]=self.lista_prod_geral
         self.entra_listbox_feed()
@@ -526,10 +529,12 @@ class Tela_Login:
         self.botao_user()
         self.entra_listbox()
         
-    def s2e3(self):
+    def s2e3(self,event):
         self.limpar_2()
         self.pagina_3()
         self.botao_user()
+        
+        self.achar_produto_s2e3()
         
         
     def s3e1(self):
@@ -572,7 +577,23 @@ class Tela_Login:
     def entra_listbox_feed(self):
         for i in range(len(self.lista_prod_todos)):
             self.listbox_1.insert(tk.END, self.lista_prod_todos[i])
-    
+            
+    def achar_produto_s2e3 (self):
+        if self.user_log != "":
+            self.descricao_produto.configure (text = "Nome: {0}".format(self.user_dic[self.user_log][2][self.listbox.curselection()[0]]))
+            self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1}" .format(self.dic_prod_geral[self.user_dic[self.user_log][2][self.listbox.curselection()[0]]][0],self.dic_prod_geral[self.user_dic[self.user_log][2][self.listbox.curselection()[0]]][1]))
+        if self.user_cad != "":
+            self.descricao_produto.configure (text = "Nome: {0}".format(self.user_dic[self.user_cad][2][self.listbox.curselection()[0]]))
+            self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1}" .format(self.dic_prod_geral[self.user_dic[self.user_cad][2][self.listbox.curselection()[0]]][0],self.dic_prod_geral[self.user_dic[self.user_cad][2][self.listbox.curselection()[0]]][1]))
+        
+    def achar_produto_s1e3 (self):
+        self.descricao_produto.configure (text = "Nome: {0}".format(self.lista_prod_todos[self.listbox_1.curselection()[0]]))
+        #print(self.dic_prod_geral)
+        #print([self.lista_prod_todos])
+        #print(self.listbox_1.curselection()[0])
+        #print([self.lista_prod_todos][self.listbox_1.curselection()[0]])
+        #print(self.dic_prod_geral[self.lista_prod_todos][self.listbox_1.curselection()[0]])
+        self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1} ".format(self.dic_prod_geral[self.lista_prod_todos[self.listbox_1.curselection()[0]]][0],self.dic_prod_geral[self.lista_prod_todos[self.listbox_1.curselection()[0]]][1]))
         
 Site = Tela_Login()
 Site.iniciar()    

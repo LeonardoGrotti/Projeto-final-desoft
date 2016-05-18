@@ -409,6 +409,12 @@ class Tela_Login:
         self.nome_st()
         self.cadastro_geral()
         
+        #Botao excluir
+        self.botao_excluir = tk.Button(self.window)
+        self.botao_excluir .grid(row=7,column=5,sticky="s")
+        self.botao_excluir.configure(text="Excluir", command=self.s3e2_excluir,font="Courier 18 bold",bg= "white")
+        self.botao_excluir.grid_forget() 
+        
     def limpar_1(self):
         self.slogan.grid_forget()
         self.user_name.grid_forget()
@@ -445,8 +451,9 @@ class Tela_Login:
         self.info_preco_produto.grid_forget()
         self.info_email_produto.grid_forget()
         self.botao_logout.grid_forget()
-        
-        
+        self.botao_excluir.grid_forget() 
+           
+   
     def pagina_0(self):
         self.zero_pagina()
         
@@ -514,12 +521,12 @@ class Tela_Login:
         self.pagina_2()
         self.botao_user()
         self.entra_listbox()
-        
+                e
     def s1e3(self,event):
         self.limpar_1()
         self.pagina_3()
         self.botao_user()
-        self.listbox.curselection()
+        self.listbox_1.curselection()
         self.achar_produto_s1e3()
         
     def s2e1(self):
@@ -544,10 +551,10 @@ class Tela_Login:
                     self.user_dic[self.user_log][3][self.produto]=self.lista_produto
                     self.lista_prod_geral=[self.preco, self.troca, self.user_log]
                     self.lista_prod_todos.append(self.produto)
-        #print(self.user_dic)
-        #print(self.lista_prod_todos)
+        print(self.user_dic)
+        print(self.lista_prod_todos)
         self.dic_prod_geral[self.produto]=self.lista_prod_geral
-        #print(self.dic_prod_geral)
+        print(self.dic_prod_geral)
         self.entra_listbox_feed()
         self.limpar_2()
         self.pagina_2()
@@ -567,7 +574,11 @@ class Tela_Login:
         self.pagina_3()
         self.botao_user() 
         self.achar_produto_s2e3() 
-        self.botao_excluir()
+        
+        #Botao excluir
+        self.botao_excluir = tk.Button(self.window)
+        self.botao_excluir .grid(row=7,column=5,sticky="s")
+        self.botao_excluir.configure(text="Excluir", command=self.s3e2_excluir,font="Courier 18 bold",bg= "white")
         
     def s3e1(self):
         self.limpar_3()
@@ -583,10 +594,14 @@ class Tela_Login:
         
     def s3e2_excluir(self):
         self.lista_prod_todos.remove(self.nome_excluir)
-        print(self.lista_prod_todos)
-        
+        if self.user_log != "": 
+            del self.user_dic[self.user_log][3][self.nome_excluir]            
+            self.user_dic[self.user_log][2].remove(self.nome_excluir)            
+        if self.user_cad != "": 
+            del self.user_dic[self.user_cad][3][self.nome_excluir] 
+            self.user_dic[self.user_cad][2].remove(self.nome_excluir)        
+        del self.dic_prod_geral[self.nome_excluir]
         self.limpar_3()
-        self.botao_excluir.grid_forget()
         self.pagina_2()
         self.botao_user()
         self.entra_listbox()
@@ -648,11 +663,7 @@ class Tela_Login:
         pickle.dump(todos_produtos_lista, arquivo)
         arquivo.close()
         
-    def botao_excluir(self):
-        #Botao excluir
-        self.botao_excluir = tk.Button(self.window)
-        self.botao_excluir .grid(row=7,column=5,sticky="s")
-        self.botao_excluir.configure(text="Excluir", command=self.s3e2_excluir,font="Courier 18 bold",bg= "white")
+   
         
         
         

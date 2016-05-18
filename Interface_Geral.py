@@ -1,3 +1,4 @@
+import pickle
 import tkinter as tk
 
 class Tela_Login:
@@ -23,7 +24,6 @@ class Tela_Login:
         
         #CORES
         self.window.configure(bg= "white")
-        
         
         #Baita Variavel necessaria
         self.A = -1
@@ -67,7 +67,7 @@ class Tela_Login:
         #linha em baixo do nome do site
         self.mini_linha = tk.Label(self.window)
         self.mini_linha.grid(row=1, column=0, columnspan=6, sticky="nsew")
-        self.mini_linha.configure(text="Desenvolvido por : Caue Citrin, Leonardo Grotti, Patrick W, Rodrigo Lino, participações especiais:Fabio e Camila",font="Times 10 bold" ,bg="gray18",fg="white")
+        self.mini_linha.configure(text="Desenvolvido por : Caue Citrin, Leonardo Grotti, Patrick Wiegeneric, Rodrigo Lino. Participações especiais: Fabio Ayres e Camila. Por um mundo mais sustentável",font="Times 10 bold" ,bg="gray18",fg="white")
        
        
        #Label Slogan
@@ -105,7 +105,7 @@ class Tela_Login:
         #Entery Login Senha
         self.login_senha_cx = tk.Entry(self.window)
         self.login_senha_cx.grid(row=3, column=1, columnspan=3, sticky="w")
-        self.login_senha_cx.configure(font="Courier 25 bold", textvariable = self.senha_log_st)
+        self.login_senha_cx.configure(font="Courier 25 bold", textvariable = self.senha_log_st,show="*" )
         
         #Botão Login
         self.enter_login = tk.Button(self.window)
@@ -145,7 +145,7 @@ class Tela_Login:
         #Entery Cadastro Senha
         self.cadastro_senha_cx = tk.Entry(self.window)
         self.cadastro_senha_cx.grid(row=7, column=1, columnspan=3, sticky="w")
-        self.cadastro_senha_cx.configure(font="Courier 25 bold" , textvariable = self.senha_cad_st)
+        self.cadastro_senha_cx.configure(font="Courier 25 bold" , textvariable = self.senha_cad_st,show="*" )
         
         #Botão Cadastro
         self.enter_cadastro = tk.Button(self.window)
@@ -156,12 +156,12 @@ class Tela_Login:
         #Botao Slogan
         self.slogan = tk.Button(self.window)
         self.slogan.grid(row=0, column=0, columnspan=3, sticky="nsw")
-        self.slogan.configure(text="Save & Trade", command=self.s1e1,font="Times 50 bold", bg="chartreuse3",fg="gray18")
+        self.slogan.configure(text="Save & Trade", command=self.s1e1,font="Times 45 bold", bg="chartreuse3",fg="gray18")
         
         #linha em baixo do nome do site
         self.mini_linha = tk.Label(self.window)
         self.mini_linha.grid(row=1, column=0, columnspan=7, sticky="nsew")
-        self.mini_linha.configure(text="Desenvolvido por : Caue Citrin, Leonardo Grotti, Patrick W, Rodrigo Lino, participações especiais:Fabio e Camila",font="Times 10 bold" ,bg="gray18",fg="white")
+        self.mini_linha.configure(text="Desenvolvido por : Caue Citrin, Leonardo Grotti, Patrick Wiegeneric, Rodrigo Lino. Participações especiais: Fabio Ayres e Camila. Por um mundo mais sustentável",font="Times 10 bold" ,bg="gray18",fg="white")
         
         #Label de cor
         self.label_1 =tk.Label(self.window)
@@ -541,9 +541,9 @@ class Tela_Login:
                     self.lista_prod_geral=[self.preco, self.troca, self.user_log]
                     self.lista_prod_todos.append(self.produto)
         print(self.user_dic)
-        
-        self.lista_prod_geral=[self.preco, self.troca, self.user_log]
+        print(self.lista_prod_todos)
         self.dic_prod_geral[self.produto]=self.lista_prod_geral
+        print(self.dic_prod_geral)
         self.entra_listbox_feed()
         self.limpar_2()
         self.pagina_2()
@@ -561,10 +561,8 @@ class Tela_Login:
     def s2e3(self,event):
         self.limpar_2()
         self.pagina_3()
-        self.botao_user()
-        
-        self.achar_produto_s2e3()
-        
+        self.botao_user() 
+        self.achar_produto_s2e3() 
         
     def s3e1(self):
         self.limpar_3()
@@ -581,14 +579,17 @@ class Tela_Login:
     def s1e0(self):
         self.limpar_1()
         self.pagina_0()
+        self.func_pickle()       
         
     def s2e0(self):
         self.limpar_2()
         self.pagina_0()
+        self.func_pickle()
         
     def s3e0(self):
         self.limpar_3()
         self.pagina_0()
+        self.func_pickle()
         
     def entra_listbox (self):
         if self.user_log != "":
@@ -624,5 +625,17 @@ class Tela_Login:
         #print(self.dic_prod_geral[self.lista_prod_todos][self.listbox_1.curselection()[0]])
         self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1} ".format(self.dic_prod_geral[self.lista_prod_todos[self.listbox_1.curselection()[0]]][0],self.dic_prod_geral[self.lista_prod_todos[self.listbox_1.curselection()[0]]][1]))
         
+
+    def func_pickle (self):
+        arquivo = open ("Troca_Venda", "wb")
+        dados_usuarios =self.user_dic
+        dados_produtos = self.dic_prod_geral
+        todos_produtos_lista = self.lista_prod_todos
+        pickle.dump(dados_usuarios, arquivo)
+        pickle.dump(dados_produtos, arquivo)
+        pickle.dump(todos_produtos_lista, arquivo)
+
 Site = Tela_Login()
-Site.iniciar()    
+Site.iniciar()   
+arquivo.close()
+ 

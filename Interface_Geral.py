@@ -116,7 +116,12 @@ class Tela_Login:
         #Label Cadastro
         self.cadastro = tk.Label(self.window)
         self.cadastro.grid(row=4, column=0, columnspan=2, stick="nsw")
-        self.cadastro.configure(text=" Cadastro", font="Courier 70 bold",bg= "white")
+        self.cadastro.configure(text=" Cadastro", font="Times 70 bold",fg="gray18",bg="white")
+        
+#        #Label de preenchimento
+#        self.preenchimento = tk.Label(self.window)
+#        self.preenchimento.grid(row=4,column=2,columnspan=6,sticky="nsew")
+#        self.preenchimento.configure(bg="chartreuse3")
         
         #Label Cadastro User
         self.cadastro_user = tk.Label(self.window)
@@ -220,12 +225,15 @@ class Tela_Login:
         self.produto = ""
         self.produto_st = tk.StringVar()
         
+        self.descricao = ""
+        self.descricao_st = tk.StringVar()
+        
         self.lista_produto = []
         
         #Listbox e scrollbar
         
         self.frame_listbox = tk.Frame(self.window)
-        self.frame_listbox.grid(row=4, rowspan = 6, column=3,columnspan=5, sticky="nsew")
+        self.frame_listbox.grid(row=3, rowspan = 5, column=3,columnspan=5, sticky="nsew")
         self.frame_listbox.rowconfigure(0, minsize=380)
         self.frame_listbox.rowconfigure(1, minsize=20)
         self.frame_listbox.columnconfigure(0, minsize=580)
@@ -264,48 +272,58 @@ class Tela_Login:
 
         #Label Cadastrar Produtos
         self.cadastrar_produtos = tk.Label(self.window)
-        self.cadastrar_produtos.grid(row=3, column=0, columnspan=3, sticky="nsw")
+        self.cadastrar_produtos.grid(row=2, column=0, columnspan=3, sticky="nsw")
         self.cadastrar_produtos.configure(text=" Cadastrar Produtos", font="Courier 30 bold",bg= "white")
         
         #Label Nome produto
         self.nome_produto = tk.Label(self.window)
-        self.nome_produto.grid(row=4, column=0, columnspan=3, sticky="nsw")
+        self.nome_produto.grid(row=3, column=0, columnspan=3, sticky="nsw")
         self.nome_produto.configure(text=" Nome:", font="Courier 20 bold",bg= "white")
         
         #Entery Nome produto
         self.nome_produto_cx = tk.Entry(self.window)
-        self.nome_produto_cx.grid(row=4, column=1, columnspan=3, sticky="w")
+        self.nome_produto_cx.grid(row=3, column=1, columnspan=3, sticky="w")
         self.nome_produto_cx.configure(font="Courier 25 bold" , textvariable = self.produto_st)
         
         #Label Preco produto
         self.preco_produto = tk.Label(self.window)
-        self.preco_produto.grid(row=5, column=0, columnspan=3, sticky="nsw")
+        self.preco_produto.grid(row=4, column=0, columnspan=3, sticky="nsw")
         self.preco_produto.configure(text=" Preço:", font="Courier 20 bold",bg= "white")
         
         #Entery Preco Produto
         self.preco_produto_cx = tk.Entry(self.window)
-        self.preco_produto_cx.grid(row=5, column=1, columnspan=3, sticky="w")
+        self.preco_produto_cx.grid(row=4, column=1, columnspan=3, sticky="w")
         self.preco_produto_cx.configure(font="Courier 25 bold" , textvariable = self.preco_st)
         
         #Label Troca Produto
         self.troca_produto = tk.Label(self.window)
-        self.troca_produto.grid(row=6, column=0, columnspan=3, sticky="nsw")
+        self.troca_produto.grid(row=5, column=0, columnspan=3, sticky="nsw")
         self.troca_produto.configure(text=" Troca:", font="Courier 20 bold",bg= "white")
         
         #Entery Troca Produto
         self.troca_produto_cx = tk.Entry(self.window)
-        self.troca_produto_cx.grid(row=6, column=1, columnspan=3, sticky="w")
+        self.troca_produto_cx.grid(row=5, column=1, columnspan=3, sticky="w")
         self.troca_produto_cx.configure(font="Courier 25 bold" , textvariable = self.troca_st)
         
         #Label Meus Produtos Anunciados
         self.meus_produtos_anun = tk.Label(self.window)
-        self.meus_produtos_anun.grid(row=3, column=3, columnspan=6, sticky="nsw")
+        self.meus_produtos_anun.grid(row=2, column=3, columnspan=6, sticky="nsw")
         self.meus_produtos_anun.configure(text=" Meus Produtos Anunciados", font="Courier 30 bold",bg= "white")
         
         #Botao confirmar
         self.botao_confirmar=tk.Button(self.window)
         self.botao_confirmar.grid(row=7, column=0, sticky="nsew")
         self.botao_confirmar.configure(text="confirmar", font="Courier 15 bold",command=self.s2e2_confirma,bg= "white")
+        
+        #Label descrição
+        self.descricao_label = tk.Label(self.window)
+        self.descricao_label.grid(row=6, column=0, columnspan=6, sticky="nsw")
+        self.descricao_label.configure(text=" Descrição:", font="Courier 20 bold",bg= "white")
+        
+        #Entry Descrição
+        self.descricao_cx = tk.Entry(self.window)
+        self.descricao_cx.grid(row=6, column=1, columnspan=3, sticky="w")
+        self.descricao_cx.configure(font="Courier 25 bold" , textvariable = self.descricao_st)
         
     def terceira_pagina(self):
         #Botao Slogan
@@ -343,6 +361,11 @@ class Tela_Login:
         self.info_email_produto.grid(row=5, column=3, columnspan=6, sticky="nsw")
         self.info_email_produto.configure( font="Courier 15 bold",bg= "white")
         
+        #Label Descricao
+        self.info_descricao =  tk.Label(self.window)
+        self.info_descricao.grid(row=6, column=3, columnspan=6, sticky="nsw")
+        self.info_descricao.configure( font="Courier 15 bold",bg= "white")
+        
     def iniciar(self):
         self.window.mainloop()
         
@@ -358,6 +381,7 @@ class Tela_Login:
         self.produto = self.produto_st.get()
         self.preco = self.preco_st.get()
         self.troca = self.troca_st.get()
+        self.descricao = self.descricao_st.get()
         
     def armazenamento_produto(self):
         self.lista_produto.append(self.preco)
@@ -372,7 +396,6 @@ class Tela_Login:
             self.lista_user.append(self.lista_produto_total)
             self.lista_user.append(self.produto_dic)
             self.user_dic[self.user_cad] = self.lista_user
-            
         
     def verificar(self):
         if self.user_log in self.user_dic:
@@ -383,12 +406,12 @@ class Tela_Login:
     def cadastro_vazio(self):
         self.limpar_1()
         self.pagina_0()
-        self.login_fail.configure(text="Faltou dados",state="active",font = "Courier 18 bold")
+        self.login_fail.configure(text="Faltaram dados",state="active",font = "Courier 18 bold",bg= "white")
     
     def login_incorreto(self):
         self.limpar_1()
         self.pagina_0()
-        self.login_fail.configure(text="Login incorreto",state="active",font = "Courier 18 bold")
+        self.login_fail.configure(text="Login incorreto",state="active",font = "Courier 18 bold",bg= "white")
     
     def limpar_0(self):
         self.slogan.grid_forget()
@@ -442,6 +465,8 @@ class Tela_Login:
         self.scrollbar_y.grid_forget()
         self.botao_confirmar.grid_forget()
         self.botao_logout.grid_forget()
+        self.descricao_label.grid_forget()
+        self.descricao_cx.grid_forget()
         
     def limpar_3(self):
         self.slogan.grid_forget()
@@ -452,6 +477,7 @@ class Tela_Login:
         self.info_email_produto.grid_forget()
         self.botao_logout.grid_forget()
         self.botao_excluir.grid_forget() 
+        self.info_descricao.grid_forget()
            
    
     def pagina_0(self):
@@ -459,7 +485,7 @@ class Tela_Login:
         
     def pagina_1(self):
        self.primeira_pagina()
-       self.login_fail.configure(text="",state="disabled",font = "Courier 18 bold")
+       self.login_fail.configure(text="",state="disabled",font = "Courier 18 bold", bg="white")
         
     def pagina_2(self):
         self.segunda_pagina()
@@ -473,6 +499,7 @@ class Tela_Login:
         self.dic_prod_geral = pickle.load(arquivo)
         self.lista_prod_todos = pickle.load(arquivo)
         arquivo.close()
+        self.func_pickle()
         print(self.user_dic)
         if self.user_log != "":
             if self.verificar() == True:
@@ -489,6 +516,7 @@ class Tela_Login:
             return self.A
         elif self.user_cad == "":
             self.cadastro_vazio()
+
             
     def botao_user(self):
         if self.A == 0:
@@ -543,19 +571,21 @@ class Tela_Login:
                 if self.preco != "" or self.troca != "":
                     self.user_dic[self.user_cad][2].append(self.produto)
                     self.user_dic[self.user_cad][3][self.produto]=self.lista_produto
-                    self.lista_prod_geral=[self.preco, self.troca, self.user_cad]
+                    self.lista_prod_geral=[self.preco, self.troca, self.user_cad, self.descricao]
                     self.lista_prod_todos.append(self.produto)
             elif self.user_log != "":
                 if self.preco != "" or self.troca != "":
                     self.user_dic[self.user_log][2].append(self.produto)
                     self.user_dic[self.user_log][3][self.produto]=self.lista_produto
-                    self.lista_prod_geral=[self.preco, self.troca, self.user_log]
+                    self.lista_prod_geral=[self.preco, self.troca, self.user_log, self.descricao]
                     self.lista_prod_todos.append(self.produto)
+        
         print(self.user_dic)
         print(self.lista_prod_todos)
         self.dic_prod_geral[self.produto]=self.lista_prod_geral
         print(self.dic_prod_geral)
         self.entra_listbox_feed()
+        self.func_pickle()
         self.limpar_2()
         self.pagina_2()
         self.botao_user()
@@ -572,7 +602,7 @@ class Tela_Login:
     def s2e3(self,event):
         self.limpar_2()
         self.pagina_3()
-        self.botao_user() 
+        self.botao_user()
         self.achar_produto_s2e3() 
         
         #Botao excluir
@@ -601,6 +631,7 @@ class Tela_Login:
             del self.user_dic[self.user_cad][3][self.nome_excluir] 
             self.user_dic[self.user_cad][2].remove(self.nome_excluir)        
         del self.dic_prod_geral[self.nome_excluir]
+        self.func_pickle()
         self.limpar_3()
         self.pagina_2()
         self.botao_user()
@@ -643,16 +674,23 @@ class Tela_Login:
             self.nome_excluir = self.user_dic[self.user_log][2][self.listbox.curselection()[0]]
             self.descricao_produto.configure (text = "Nome: {0}".format(self.user_dic[self.user_log][2][self.listbox.curselection()[0]]))
             self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1}" .format(self.dic_prod_geral[self.user_dic[self.user_log][2][self.listbox.curselection()[0]]][0],self.dic_prod_geral[self.user_dic[self.user_log][2][self.listbox.curselection()[0]]][1]))
-        if self.user_cad != "":
+        elif self.user_cad != "":
             self.nome_excluir = self.user_dic[self.user_cad][2][self.listbox.curselection()[0]]
             self.descricao_produto.configure (text = "Nome: {0}".format(self.user_dic[self.user_cad][2][self.listbox.curselection()[0]]))
             self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1}" .format(self.dic_prod_geral[self.user_dic[self.user_cad][2][self.listbox.curselection()[0]]][0],self.dic_prod_geral[self.user_dic[self.user_cad][2][self.listbox.curselection()[0]]][1]))
+        self.info_descricao.configure(text="Descrição: {0}".format(self.dic_prod_geral[self.nome_excluir][3]))
+        self.info_email_produto.configure(text="email: {0}".format(self.user_dic[self.dic_prod_geral[self.nome_excluir][2]][1]))
         
     def achar_produto_s1e3 (self):
+        if self.user_log != "":
+            self.nome_excluir = self.user_dic[self.user_log][2][self.listbox_1.curselection()[0]]
+        elif self.user_cad != "":
+            self.nome_excluir = self.user_dic[self.user_cad][2][self.listbox_1.curselection()[0]]
         self.descricao_produto.configure (text = "Nome: {0}".format(self.lista_prod_todos[self.listbox_1.curselection()[0]]))
         self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1} ".format(self.dic_prod_geral[self.lista_prod_todos[self.listbox_1.curselection()[0]]][0],self.dic_prod_geral[self.lista_prod_todos[self.listbox_1.curselection()[0]]][1]))
+        self.info_email_produto.configure(text="email: {0}".format(self.user_dic[self.dic_prod_geral[self.nome_excluir][2]][1]))
+        self.info_descricao.configure(text="Descrição: {0}".format(self.dic_prod_geral[self.nome_excluir][3]))
         
-
     def func_pickle (self):
         arquivo = open ("Troca_Venda", "wb")
         dados_usuarios =self.user_dic
@@ -662,10 +700,6 @@ class Tela_Login:
         pickle.dump(dados_produtos, arquivo)
         pickle.dump(todos_produtos_lista, arquivo)
         arquivo.close()
-        
-   
-        
-        
         
 Site = Tela_Login()
 Site.iniciar()   

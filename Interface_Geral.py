@@ -27,6 +27,7 @@ class Tela_Login:
         
         #Baita Variavel necessaria
         self.A = -1
+        self.nome_excluir=0
         
         #Label Login Fail
         self.login_fail = tk.Label()
@@ -324,7 +325,7 @@ class Tela_Login:
         
         #Label Foto Produto
         self.foto_produto = tk.Label(self.window)
-        self.foto_produto.grid(row=3, rowspan=5, column=0, columnspan=2, sticky="nsw")
+        self.foto_produto.grid(row=3, rowspan=4, column=0, columnspan=2, sticky="nsw")
         self.foto_produto.configure(text="Foto",font="Courier 200 bold",bg="red")
         
         #Label Descrição Produto
@@ -361,9 +362,7 @@ class Tela_Login:
     def armazenamento_produto(self):
         self.lista_produto.append(self.preco)
         self.lista_produto.append(self.troca)
-        #self.lista_produto_total.append(self.produto)
         self.produto_dic[self.produto] = self.lista_produto
-        #self.lista_user.append(self.produto_dic)
         
     #Criando as funções de callback
     def cadastro_geral(self):
@@ -447,6 +446,7 @@ class Tela_Login:
         self.info_email_produto.grid_forget()
         self.botao_logout.grid_forget()
         
+        
     def pagina_0(self):
         self.zero_pagina()
         
@@ -461,9 +461,14 @@ class Tela_Login:
         self.terceira_pagina()
 
     def botao_user_log(self):
+        arquivo = open("Troca_Venda","rb")
+        self.user_dic = pickle.load(arquivo)
+        self.dic_prod_geral = pickle.load(arquivo)
+        self.lista_prod_todos = pickle.load(arquivo)
+        arquivo.close()
+        print(self.user_dic)
         if self.user_log != "":
             if self.verificar() == True:
-                #self.user_name.configure(text= self.user_log)
                 self.A = 0
                 return self.A
             else:
@@ -473,7 +478,6 @@ class Tela_Login:
             
     def botao_user_cad(self):
         if self.user_cad != "":
-            #self.user_name.configure(text= self.user_cad)
             self.A = 1
             return self.A
         elif self.user_cad == "":
@@ -540,10 +544,10 @@ class Tela_Login:
                     self.user_dic[self.user_log][3][self.produto]=self.lista_produto
                     self.lista_prod_geral=[self.preco, self.troca, self.user_log]
                     self.lista_prod_todos.append(self.produto)
-        print(self.user_dic)
-        print(self.lista_prod_todos)
+        #print(self.user_dic)
+        #print(self.lista_prod_todos)
         self.dic_prod_geral[self.produto]=self.lista_prod_geral
-        print(self.dic_prod_geral)
+        #print(self.dic_prod_geral)
         self.entra_listbox_feed()
         self.limpar_2()
         self.pagina_2()
@@ -563,6 +567,7 @@ class Tela_Login:
         self.pagina_3()
         self.botao_user() 
         self.achar_produto_s2e3() 
+        self.botao_excluir()
         
     def s3e1(self):
         self.limpar_3()
@@ -572,6 +577,16 @@ class Tela_Login:
         
     def s3e2(self):
         self.limpar_3()
+        self.pagina_2()
+        self.botao_user()
+        self.entra_listbox()
+        
+    def s3e2_excluir(self):
+        self.lista_prod_todos.remove(self.nome_excluir)
+        print(self.lista_prod_todos)
+        
+        self.limpar_3()
+        self.botao_excluir.grid_forget()
         self.pagina_2()
         self.botao_user()
         self.entra_listbox()
@@ -610,19 +625,16 @@ class Tela_Login:
             
     def achar_produto_s2e3 (self):
         if self.user_log != "":
+            self.nome_excluir = self.user_dic[self.user_log][2][self.listbox.curselection()[0]]
             self.descricao_produto.configure (text = "Nome: {0}".format(self.user_dic[self.user_log][2][self.listbox.curselection()[0]]))
             self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1}" .format(self.dic_prod_geral[self.user_dic[self.user_log][2][self.listbox.curselection()[0]]][0],self.dic_prod_geral[self.user_dic[self.user_log][2][self.listbox.curselection()[0]]][1]))
         if self.user_cad != "":
+            self.nome_excluir = self.user_dic[self.user_cad][2][self.listbox.curselection()[0]]
             self.descricao_produto.configure (text = "Nome: {0}".format(self.user_dic[self.user_cad][2][self.listbox.curselection()[0]]))
             self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1}" .format(self.dic_prod_geral[self.user_dic[self.user_cad][2][self.listbox.curselection()[0]]][0],self.dic_prod_geral[self.user_dic[self.user_cad][2][self.listbox.curselection()[0]]][1]))
         
     def achar_produto_s1e3 (self):
         self.descricao_produto.configure (text = "Nome: {0}".format(self.lista_prod_todos[self.listbox_1.curselection()[0]]))
-        #print(self.dic_prod_geral)
-        #print([self.lista_prod_todos])
-        #print(self.listbox_1.curselection()[0])
-        #print([self.lista_prod_todos][self.listbox_1.curselection()[0]])
-        #print(self.dic_prod_geral[self.lista_prod_todos][self.listbox_1.curselection()[0]])
         self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1} ".format(self.dic_prod_geral[self.lista_prod_todos[self.listbox_1.curselection()[0]]][0],self.dic_prod_geral[self.lista_prod_todos[self.listbox_1.curselection()[0]]][1]))
         
 
@@ -634,8 +646,15 @@ class Tela_Login:
         pickle.dump(dados_usuarios, arquivo)
         pickle.dump(dados_produtos, arquivo)
         pickle.dump(todos_produtos_lista, arquivo)
-
+        arquivo.close()
+        
+    def botao_excluir(self):
+        #Botao excluir
+        self.botao_excluir = tk.Button(self.window)
+        self.botao_excluir .grid(row=7,column=5,sticky="s")
+        self.botao_excluir.configure(text="Excluir", command=self.s3e2_excluir,font="Courier 18 bold",bg= "white")
+        
+        
+        
 Site = Tela_Login()
 Site.iniciar()   
-arquivo.close()
- 

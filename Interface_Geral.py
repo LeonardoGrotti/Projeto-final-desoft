@@ -1,5 +1,8 @@
 import pickle
 import tkinter as tk
+from PIL import ImageTk, Image
+
+
 
 class Tela_Login:
     def __init__(self):
@@ -7,14 +10,15 @@ class Tela_Login:
         self.window = tk.Tk()
         self.window.title("Troca e Venda")
         self.window.geometry("{0}x{1}".format(self.window.winfo_screenwidth(), self.window.winfo_screenheight()))
-        self.window.rowconfigure(0, minsize=80, weight=1)
-        self.window.rowconfigure(1, minsize=20, weight=1)
-        self.window.rowconfigure(2, minsize=100, weight=1)
+        self.window.rowconfigure(0, minsize=40, weight=1)
+        self.window.rowconfigure(1, minsize=40, weight=1)
+        self.window.rowconfigure(2, minsize=20, weight=1)
         self.window.rowconfigure(3, minsize=100, weight=1)
         self.window.rowconfigure(4, minsize=100, weight=1)
         self.window.rowconfigure(5, minsize=100, weight=1)
         self.window.rowconfigure(6, minsize=100, weight=1)
         self.window.rowconfigure(7, minsize=100, weight=1)
+        self.window.rowconfigure(8, minsize=100, weight=1)
         self.window.columnconfigure(0, minsize=200, weight=1)
         self.window.columnconfigure(1, minsize=200, weight=1)
         self.window.columnconfigure(2, minsize=200, weight=1)
@@ -31,10 +35,14 @@ class Tela_Login:
         
         #Label Login Fail
         self.login_fail = tk.Label()
-        self.login_fail.grid(row=2, column=4, sticky="nsew")
+        self.login_fail.grid(row=8, column=4, sticky="nsew")
         self.login_fail.configure(state="disabled",bg= "white")
         
-        # criando armazenamento
+        self.login_fail1 = tk.Label()
+        self.login_fail1.grid(row=0, column=5, columnspan=6, sticky="wnse")
+        self.login_fail1.configure(text="" ,bg= "chartreuse3")
+        
+        #Criando armazenamento
         self.user_dic = {}
         self.lista_user = []
         self.produto_dic = {}
@@ -67,132 +75,141 @@ class Tela_Login:
         
         #linha em baixo do nome do site
         self.mini_linha = tk.Label(self.window)
-        self.mini_linha.grid(row=1, column=0, columnspan=6, sticky="nsew")
+        self.mini_linha.grid(row=2, column=0, columnspan=6, sticky="nsew")
         self.mini_linha.configure(text="Desenvolvido por : Caue Citrin, Leonardo Grotti, Patrick Wiegeneric, Rodrigo Lino. Participações especiais: Fabio Ayres e Camila. Por um mundo mais sustentável",font="Times 10 bold" ,bg="gray18",fg="white")
        
        
-       #Label Slogan
+        #Label Slogan
         self.slogan = tk.Label(self.window)
-        self.slogan.grid(row=0, column=3, columnspan=6, sticky="nsew")
+        self.slogan.grid(row=0, rowspan=2, column=0, columnspan=2, sticky="nsew")
         self.slogan.configure(text="Save & Trade",font="Times 60 bold" ,bg="chartreuse3",fg="gray18")
        
         #Label de cor
         self.label_1 =tk.Label(self.window)
-        self.label_1.grid(row=0, column=0, columnspan=3, sticky="nsew")
+        self.label_1.grid(row=0, rowspan=2, column=2, columnspan=3, sticky="nsew")
         self.label_1.configure(bg="chartreuse3")
+        
+        #Label de cor 2
+        self.label_1 =tk.Label(self.window)
+        self.label_1.grid(row=1, column=2, columnspan=6, sticky="nsew")
+        self.label_1.configure(bg="chartreuse3")        
         
         #Label Login
         self.login = tk.Label(self.window)
-        self.login.grid(row=0, column=0, columnspan=2, sticky="nsw")
-        self.login.configure(text=" Login",font="Times 70 bold",bg="chartreuse3",fg="gray18")
+        self.login.grid(row=0, rowspan=1, column=3, columnspan=4, sticky="nsw")
+        self.login.configure(text=" Login:",font="Times 30 bold",bg="chartreuse3",fg="gray18")
         
-        #Label Login User
-        self.login_user = tk.Label(self.window)
-        self.login_user.grid(row=2, column=0, sticky="nsw")
-        self.login_user.configure(text=" User: ")
-        self.login_user.configure(font="Courier 40 bold",bg= "white")
         
         #Entery Login User
         self.login_user_cx = tk.Entry(self.window)
-        self.login_user_cx.grid(row=2, column=1, columnspan=3, sticky="w")
-        self.login_user_cx.configure(font="Courier 25 bold", textvariable = self.user_log_st)
+        self.login_user_cx.grid(row=0, column=4, columnspan=5, sticky="w")
+        self.login_user_cx.configure(font="Times 20 bold", textvariable = self.user_log_st)
         
         
         #Label Login Senha
         self.login_senha = tk.Label(self.window)
-        self.login_senha.grid(row=3, column=0, sticky="nsw")
-        self.login_senha.configure(text=" Senha: " ,font="Courier 40 bold",bg= "white")
+        self.login_senha.grid(row=1, column=3, columnspan=4, sticky="nsw")
+        self.login_senha.configure(text=" Senha: " ,font="Times 30 bold",bg="chartreuse3")
         
         #Entery Login Senha
         self.login_senha_cx = tk.Entry(self.window)
-        self.login_senha_cx.grid(row=3, column=1, columnspan=3, sticky="w")
-        self.login_senha_cx.configure(font="Courier 25 bold", textvariable = self.senha_log_st,show="*" )
+        self.login_senha_cx.grid(row=1, column=4, columnspan=5, sticky="w")
+        self.login_senha_cx.configure(font="Times 20 bold", textvariable = self.senha_log_st,show="*" )
         
         #Botão Login
         self.enter_login = tk.Button(self.window)
-        self.enter_login.configure(text=" Login ", command=self.s0e1_log, font="Courier 25 bold",bg= "white")
-        self.enter_login.grid(row=3, column=4, columnspan=6)
+        self.enter_login.configure(text=" Login ", command=self.s0e1_log, font="Times 25 bold", bg= "white")
+        self.enter_login.grid(row=1, column=5, columnspan=6, sticky="e")
         
         #Label Cadastro
         self.cadastro = tk.Label(self.window)
-        self.cadastro.grid(row=4, column=0, columnspan=2, stick="nsw")
-        self.cadastro.configure(text=" Cadastro", font="Times 70 bold",fg="gray18",bg="white")
-        
-#        #Label de preenchimento
-#        self.preenchimento = tk.Label(self.window)
-#        self.preenchimento.grid(row=4,column=2,columnspan=6,sticky="nsew")
-#        self.preenchimento.configure(bg="chartreuse3")
+        self.cadastro.grid(row=3, column=3, columnspan=4, sticky="ew")
+        self.cadastro.configure(text=" Cadastro", font="Times 70 bold",bg= "white")
         
         #Label Cadastro User
         self.cadastro_user = tk.Label(self.window)
-        self.cadastro_user.grid(row=5, column=0, sticky="nsw")
-        self.cadastro_user.configure(text=" User: ", font="Courier 40 bold",bg= "white")
+        self.cadastro_user.grid(row=5, column=3, columnspan=4, sticky="nsw")
+        self.cadastro_user.configure(text=" User: ", font="Times 40 bold",bg= "white")
         
         #Entery Cadastro User
         self.cadastro_user_cx = tk.Entry(self.window)
-        self.cadastro_user_cx.grid(row=5, column=1, columnspan=3, sticky="w")
-        self.cadastro_user_cx.configure(font="Courier 25 bold" , textvariable = self.user_cad_st)
+        self.cadastro_user_cx.grid(row=5, column=4, columnspan=5, sticky="w")
+        self.cadastro_user_cx.configure(font="Times 25 bold" , textvariable = self.user_cad_st)
         
         #Label Cadastro Email
         self.cadastro_email = tk.Label(self.window)
-        self.cadastro_email.grid(row=6, column=0, sticky="nsw")
-        self.cadastro_email.configure(text=" E-mail: ", font="Courier 40 bold",bg= "white")
-        
+        self.cadastro_email.grid(row=6, column=3, columnspan=4, sticky="nsw")
+        self.cadastro_email.configure(text=" E-mail: ", font="Times 40 bold",bg= "white")
+      
         #Entery Cadastro Email
         self.cadastro_email_cx = tk.Entry(self.window)
-        self.cadastro_email_cx.grid(row=6, column=1, columnspan=3, sticky="w")
-        self.cadastro_email_cx.configure(font="Courier 25 bold" , textvariable = self.email_st)
+        self.cadastro_email_cx.grid(row=6, column=4, columnspan=5, sticky="w")
+        self.cadastro_email_cx.configure(font="Times 25 bold" , textvariable = self.email_st)
         
         #Label Cadastro Senha
         self.cadastro_senha = tk.Label(self.window)
-        self.cadastro_senha.grid(row=7, column=0, sticky="nsw")
-        self.cadastro_senha.configure(text=" Senha: ", font="Courier 40 bold",bg= "white")
+        self.cadastro_senha.grid(row=7, column=3, columnspan=4, sticky="nsw")
+        self.cadastro_senha.configure(text=" Senha: ", font="Times 40 bold",bg= "white")
         
         #Entery Cadastro Senha
         self.cadastro_senha_cx = tk.Entry(self.window)
-        self.cadastro_senha_cx.grid(row=7, column=1, columnspan=3, sticky="w")
-        self.cadastro_senha_cx.configure(font="Courier 25 bold" , textvariable = self.senha_cad_st,show="*" )
+        self.cadastro_senha_cx.grid(row=7, column=4, columnspan=5, sticky="w")
+        self.cadastro_senha_cx.configure(font="Times 25 bold" , textvariable = self.senha_cad_st,show="*" )
         
         #Botão Cadastro
         self.enter_cadastro = tk.Button(self.window)
-        self.enter_cadastro.configure(text=" Cadastro ", command=self.s0e1_cad, font="Courier 25 bold",bg= "white")
-        self.enter_cadastro.grid(row=7, column=4, columnspan=6)  
+        self.enter_cadastro.configure(text=" Cadastro ", command=self.s0e1_cad, font="Times 25 bold",bg= "white")
+        self.enter_cadastro.grid(row=8, column=5, columnspan=6)  
         
+#        #Foto
+#        self.diretorio = "foto.jpg"
+#        self.img = ImageTk.PhotoImage(Image.open(self.diretorio))
+#
+#        self.imglabel = tk.Label(self.window, image=self.img) 
+#        self.imglabel.grid(row=3, rowspan=6, column=0, columnspan=3)
+        
+
+
+
+
+
+
     def primeira_pagina(self):
         #Botao Slogan
         self.slogan = tk.Button(self.window)
-        self.slogan.grid(row=0, column=0, columnspan=3, sticky="nsw")
-        self.slogan.configure(text="Save & Trade", command=self.s1e1,font="Times 45 bold", bg="chartreuse3",fg="gray18")
+        self.slogan.grid(row=0, rowspan=2, column=0, columnspan=2, sticky="nsew")
+        self.slogan.configure(text="Save & Trade", command=self.s1e1,font="Times 60 bold", bg="chartreuse3",fg="gray18")
+
         
         #linha em baixo do nome do site
         self.mini_linha = tk.Label(self.window)
-        self.mini_linha.grid(row=1, column=0, columnspan=7, sticky="nsew")
+        self.mini_linha.grid(row=2, column=0, columnspan=7, sticky="nsew")
         self.mini_linha.configure(text="Desenvolvido por : Caue Citrin, Leonardo Grotti, Patrick Wiegeneric, Rodrigo Lino. Participações especiais: Fabio Ayres e Camila. Por um mundo mais sustentável",font="Times 10 bold" ,bg="gray18",fg="white")
         
-        #Label de cor
-        self.label_1 =tk.Label(self.window)
-        self.label_1.grid(row=0, column=3, columnspan=4, sticky="nsew")
-        self.label_1.configure(bg="chartreuse3") 
+#        #Label de cor
+#        self.label_1 =tk.Label(self.window)
+#        self.label_1.grid(row=0, rowspan=1, column=3, columnspan=4, sticky="nsew")
+#        self.label_1.configure(bg="chartreuse3") 
          
         #Botao Nome do Usuario
         self.user_name = tk.Button(self.window)     
-        self.user_name.grid(row=0, column=4, columnspan=6, sticky="nse")
+        self.user_name.grid(row=0, rowspan=2, column=4, columnspan=6, sticky="nse")
         self.user_name.configure(command=self.s1e2, font="Times 30 bold", bg = "chartreuse3",fg="gray18")
         
         #Botao Logout
         self.botao_logout = tk.Button(self.window)
-        self.botao_logout.grid(row=7,column=6,sticky="s")
-        self.botao_logout.configure(text="Logout", command=self.s1e0,font="Courier 18 bold",bg= "white")
+        self.botao_logout.grid(row=8,column=6)
+        self.botao_logout.configure(text="Logout", command=self.s1e0,font="Times 18 bold",bg= "white")
         
         #Label Feed produtos
         self.feed_produtos = tk.Label(self.window)
-        self.feed_produtos.grid(row=3, column=0, columnspan=3, sticky="nsw")
-        self.feed_produtos.configure(text=" Feed Produtos", font="Courier 50 bold",bg= "white")
+        self.feed_produtos.grid(row=4, column=0, columnspan=3, sticky="nsw")
+        self.feed_produtos.configure(text=" Feed Produtos", font="Times 50 bold",bg= "white")
         
         #Listbox e scrollbar
         
         self.frame_listbox_1 = tk.Frame(self.window)
-        self.frame_listbox_1.grid(row=4, rowspan = 6, column=0,columnspan=3, sticky="nswe")
+        self.frame_listbox_1.grid(row=5, rowspan = 6, column=0,columnspan=3, sticky="nswe")
         self.frame_listbox_1.rowconfigure(0, minsize=280)
         self.frame_listbox_1.rowconfigure(1, minsize=20)
         self.frame_listbox_1.columnconfigure(0, minsize=580)
@@ -201,7 +218,7 @@ class Tela_Login:
         
         self.listbox_1 = tk.Listbox(self.frame_listbox_1)
         self.listbox_1.grid(row=0,column = 0, sticky="nwse")
-        self.listbox_1.configure( font="Courier 20 bold",bg= "white")
+        self.listbox_1.configure( font="Times 20 bold",bg= "white")
         self.listbox_1.bind("<Double-Button-1>", self.s1e3)
         
         self.scrollbar_x_1 = tk.Scrollbar(self.frame_listbox_1, orient=tk.HORIZONTAL)
@@ -233,7 +250,7 @@ class Tela_Login:
         #Listbox e scrollbar
         
         self.frame_listbox = tk.Frame(self.window)
-        self.frame_listbox.grid(row=3, rowspan = 5, column=3,columnspan=5, sticky="nsew")
+        self.frame_listbox.grid(row=4, rowspan = 6, column=3,columnspan=5, sticky="nsew")
         self.frame_listbox.rowconfigure(0, minsize=380)
         self.frame_listbox.rowconfigure(1, minsize=20)
         self.frame_listbox.columnconfigure(0, minsize=580)
@@ -242,7 +259,7 @@ class Tela_Login:
         
         self.listbox = tk.Listbox(self.frame_listbox)
         self.listbox.grid(row=0,column = 0, sticky="nsew")
-        self.listbox.configure( font="Courier 30 bold")
+        self.listbox.configure( font="Times 30 bold")
         self.listbox.bind("<Double-Button-1>", self.s2e3)
         
         self.scrollbar_x = tk.Scrollbar(self.frame_listbox, orient=tk.HORIZONTAL)
@@ -257,114 +274,114 @@ class Tela_Login:
         
         #Botao Slogan
         self.slogan = tk.Button(self.window)
-        self.slogan.grid(row=0, column=0, columnspan=3, sticky="nsw")
-        self.slogan.configure(text="Save & Trade",command=self.s2e1, font="Times 50 bold", bg="chartreuse3", fg="gray18")
+        self.slogan.grid(row=0, rowspan=2, column=0, columnspan=2, sticky="nsew")
+        self.slogan.configure(text="Save & Trade",command=self.s2e1, font="Times 60 bold", bg="chartreuse3", fg="gray18")
         
-         #Botao Nome do Usuario
+        #Botao Nome do Usuario
         self.user_name = tk.Button(self.window)
-        self.user_name.grid(row=0, column=4, columnspan=6, sticky="nse")
+        self.user_name.grid(row=0, rowspan=2, column=4, columnspan=6, sticky="nse")
         self.user_name.configure(command=self.s2e2, font="Times 30 bold", bg = "chartreuse3", fg="gray18")
         
         #Botao Logout
         self.botao_logout = tk.Button(self.window)
-        self.botao_logout.grid(row=7,column=6,sticky="s")
-        self.botao_logout.configure(text="Logout", command=self.s2e0,font="Courier 18 bold",bg= "white")
+        self.botao_logout.grid(row=8,column=6)
+        self.botao_logout.configure(text="Logout", command=self.s2e0,font="Times 18 bold",bg= "white")
 
         #Label Cadastrar Produtos
         self.cadastrar_produtos = tk.Label(self.window)
-        self.cadastrar_produtos.grid(row=2, column=0, columnspan=3, sticky="nsw")
-        self.cadastrar_produtos.configure(text=" Cadastrar Produtos", font="Courier 30 bold",bg= "white")
+        self.cadastrar_produtos.grid(row=3, column=0, columnspan=3, sticky="nsw")
+        self.cadastrar_produtos.configure(text=" Cadastrar Produtos", font="Times 30 bold",bg= "white")
         
         #Label Nome produto
         self.nome_produto = tk.Label(self.window)
-        self.nome_produto.grid(row=3, column=0, columnspan=3, sticky="nsw")
-        self.nome_produto.configure(text=" Nome:", font="Courier 20 bold",bg= "white")
+        self.nome_produto.grid(row=4, column=0, columnspan=3, sticky="nsw")
+        self.nome_produto.configure(text=" Nome:", font="Times 20 bold",bg= "white")
         
         #Entery Nome produto
         self.nome_produto_cx = tk.Entry(self.window)
-        self.nome_produto_cx.grid(row=3, column=1, columnspan=3, sticky="w")
-        self.nome_produto_cx.configure(font="Courier 25 bold" , textvariable = self.produto_st)
+        self.nome_produto_cx.grid(row=4, column=1, columnspan=3, sticky="w")
+        self.nome_produto_cx.configure(font="Times 25 bold" , textvariable = self.produto_st)
         
         #Label Preco produto
         self.preco_produto = tk.Label(self.window)
-        self.preco_produto.grid(row=4, column=0, columnspan=3, sticky="nsw")
-        self.preco_produto.configure(text=" Preço:", font="Courier 20 bold",bg= "white")
+        self.preco_produto.grid(row=5, column=0, columnspan=3, sticky="nsw")
+        self.preco_produto.configure(text=" Preço:", font="Times 20 bold",bg= "white")
         
         #Entery Preco Produto
         self.preco_produto_cx = tk.Entry(self.window)
-        self.preco_produto_cx.grid(row=4, column=1, columnspan=3, sticky="w")
-        self.preco_produto_cx.configure(font="Courier 25 bold" , textvariable = self.preco_st)
+        self.preco_produto_cx.grid(row=5, column=1, columnspan=3, sticky="w")
+        self.preco_produto_cx.configure(font="Times 25 bold" , textvariable = self.preco_st)
         
         #Label Troca Produto
         self.troca_produto = tk.Label(self.window)
-        self.troca_produto.grid(row=5, column=0, columnspan=3, sticky="nsw")
-        self.troca_produto.configure(text=" Troca:", font="Courier 20 bold",bg= "white")
+        self.troca_produto.grid(row=6, column=0, columnspan=3, sticky="nsw")
+        self.troca_produto.configure(text=" Troca:", font="Times 20 bold",bg= "white")
         
         #Entery Troca Produto
         self.troca_produto_cx = tk.Entry(self.window)
-        self.troca_produto_cx.grid(row=5, column=1, columnspan=3, sticky="w")
-        self.troca_produto_cx.configure(font="Courier 25 bold" , textvariable = self.troca_st)
+        self.troca_produto_cx.grid(row=6, column=1, columnspan=3, sticky="w")
+        self.troca_produto_cx.configure(font="Times 25 bold" , textvariable = self.troca_st)
         
         #Label Meus Produtos Anunciados
         self.meus_produtos_anun = tk.Label(self.window)
-        self.meus_produtos_anun.grid(row=2, column=3, columnspan=6, sticky="nsw")
-        self.meus_produtos_anun.configure(text=" Meus Produtos Anunciados", font="Courier 30 bold",bg= "white")
+        self.meus_produtos_anun.grid(row=3, column=3, columnspan=6, sticky="nsw")
+        self.meus_produtos_anun.configure(text=" Meus Produtos Anunciados", font="Times 30 bold",bg= "white")
         
         #Botao confirmar
         self.botao_confirmar=tk.Button(self.window)
-        self.botao_confirmar.grid(row=7, column=0, sticky="nsew")
-        self.botao_confirmar.configure(text="confirmar", font="Courier 15 bold",command=self.s2e2_confirma,bg= "white")
+        self.botao_confirmar.grid(row=8, column=0)
+        self.botao_confirmar.configure(text="Confirma", font="Times 20 bold",command=self.s2e2_confirma,bg= "white")
         
         #Label descrição
         self.descricao_label = tk.Label(self.window)
-        self.descricao_label.grid(row=6, column=0, columnspan=6, sticky="nsw")
-        self.descricao_label.configure(text=" Descrição:", font="Courier 20 bold",bg= "white")
+        self.descricao_label.grid(row=7, column=0, columnspan=6, sticky="nsw")
+        self.descricao_label.configure(text=" Descrição:", font="Times 20 bold",bg= "white")
         
         #Entry Descrição
         self.descricao_cx = tk.Entry(self.window)
-        self.descricao_cx.grid(row=6, column=1, columnspan=3, sticky="w")
-        self.descricao_cx.configure(font="Courier 25 bold" , textvariable = self.descricao_st)
+        self.descricao_cx.grid(row=7, column=1, columnspan=3, sticky="w")
+        self.descricao_cx.configure(font="Times 25 bold" , textvariable = self.descricao_st)
         
     def terceira_pagina(self):
         #Botao Slogan
         self.slogan = tk.Button(self.window)
-        self.slogan.grid(row=0, column=0, columnspan=3, sticky="nsw")
-        self.slogan.configure(text="Save & Trade",command=self.s3e1, font="Times 50 bold", bg="chartreuse3", fg="gray18")
+        self.slogan.grid(row=0, rowspan=2, column=0, columnspan=2, sticky="nsew")
+        self.slogan.configure(text="Save & Trade",command=self.s3e1, font="Times 60 bold", bg="chartreuse3", fg="gray18")
         
-         #Botao Nome do Usuario
+        #Botao Nome do Usuario
         self.user_name = tk.Button(self.window)
-        self.user_name.grid(row=0, column=4, columnspan=6, sticky="nse")
+        self.user_name.grid(row=0, rowspan=2, column=4, columnspan=6, sticky="nse")
         self.user_name.configure(command=self.s3e2, font="Times 30 bold", bg = "chartreuse3", fg="gray18")
         
         #Botao Logout
         self.botao_logout = tk.Button(self.window)
-        self.botao_logout.grid(row=7,column=6,sticky="s")
-        self.botao_logout.configure(text="Logout", command=self.s3e0,font="Courier 18 bold",bg= "white")
+        self.botao_logout.grid(row=8,column=6)
+        self.botao_logout.configure(text="Logout", command=self.s3e0,font="Times 18 bold",bg= "white")
         
         #Label Foto Produto
         self.foto_produto = tk.Label(self.window)
-        self.foto_produto.grid(row=3, rowspan=4, column=0, columnspan=2, sticky="nsw")
-        self.foto_produto.configure(text="Foto",font="Courier 200 bold",bg="red")
+        self.foto_produto.grid(row=4, rowspan=4, column=0, columnspan=2, sticky="nsw")
+        self.foto_produto.configure(text="Foto",font="Times 200 bold",bg="red")
         
         #Label Descrição Produto
         self.descricao_produto = tk.Label(self.window)
-        self.descricao_produto.grid(row=3, column=3, columnspan=6, sticky="nsw")
-        self.descricao_produto.configure(font="Courier 15 bold",bg= "white")
+        self.descricao_produto.grid(row=4, column=3, columnspan=6, sticky="nsw")
+        self.descricao_produto.configure(font="Times 25 bold",bg= "white")
         
         #Label Preco Troca Produto
         self.info_preco_produto = tk.Label(self.window)
-        self.info_preco_produto.grid(row=4, column=3, columnspan=6, sticky="nsw")
-        self.info_preco_produto.configure( font="Courier 15 bold",bg= "white")
+        self.info_preco_produto.grid(row=5, column=3, columnspan=6, sticky="nsw")
+        self.info_preco_produto.configure( font="Times 25 bold",bg= "white")
         
         #Label Email
         self.info_email_produto = tk.Label(self.window)
-        self.info_email_produto.grid(row=5, column=3, columnspan=6, sticky="nsw")
-        self.info_email_produto.configure( font="Courier 15 bold",bg= "white")
+        self.info_email_produto.grid(row=6, column=3, columnspan=6, sticky="nsw")
+        self.info_email_produto.configure( font="Times 25 bold",bg= "white")
         
         #Label Descricao
         self.info_descricao =  tk.Label(self.window)
-        self.info_descricao.grid(row=6, column=3, columnspan=6, sticky="nsw")
-        self.info_descricao.configure( font="Courier 15 bold",bg= "white")
+        self.info_descricao.grid(row=7, column=3, columnspan=6, sticky="nsw")
+        self.info_descricao.configure( font="Times 25 bold",bg= "white")
         
     def iniciar(self):
         self.window.mainloop()
@@ -406,17 +423,17 @@ class Tela_Login:
     def cadastro_vazio(self):
         self.limpar_1()
         self.pagina_0()
-        self.login_fail.configure(text="Faltaram dados",state="active",font = "Courier 18 bold",bg= "white")
+        self.login_fail.configure(text="Faltaram dados",state="active",font = "Times 18 bold",fg="red", bg= "white")
     
     def login_incorreto(self):
         self.limpar_1()
         self.pagina_0()
-        self.login_fail.configure(text="Login incorreto",state="active",font = "Courier 18 bold",bg= "white")
+        self.login_fail1.configure(text="              Login incorreto",font = "Times 14 bold",fg="red", bg= "chartreuse3")
     
     def limpar_0(self):
         self.slogan.grid_forget()
+        self.login_fail1.configure(text="")
         self.login.grid_forget()
-        self.login_user.grid_forget()
         self.login_senha.grid_forget()
         self.login_user_cx.grid_forget()
         self.login_senha_cx.grid_forget()
@@ -434,8 +451,8 @@ class Tela_Login:
         
         #Botao excluir
         self.botao_excluir = tk.Button(self.window)
-        self.botao_excluir .grid(row=7,column=5,sticky="s")
-        self.botao_excluir.configure(text="Excluir", command=self.s3e2_excluir,font="Courier 18 bold",bg= "white")
+        self.botao_excluir .grid(row=8,column=5)
+        self.botao_excluir.configure(text="Excluir", command=self.s3e2_excluir,font="Times 18 bold",bg= "white")
         self.botao_excluir.grid_forget() 
         
     def limpar_1(self):
@@ -485,7 +502,7 @@ class Tela_Login:
         
     def pagina_1(self):
        self.primeira_pagina()
-       self.login_fail.configure(text="",state="disabled",font = "Courier 18 bold", bg="white")
+       self.login_fail.configure(text="",state="disabled",font = "Times 18 bold", bg="white")
         
     def pagina_2(self):
         self.segunda_pagina()
@@ -607,8 +624,8 @@ class Tela_Login:
         
         #Botao excluir
         self.botao_excluir = tk.Button(self.window)
-        self.botao_excluir .grid(row=7,column=5,sticky="s")
-        self.botao_excluir.configure(text="Excluir", command=self.s3e2_excluir,font="Courier 18 bold",bg= "white")
+        self.botao_excluir .grid(row=8,column=5)
+        self.botao_excluir.configure(text="Excluir", command=self.s3e2_excluir,font="Times 18 bold",bg= "white")
         
     def s3e1(self):
         self.limpar_3()
@@ -682,10 +699,7 @@ class Tela_Login:
         self.info_email_produto.configure(text="email: {0}".format(self.user_dic[self.dic_prod_geral[self.nome_excluir][2]][1]))
         
     def achar_produto_s1e3 (self):
-        if self.user_log != "":
-            self.nome_excluir = self.user_dic[self.user_log][2][self.listbox_1.curselection()[0]]
-        elif self.user_cad != "":
-            self.nome_excluir = self.user_dic[self.user_cad][2][self.listbox_1.curselection()[0]]
+        self.nome_excluir = self.lista_prod_todos[self.listbox_1.curselection()[0]]
         self.descricao_produto.configure (text = "Nome: {0}".format(self.lista_prod_todos[self.listbox_1.curselection()[0]]))
         self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1} ".format(self.dic_prod_geral[self.lista_prod_todos[self.listbox_1.curselection()[0]]][0],self.dic_prod_geral[self.lista_prod_todos[self.listbox_1.curselection()[0]]][1]))
         self.info_email_produto.configure(text="email: {0}".format(self.user_dic[self.dic_prod_geral[self.nome_excluir][2]][1]))

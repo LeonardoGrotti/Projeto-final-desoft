@@ -130,38 +130,38 @@ class Tela_Login:
         
         #Label Cadastro User
         self.cadastro_user = tk.Label(self.window)
-        self.cadastro_user.grid(row=5, column=3, columnspan=4, sticky="nsw")
+        self.cadastro_user.grid(row=4, column=3, columnspan=4, sticky="nsw")
         self.cadastro_user.configure(text=" User: ", font="Times 40 bold",bg= "white")
         
         #Entery Cadastro User
         self.cadastro_user_cx = tk.Entry(self.window)
-        self.cadastro_user_cx.grid(row=5, column=4, columnspan=5, sticky="w")
+        self.cadastro_user_cx.grid(row=4, column=4, columnspan=5, sticky="w")
         self.cadastro_user_cx.configure(font="Times 25 bold" , textvariable = self.user_cad_st)
         
         #Label Cadastro Email
         self.cadastro_email = tk.Label(self.window)
-        self.cadastro_email.grid(row=6, column=3, columnspan=4, sticky="nsw")
+        self.cadastro_email.grid(row=5, column=3, columnspan=4, sticky="nsw")
         self.cadastro_email.configure(text=" E-mail: ", font="Times 40 bold",bg= "white")
       
         #Entery Cadastro Email
         self.cadastro_email_cx = tk.Entry(self.window)
-        self.cadastro_email_cx.grid(row=6, column=4, columnspan=5, sticky="w")
+        self.cadastro_email_cx.grid(row=5, column=4, columnspan=5, sticky="w")
         self.cadastro_email_cx.configure(font="Times 25 bold" , textvariable = self.email_st)
         
         #Label Cadastro Senha
         self.cadastro_senha = tk.Label(self.window)
-        self.cadastro_senha.grid(row=7, column=3, columnspan=4, sticky="nsw")
+        self.cadastro_senha.grid(row=6, column=3, columnspan=4, sticky="nsw")
         self.cadastro_senha.configure(text=" Senha: ", font="Times 40 bold",bg= "white")
         
         #Entery Cadastro Senha
         self.cadastro_senha_cx = tk.Entry(self.window)
-        self.cadastro_senha_cx.grid(row=7, column=4, columnspan=5, sticky="w")
+        self.cadastro_senha_cx.grid(row=6, column=4, columnspan=5, sticky="w")
         self.cadastro_senha_cx.configure(font="Times 25 bold" , textvariable = self.senha_cad_st,show="*" )
         
         #Botão Cadastro
         self.enter_cadastro = tk.Button(self.window)
         self.enter_cadastro.configure(text=" Cadastro ", command=self.s0e1_cad, font="Times 25 bold",bg= "white")
-        self.enter_cadastro.grid(row=8, column=5, columnspan=6)  
+        self.enter_cadastro.grid(row=7, column=5, columnspan=6)  
         
         #Foto
         self.diretorio = "fotoproj.jpg"
@@ -176,17 +176,11 @@ class Tela_Login:
         self.slogan = tk.Button(self.window)
         self.slogan.grid(row=0, rowspan=2, column=0, columnspan=3, sticky="nsw")
         self.slogan.configure(text="Save & Trade", command=self.s1e1,font="Times 60 bold", bg="chartreuse3",fg="gray18")
-
         
         #linha em baixo do nome do site
         self.mini_linha = tk.Label(self.window)
         self.mini_linha.grid(row=2, column=0, columnspan=7, sticky="nsew")
         self.mini_linha.configure(text="Desenvolvido por : Caue Citrin, Leonardo Grotti, Patrick Wiegeneric, Rodrigo Lino. Participações especiais: Fabio Ayres e Camila. Por um mundo mais sustentável",font="Times 10 bold" ,bg="gray18",fg="white")
-        
-#        #Label de cor
-#        self.label_1 =tk.Label(self.window)
-#        self.label_1.grid(row=0, rowspan=1, column=3, columnspan=4, sticky="nsew")
-#        self.label_1.configure(bg="chartreuse3") 
          
         #Botao Nome do Usuario
         self.user_name = tk.Button(self.window)     
@@ -204,7 +198,6 @@ class Tela_Login:
         self.feed_produtos.configure(text=" Feed Produtos", font="Times 50 bold",bg= "white")
         
         #Listbox e scrollbar
-        
         self.frame_listbox_1 = tk.Frame(self.window)
         self.frame_listbox_1.grid(row=5, rowspan = 6, column=0,columnspan=3, sticky="nswe")
         self.frame_listbox_1.rowconfigure(0, minsize=280)

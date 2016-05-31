@@ -1,4 +1,4 @@
-import pickle
+from firebase import firebase
 import tkinter as tk
 from PIL import ImageTk, Image
 
@@ -6,6 +6,9 @@ from PIL import ImageTk, Image
 
 class Tela_Login:
     def __init__(self):
+        #firebase
+        self.fb = firebase.FirebaseApplication("https://trocavenda.firebaseio.com/")
+        
         #Interface
         self.window = tk.Tk()
         self.window.title("Troca e Venda")
@@ -36,22 +39,23 @@ class Tela_Login:
         #Label Login Fail
         self.login_fail = tk.Label()
         self.login_fail.grid(row=8, column=4, sticky="nsew")
-        self.login_fail.configure(state="disabled",bg= "white")
-        
+        self.login_fail.configure(text="", bg= "white")
+    
         self.login_fail1 = tk.Label()
         self.login_fail1.grid(row=0, column=5, columnspan=6, sticky="wnse")
         self.login_fail1.configure(text="" ,bg= "chartreuse3")
         
-        #Criando armazenamento
-        self.user_dic = {}
-        self.lista_user = []
-        self.produto_dic = {}
-        self.lista_produto_total = []
-        self.dic_prod_geral={}
-        self.lista_prod_geral=[]
-        self.lista_prod_todos=[]
+        #lista de todos os produtos de todos os usuários
+        L = self.fb.get("todos_os_produtos/geral","top")
+        if L == None:
+            self.t_prod_u = []
+        else:
+            self.t_prod_u = L
         
         self.zero_pagina()
+        
+        #lista de todos os produtos de um usuário
+        self.lista_prod_tot = []
                 
         #Criando paginas
         
@@ -70,9 +74,7 @@ class Tela_Login:
         
         self.user_log = ""
         self.user_log_st = tk.StringVar()
-        
-        self.lista_user = []
-        
+                
         #linha em baixo do nome do site
         self.mini_linha = tk.Label(self.window)
         self.mini_linha.grid(row=2, column=0, columnspan=6, sticky="nsew")
@@ -81,7 +83,7 @@ class Tela_Login:
        
         #Label Slogan
         self.slogan = tk.Label(self.window)
-        self.slogan.grid(row=0, rowspan=2, column=0, columnspan=2, sticky="nsew")
+        self.slogan.grid(row=0, rowspan=2, column=0, columnspan=2, sticky="ns")
         self.slogan.configure(text="Save & Trade",font="Times 60 bold" ,bg="chartreuse3",fg="gray18")
        
         #Label de cor
@@ -118,7 +120,7 @@ class Tela_Login:
         
         #Botão Login
         self.enter_login = tk.Button(self.window)
-        self.enter_login.configure(text=" Login ", command=self.s0e1_log, font="Times 25 bold", bg= "white")
+        self.enter_login.configure(text=" Login ", command=self.s0e1_log, font="Times 20 bold", bg= "white")
         self.enter_login.grid(row=1, column=5, columnspan=6, sticky="e")
         
         #Label Cadastro
@@ -161,23 +163,18 @@ class Tela_Login:
         self.enter_cadastro.configure(text=" Cadastro ", command=self.s0e1_cad, font="Times 25 bold",bg= "white")
         self.enter_cadastro.grid(row=8, column=5, columnspan=6)  
         
-#        #Foto
-#        self.diretorio = "foto.jpg"
-#        self.img = ImageTk.PhotoImage(Image.open(self.diretorio))
-#
-#        self.imglabel = tk.Label(self.window, image=self.img) 
-#        self.imglabel.grid(row=3, rowspan=6, column=0, columnspan=3)
-        
+        #Foto
+        self.diretorio = "fotoproj.jpg"
+        self.img = ImageTk.PhotoImage(Image.open(self.diretorio))
 
-
-
-
-
+        self.imglabel = tk.Label(self.window, image=self.img) 
+        self.imglabel.grid(row=3, rowspan=6, column=0, columnspan=3)
 
     def primeira_pagina(self):
+        
         #Botao Slogan
         self.slogan = tk.Button(self.window)
-        self.slogan.grid(row=0, rowspan=2, column=0, columnspan=2, sticky="nsew")
+        self.slogan.grid(row=0, rowspan=2, column=0, columnspan=3, sticky="nsw")
         self.slogan.configure(text="Save & Trade", command=self.s1e1,font="Times 60 bold", bg="chartreuse3",fg="gray18")
 
         
@@ -230,8 +227,15 @@ class Tela_Login:
         self.scrollbar_y_1.config(command=self.listbox_1.yview)
         self.scrollbar_y_1.grid(row=0, column=1, sticky="nsew")
         self.listbox_1.configure(yscrollcommand=self.scrollbar_y_1.set)
+        
+        #Foto2
+        self.diretorio_1 = "etiqueta.jpg"
+        self.img_1 = ImageTk.PhotoImage(Image.open(self.diretorio_1))
+        self.imglabel_1 = tk.Label(self.window, image=self.img_1) 
+        self.imglabel_1.grid(row=3, rowspan=5, column=3, columnspan=5)
               
     def segunda_pagina(self):
+            
         #criar stringvar
         self.preco = ""
         self.preco_st = tk.StringVar()
@@ -244,9 +248,7 @@ class Tela_Login:
         
         self.descricao = ""
         self.descricao_st = tk.StringVar()
-        
-        self.lista_produto = []
-        
+                
         #Listbox e scrollbar
         
         self.frame_listbox = tk.Frame(self.window)
@@ -274,7 +276,7 @@ class Tela_Login:
         
         #Botao Slogan
         self.slogan = tk.Button(self.window)
-        self.slogan.grid(row=0, rowspan=2, column=0, columnspan=2, sticky="nsew")
+        self.slogan.grid(row=0, rowspan=2, column=0, columnspan=3, sticky="nsw")
         self.slogan.configure(text="Save & Trade",command=self.s2e1, font="Times 60 bold", bg="chartreuse3", fg="gray18")
         
         #Botao Nome do Usuario
@@ -327,11 +329,6 @@ class Tela_Login:
         self.meus_produtos_anun.grid(row=3, column=3, columnspan=6, sticky="nsw")
         self.meus_produtos_anun.configure(text=" Meus Produtos Anunciados", font="Times 30 bold",bg= "white")
         
-        #Botao confirmar
-        self.botao_confirmar=tk.Button(self.window)
-        self.botao_confirmar.grid(row=8, column=0)
-        self.botao_confirmar.configure(text="Confirma", font="Times 20 bold",command=self.s2e2_confirma,bg= "white")
-        
         #Label descrição
         self.descricao_label = tk.Label(self.window)
         self.descricao_label.grid(row=7, column=0, columnspan=6, sticky="nsw")
@@ -342,10 +339,16 @@ class Tela_Login:
         self.descricao_cx.grid(row=7, column=1, columnspan=3, sticky="w")
         self.descricao_cx.configure(font="Times 25 bold" , textvariable = self.descricao_st)
         
+        #Botao confirmar
+        self.botao_confirmar=tk.Button(self.window)
+        self.botao_confirmar.grid(row=8, column=0)
+        self.botao_confirmar.configure(text="Confirma", font="Times 20 bold",command=self.s2e2_confirma,bg= "white")
+        
+        
     def terceira_pagina(self):
         #Botao Slogan
         self.slogan = tk.Button(self.window)
-        self.slogan.grid(row=0, rowspan=2, column=0, columnspan=2, sticky="nsew")
+        self.slogan.grid(row=0, rowspan=2, column=0, columnspan=3, sticky="nsw")
         self.slogan.configure(text="Save & Trade",command=self.s3e1, font="Times 60 bold", bg="chartreuse3", fg="gray18")
         
         #Botao Nome do Usuario
@@ -358,10 +361,11 @@ class Tela_Login:
         self.botao_logout.grid(row=8,column=6)
         self.botao_logout.configure(text="Logout", command=self.s3e0,font="Times 18 bold",bg= "white")
         
-        #Label Foto Produto
-        self.foto_produto = tk.Label(self.window)
-        self.foto_produto.grid(row=4, rowspan=4, column=0, columnspan=2, sticky="nsw")
-        self.foto_produto.configure(text="Foto",font="Times 200 bold",bg="red")
+        #Foto3
+        self.diretorio_3 = "fechou.jpg"
+        self.img_3 = ImageTk.PhotoImage(Image.open(self.diretorio_3))
+        self.imglabel_3= tk.Label(self.window, image=self.img_3) 
+        self.imglabel_3.grid(row=4, rowspan=4, column=0, columnspan=2)
         
         #Label Descrição Produto
         self.descricao_produto = tk.Label(self.window)
@@ -400,39 +404,32 @@ class Tela_Login:
         self.troca = self.troca_st.get()
         self.descricao = self.descricao_st.get()
         
-    def armazenamento_produto(self):
-        self.lista_produto.append(self.preco)
-        self.lista_produto.append(self.troca)
-        self.produto_dic[self.produto] = self.lista_produto
-        
     #Criando as funções de callback
     def cadastro_geral(self):
         if self.user_cad != "":
-            self.lista_user.append(self.senha_cad)
-            self.lista_user.append(self.email)
-            self.lista_user.append(self.lista_produto_total)
-            self.lista_user.append(self.produto_dic)
-            self.user_dic[self.user_cad] = self.lista_user
+            self.u_cad = self.fb.put("user",self.user_cad,{"senha":self.senha_cad,"email":self.email})
         
     def verificar(self):
-        if self.user_log in self.user_dic:
-            if self.user_dic[self.user_log][0]==self.senha_log:
+        self.u_log = self.fb.get("/user",self.user_log)
+        if self.u_log != None:
+            if self.u_log["senha"]==self.senha_log:
                 return True
         return False
         
     def cadastro_vazio(self):
         self.limpar_1()
         self.pagina_0()
-        self.login_fail.configure(text="Faltaram dados",state="active",font = "Times 18 bold",fg="red", bg= "white")
+        self.login_fail.configure(text="Faltaram dados",font = "Times 18 bold",fg="red", bg= "white")
     
     def login_incorreto(self):
         self.limpar_1()
         self.pagina_0()
-        self.login_fail1.configure(text="              Login incorreto",font = "Times 14 bold",fg="red", bg= "chartreuse3")
+        self.login_fail1.configure(text="                   Login incorreto",font = "Times 12 bold",fg="red", bg= "chartreuse3")
     
     def limpar_0(self):
         self.slogan.grid_forget()
         self.login_fail1.configure(text="")
+        self.login_fail.configure(text="")
         self.login.grid_forget()
         self.login_senha.grid_forget()
         self.login_user_cx.grid_forget()
@@ -446,6 +443,7 @@ class Tela_Login:
         self.cadastro_senha.grid_forget()
         self.cadastro_senha_cx.grid_forget()
         self.enter_cadastro.grid_forget()
+        self.imglabel.grid_forget()
         self.nome_st()
         self.cadastro_geral()
         
@@ -453,7 +451,15 @@ class Tela_Login:
         self.botao_excluir = tk.Button(self.window)
         self.botao_excluir .grid(row=8,column=5)
         self.botao_excluir.configure(text="Excluir", command=self.s3e2_excluir,font="Times 18 bold",bg= "white")
-        self.botao_excluir.grid_forget() 
+        self.botao_excluir.grid_forget()
+        
+        #lista de todos os produtos de um usuário
+        if self.user_log != "":
+            LU = self.fb.get("/user/{0}".format(self.user_log),"todos_produtos")
+            if LU == None:
+                self.lista_prod_tot = []
+            else:
+                self.lista_prod_tot = LU
         
     def limpar_1(self):
         self.slogan.grid_forget()
@@ -464,6 +470,7 @@ class Tela_Login:
         self.scrollbar_x_1.grid_forget()
         self.scrollbar_y_1.grid_forget()
         self.botao_logout.grid_forget()
+        self.imglabel_1.grid_forget()        
         
     def limpar_2(self):
         self.slogan.grid_forget()
@@ -488,13 +495,14 @@ class Tela_Login:
     def limpar_3(self):
         self.slogan.grid_forget()
         self.user_name.grid_forget()
-        self.foto_produto.grid_forget()
         self.descricao_produto.grid_forget()
         self.info_preco_produto.grid_forget()
         self.info_email_produto.grid_forget()
         self.botao_logout.grid_forget()
         self.botao_excluir.grid_forget() 
         self.info_descricao.grid_forget()
+        self.imglabel_3.grid_forget()
+        
            
    
     def pagina_0(self):
@@ -502,7 +510,6 @@ class Tela_Login:
         
     def pagina_1(self):
        self.primeira_pagina()
-       self.login_fail.configure(text="",state="disabled",font = "Times 18 bold", bg="white")
         
     def pagina_2(self):
         self.segunda_pagina()
@@ -511,17 +518,13 @@ class Tela_Login:
         self.terceira_pagina()
 
     def botao_user_log(self):
-        arquivo = open("Troca_Venda","rb")
-        self.user_dic = pickle.load(arquivo)
-        self.dic_prod_geral = pickle.load(arquivo)
-        self.lista_prod_todos = pickle.load(arquivo)
-        arquivo.close()
-        self.func_pickle()
-        print(self.user_dic)
         if self.user_log != "":
-            if self.verificar() == True:
-                self.A = 0
-                return self.A
+            if self.senha_log != "":
+                if self.verificar() == True:
+                    self.A = 0
+                    return self.A
+                else:
+                    self.login_incorreto()
             else:
                 self.login_incorreto()
         elif self.user_log == "":
@@ -542,6 +545,7 @@ class Tela_Login:
             self.user_name.configure(text= self.user_cad)
             
     def s0e1_log(self):
+        self.lista_prod_tot = []
         self.limpar_0()
         self.pagina_1()
         self.botao_user_log()
@@ -549,18 +553,19 @@ class Tela_Login:
         self.entra_listbox_feed()
         
     def s0e1_cad(self):
+        self.lista_prod_tot = []
         self.limpar_0()
         self.pagina_1()
         self.botao_user_cad()
         self.botao_user()
         self.entra_listbox_feed()
-        
+    
     def s1e1(self):
         self.limpar_1()
         self.pagina_1()
         self.botao_user()
         self.entra_listbox_feed()
-        
+    
     def s1e2(self):
         self.limpar_1()
         self.pagina_2()
@@ -581,33 +586,25 @@ class Tela_Login:
         self.entra_listbox_feed()
     
     def s2e2_confirma(self):
-        if self.nome_produto != "":
+        self.cadastro_produto_st()
+        print(self.produto)
+        if self.produto != "":
             self.cadastro_produto_st()
-            self.armazenamento_produto()
+            self.lista_prod_tot.append(self.produto)
+            self.t_prod_u.append(self.produto)
+            self.prod_usu = self.fb.patch("/todos_os_produtos/geral",{"top":self.t_prod_u})
             if self.user_cad != "":
                 if self.preco != "" or self.troca != "":
-                    self.user_dic[self.user_cad][2].append(self.produto)
-                    self.user_dic[self.user_cad][3][self.produto]=self.lista_produto
-                    self.lista_prod_geral=[self.preco, self.troca, self.user_cad, self.descricao]
-                    self.lista_prod_todos.append(self.produto)
+                    self.lista_prod_tot_at = self.fb.patch("/user/{0}".format(self.user_cad),{"todos_produtos":self.lista_prod_tot})
+                    self.u_prod = self.fb.patch("/user/{0}".format(self.user_cad),{self.produto:{"preço":self.preco,"troca":self.troca,"descrição":self.descricao}})
             elif self.user_log != "":
                 if self.preco != "" or self.troca != "":
-                    self.user_dic[self.user_log][2].append(self.produto)
-                    self.user_dic[self.user_log][3][self.produto]=self.lista_produto
-                    self.lista_prod_geral=[self.preco, self.troca, self.user_log, self.descricao]
-                    self.lista_prod_todos.append(self.produto)
-        
-        print(self.user_dic)
-        print(self.lista_prod_todos)
-        self.dic_prod_geral[self.produto]=self.lista_prod_geral
-        print(self.dic_prod_geral)
+                    self.lista_prod_tot_at = self.fb.patch("/user/{0}".format(self.user_log),{"todos_produtos":self.lista_prod_tot})
+                    self.u_prod = self.fb.patch("/user/{0}".format(self.user_log),{self.produto:{"preço":self.preco,"troca":self.troca,"descrição":self.descricao}})
         self.entra_listbox_feed()
-        self.func_pickle()
         self.limpar_2()
         self.pagina_2()
         self.botao_user()
-        self.produto_dic = {}
-        self.lista_produto_total = []
         self.entra_listbox()
         
     def s2e2(self):
@@ -638,17 +635,27 @@ class Tela_Login:
         self.pagina_2()
         self.botao_user()
         self.entra_listbox()
-        
+    
     def s3e2_excluir(self):
-        self.lista_prod_todos.remove(self.nome_excluir)
-        if self.user_log != "": 
-            del self.user_dic[self.user_log][3][self.nome_excluir]            
-            self.user_dic[self.user_log][2].remove(self.nome_excluir)            
-        if self.user_cad != "": 
-            del self.user_dic[self.user_cad][3][self.nome_excluir] 
-            self.user_dic[self.user_cad][2].remove(self.nome_excluir)        
-        del self.dic_prod_geral[self.nome_excluir]
-        self.func_pickle()
+        if self.user_log != "":
+            self.delete_p_u = self.fb.delete("/user/{0}".format(self.user_log),self.nome_excluir)
+            self.lista_prod_tot = self.fb.get("/user/{0}".format(self.user_log),"todos_produtos")
+            self.d = self.fb.delete("/user/{0}".format(self.user_log),"todos_produtos")
+            v = self.lista_prod_tot[self.listbox.curselection()[0]]
+            del self.lista_prod_tot[self.listbox.curselection()[0]]
+            self.ins = self.fb.patch("/user/{0}".format(self.user_log),{"todos_produtos":self.lista_prod_tot})
+        if self.user_cad != "":
+            self.delete_p_u = self.fb.delete("/user/{0}".format(self.user_cad),self.nome_excluir)
+            self.lista_prod_tot = self.fb.get("/user/{0}".format(self.user_cad),"todos_produtos")
+            self.d = self.fb.delete("/user/{0}".format(self.user_cad),"todos_produtos")
+            v = self.lista_prod_tot[self.listbox.curselection()[0]]
+            del self.lista_prod_tot[self.listbox.curselection()[0]]
+            self.ins = self.fb.patch("/user/{0}".format(self.user_cad),{"todos_produtos":self.lista_prod_tot})
+        self.t_prod_u = self.fb.get("/todos_os_produtos/geral","top")
+        self.d1 = self.fb.delete("/todos_os_produtos/geral","top")
+        self.t_prod_u.remove(v)
+        self.ins1 = self.fb.patch("/todos_os_produtos/geral",{"top":self.t_prod_u})
+        print(self.fb.get("/user",self.user_log))
         self.limpar_3()
         self.pagina_2()
         self.botao_user()
@@ -657,63 +664,77 @@ class Tela_Login:
     def s1e0(self):
         self.limpar_1()
         self.pagina_0()
-        self.func_pickle()       
         
     def s2e0(self):
         self.limpar_2()
         self.pagina_0()
-        self.func_pickle()
         
     def s3e0(self):
         self.limpar_3()
         self.pagina_0()
-        self.func_pickle()
         
     def entra_listbox (self):
-        if self.user_log != "":
-            if self.user_dic[self.user_log][2] != []:
-                if self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][0] != "" or self.user_dic[self.user_log][3][self.user_dic[self.user_log][2][0]][1] != "":
-                    for i in range(len(self.user_dic[self.user_log][2])):
-                        self.listbox.insert(tk.END, self.user_dic[self.user_log][2][i])
+        if self.lista_prod_tot != []:
+            if self.user_log != "":
+                self.prod_total = self.fb.get("/user/{0}".format(self.user_log),self.produto)
+                self.prod_preco = self.fb.get("/user/{0}/{1}".format(self.user_log,self.produto),"preço")
+                self.prod_troca = self.fb.get("/user/{0}/{1}".format(self.user_log,self.produto),"troca")
+                self.lista_prod_tot = self.fb.get("/user/{0}".format(self.user_log),"todos_produtos")
+                if self.lista_prod_tot != []:
+                    for i in range(len(self.lista_prod_tot)):
+                        self.listbox.insert(tk.END, self.lista_prod_tot[i])
                         
-        elif self.user_cad != "":   
-            if self.user_dic[self.user_cad][2] != []:
-                if self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][0] != "" or self.user_dic[self.user_cad][3][self.user_dic[self.user_cad][2][0]][1] != "":
-                    for i in range(len(self.user_dic[self.user_cad][2])):
-                        self.listbox.insert(tk.END, self.user_dic[self.user_cad][2][i])
+            elif self.user_cad != "":
+                self.prod_total = self.fb.get("/user/{0}".format(self.user_cad),self.produto)
+                self.prod_preco = self.fb.get("/user/{0}/{1}".format(self.user_cad,self.produto),"preço")
+                self.prod_troca = self.fb.get("/user/{0}/{1}".format(self.user_cad,self.produto),"troca")
+                self.lista_prod_tot = self.fb.get("/user/{0}".format(self.user_cad),"todos_produtos")
+                if self.lista_prod_tot != []:
+                    for i in range(len(self.lista_prod_tot)):
+                        self.listbox.insert(tk.END, self.lista_prod_tot[i])
                         
     def entra_listbox_feed(self):
-        for i in range(len(self.lista_prod_todos)):
-            self.listbox_1.insert(tk.END, self.lista_prod_todos[i])
+        self.prod_usu = self.fb.get("/todos_os_produtos/geral","top")
+        if self.t_prod_u != []:
+            for i in range(len(self.prod_usu)):
+                self.listbox_1.insert(tk.END, self.prod_usu[i])
             
     def achar_produto_s2e3 (self):
         if self.user_log != "":
-            self.nome_excluir = self.user_dic[self.user_log][2][self.listbox.curselection()[0]]
-            self.descricao_produto.configure (text = "Nome: {0}".format(self.user_dic[self.user_log][2][self.listbox.curselection()[0]]))
-            self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1}" .format(self.dic_prod_geral[self.user_dic[self.user_log][2][self.listbox.curselection()[0]]][0],self.dic_prod_geral[self.user_dic[self.user_log][2][self.listbox.curselection()[0]]][1]))
+            self.u_log_email = self.fb.get("/user/{0}".format(self.user_log),"email")
+            self.prod_total = self.fb.get("/user/{0}".format(self.user_log),self.lista_prod_tot[self.listbox.curselection()[0]])
+            self.lista_prod_tot = self.fb.get("/user/{0}".format(self.user_log),"todos_produtos")
+            self.nome_excluir = self.lista_prod_tot[self.listbox.curselection()[0]]
+            self.descricao_produto.configure (text = "Nome: {0}".format(self.lista_prod_tot[self.listbox.curselection()[0]]))
+            self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1}" .format(self.prod_total["preço"],self.prod_total["troca"]))
+            self.info_email_produto.configure(text="email: {0}".format(self.u_log_email))
         elif self.user_cad != "":
-            self.nome_excluir = self.user_dic[self.user_cad][2][self.listbox.curselection()[0]]
-            self.descricao_produto.configure (text = "Nome: {0}".format(self.user_dic[self.user_cad][2][self.listbox.curselection()[0]]))
-            self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1}" .format(self.dic_prod_geral[self.user_dic[self.user_cad][2][self.listbox.curselection()[0]]][0],self.dic_prod_geral[self.user_dic[self.user_cad][2][self.listbox.curselection()[0]]][1]))
-        self.info_descricao.configure(text="Descrição: {0}".format(self.dic_prod_geral[self.nome_excluir][3]))
-        self.info_email_produto.configure(text="email: {0}".format(self.user_dic[self.dic_prod_geral[self.nome_excluir][2]][1]))
+            self.u_cad_email = self.fb.get("/user/{0}".format(self.user_cad),"email")
+            self.prod_total = self.fb.get("/user/{0}".format(self.user_cad),self.lista_prod_tot[self.listbox.curselection()[0]])
+            self.lista_prod_tot = self.fb.get("/user/{0}".format(self.user_cad),"todos_produtos")
+            self.nome_excluir = self.lista_prod_tot[self.listbox.curselection()[0]]
+            self.descricao_produto.configure (text = "Nome: {0}".format(self.lista_prod_tot[self.listbox.curselection()[0]]))
+            self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1}" .format(self.prod_total["preço"],self.prod_total["troca"]))
+            self.info_email_produto.configure(text="email: {0}".format(self.u_cad_email))
+        self.info_descricao.configure(text="Descrição: {0}".format(self.prod_total["descrição"]))
         
     def achar_produto_s1e3 (self):
-        self.nome_excluir = self.lista_prod_todos[self.listbox_1.curselection()[0]]
-        self.descricao_produto.configure (text = "Nome: {0}".format(self.lista_prod_todos[self.listbox_1.curselection()[0]]))
-        self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1} ".format(self.dic_prod_geral[self.lista_prod_todos[self.listbox_1.curselection()[0]]][0],self.dic_prod_geral[self.lista_prod_todos[self.listbox_1.curselection()[0]]][1]))
-        self.info_email_produto.configure(text="email: {0}".format(self.user_dic[self.dic_prod_geral[self.nome_excluir][2]][1]))
-        self.info_descricao.configure(text="Descrição: {0}".format(self.dic_prod_geral[self.nome_excluir][3]))
         
-    def func_pickle (self):
-        arquivo = open ("Troca_Venda", "wb")
-        dados_usuarios =self.user_dic
-        dados_produtos = self.dic_prod_geral
-        todos_produtos_lista = self.lista_prod_todos
-        pickle.dump(dados_usuarios, arquivo)
-        pickle.dump(dados_produtos, arquivo)
-        pickle.dump(todos_produtos_lista, arquivo)
-        arquivo.close()
+        self.nome_excluir = self.t_prod_u[self.listbox_1.curselection()[0]]
+        if self.user_log != "":
+            self.preco_fb = self.fb.get("/user/{0}/{1}".format(self.user_log,self.t_prod_u[self.listbox_1.curselection()[0]]),"preço")
+            self.troca_fb = self.fb.get("/user/{0}/{1}".format(self.user_log,self.t_prod_u[self.listbox_1.curselection()[0]]),"troca")
+            self.descricao_fb = self.fb.get("/user/{0}/{1}".format(self.user_log,self.t_prod_u[self.listbox_1.curselection()[0]]),"descrição")
+            self.email_fb = self.fb.get("/user/{0}".format(self.user_log),"email")
+        elif self.user_cad != "":
+            self.preco_fb = self.fb.get("/user/{0}/{1}".format(self.user_cad,self.t_prod_u[self.listbox_1.curselection()[0]]),"preço")
+            self.troca_fb = self.fb.get("/user/{0}/{1}".format(self.user_cad,self.t_prod_u[self.listbox_1.curselection()[0]]),"troca")
+            self.descricao_fb = self.fb.get("/user/{0}/{1}".format(self.user_cad,self.t_prod_u[self.listbox_1.curselection()[0]]),"descrição")
+            self.email_fb = self.fb.get("/user/{0}".format(self.user_cad),"email")
+        self.descricao_produto.configure (text = "Nome: {0}".format(self.t_prod_u[self.listbox_1.curselection()[0]]))
+        self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1} ".format(self.preco_fb,self.troca_fb))
+        self.info_email_produto.configure(text="email: {0}".format(self.email_fb))
+        self.info_descricao.configure(text="Descrição: {0}".format(self.descricao_fb))
         
 Site = Tela_Login()
 Site.iniciar()   

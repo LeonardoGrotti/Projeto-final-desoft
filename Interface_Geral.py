@@ -2,7 +2,7 @@ from firebase import firebase
 import tkinter as tk
 import smtplib
 #from validate_email import validate_email
-#from PIL import ImageTk, Image
+from PIL import ImageTk, Image
 
 
 
@@ -172,11 +172,11 @@ class Tela_Login:
         self.enter_cadastro.grid(row=7, column=5, columnspan=6)  
         
         #Foto
-#        self.diretorio = "fotoproj.jpg"
-#        self.img = ImageTk.PhotoImage(Image.open(self.diretorio))
-#
-#        self.imglabel = tk.Label(self.window, image=self.img) 
-#        self.imglabel.grid(row=3, rowspan=6, column=0, columnspan=3)
+        self.diretorio = "fotoproj.jpg"
+        self.img = ImageTk.PhotoImage(Image.open(self.diretorio))
+
+        self.imglabel = tk.Label(self.window, image=self.img) 
+        self.imglabel.grid(row=3, rowspan=6, column=0, columnspan=3)
 
     def primeira_pagina(self):
         
@@ -206,7 +206,7 @@ class Tela_Login:
         #Botao Nome do Usuario
         self.user_name = tk.Button(self.window)     
         self.user_name.grid(row=0, rowspan=2, column=4, columnspan=6, sticky="nse")
-        self.user_name.configure(command=self.s1e2, font="Times 30 bold", bg = "chartreuse3",fg="gray18")
+        self.user_name.configure(command=self.s1e2,text="Meus produtos", font="Times 30 bold", bg = "chartreuse3",fg="gray18")
         
         #Botao Logout
         self.botao_logout = tk.Button(self.window)
@@ -243,10 +243,10 @@ class Tela_Login:
         self.listbox_1.configure(yscrollcommand=self.scrollbar_y_1.set)
         
         #Foto2
-#        self.diretorio_1 = "etiqueta.jpg"
-#        self.img_1 = ImageTk.PhotoImage(Image.open(self.diretorio_1))
-#        self.imglabel_1 = tk.Label(self.window, image=self.img_1) 
-#        self.imglabel_1.grid(row=3, rowspan=5, column=3, columnspan=5)
+        self.diretorio_1 = "etiqueta.jpg"
+        self.img_1 = ImageTk.PhotoImage(Image.open(self.diretorio_1))
+        self.imglabel_1 = tk.Label(self.window, image=self.img_1) 
+        self.imglabel_1.grid(row=3, rowspan=5, column=3, columnspan=5)
     
     def search_pagina(self):
         
@@ -271,7 +271,7 @@ class Tela_Login:
         #Botao Nome do Usuario
         self.user_name = tk.Button(self.window)     
         self.user_name.grid(row=0, rowspan=2, column=4, columnspan=6, sticky="nse")
-        self.user_name.configure(command=self.s1e2, font="Times 30 bold", bg = "chartreuse3",fg="gray18")
+        self.user_name.configure(command=self.s1e2,text="Meus produtos", font="Times 30 bold", bg = "chartreuse3",fg="gray18")
         
         #Botao Logout
         self.botao_logout = tk.Button(self.window)
@@ -308,10 +308,10 @@ class Tela_Login:
         self.listbox_2.configure(yscrollcommand=self.scrollbar_y_2.set)
         
         #Foto2
-#        self.diretorio_1 = "etiqueta.jpg"
-#        self.img_1 = ImageTk.PhotoImage(Image.open(self.diretorio_1))
-#        self.imglabel_1 = tk.Label(self.window, image=self.img_1) 
-#        self.imglabel_1.grid(row=3, rowspan=5, column=3, columnspan=5)
+        self.diretorio_1 = "etiqueta.jpg"
+        self.img_1 = ImageTk.PhotoImage(Image.open(self.diretorio_1))
+        self.imglabel_1 = tk.Label(self.window, image=self.img_1) 
+        self.imglabel_1.grid(row=3, rowspan=5, column=3, columnspan=5)
               
     def segunda_pagina(self):
             
@@ -361,7 +361,7 @@ class Tela_Login:
         #Botao Nome do Usuario
         self.user_name = tk.Button(self.window)
         self.user_name.grid(row=0, rowspan=2, column=4, columnspan=6, sticky="nse")
-        self.user_name.configure(command=self.s2e2, font="Times 30 bold", bg = "chartreuse3", fg="gray18")
+        self.user_name.configure(command=self.s2e2,text="Meus produtos", font="Times 30 bold", bg = "chartreuse3", fg="gray18")
         
         #Botao Logout
         self.botao_logout = tk.Button(self.window)
@@ -376,7 +376,7 @@ class Tela_Login:
         #Label Nome produto
         self.nome_produto = tk.Label(self.window)
         self.nome_produto.grid(row=4, column=0, columnspan=3, sticky="nsw")
-        self.nome_produto.configure(text=" Nome:", font="Times 20 bold",bg= "white")
+        self.nome_produto.configure(text=" Produto:", font="Times 20 bold",bg= "white")
         
         #Entery Nome produto
         self.nome_produto_cx = tk.Entry(self.window)
@@ -433,14 +433,14 @@ class Tela_Login:
         #Botao Nome do Usuario
         self.user_name = tk.Button(self.window)
         self.user_name.grid(row=0, rowspan=2, column=4, columnspan=6, sticky="nse")
-        self.user_name.configure(command=self.s3e2, font="Times 30 bold", bg = "chartreuse3", fg="gray18")
+        self.user_name.configure(command=self.s3e2,text="Meus produtos", font="Times 30 bold", bg = "chartreuse3", fg="gray18")
         
         #Botao Logout
         self.botao_logout = tk.Button(self.window)
         self.botao_logout.grid(row=8,column=6)
         self.botao_logout.configure(text="Logout", command=self.s3e0,font="Times 18 bold",bg= "white")
         
-        #Foto3
+#        #Foto3
 #        self.diretorio_3 = "fechou.jpg"
 #        self.img_3 = ImageTk.PhotoImage(Image.open(self.diretorio_3))
 #        self.imglabel_3= tk.Label(self.window, image=self.img_3) 
@@ -462,9 +462,9 @@ class Tela_Login:
         self.info_email_produto.configure( font="Times 25 bold",bg= "white")
         
         #Label Descricao
-        self.info_descricao =  tk.Label(self.window)
-        self.info_descricao.grid(row=7, column=3, columnspan=6, sticky="nsw")
-        self.info_descricao.configure( font="Times 25 bold",bg= "white")
+        self.info_descricao =  tk.Label(self.window, anchor='w',wraplength=700, justify='left')
+        self.info_descricao.grid(row=7, column=3, columnspan=6, sticky="nesw")
+        self.info_descricao.configure( font="Times 20 bold",bg= "white")
         
     def iniciar(self):
         self.window.mainloop()
@@ -500,7 +500,6 @@ class Tela_Login:
                     self.lista_basica.append(i)
             self.limpar_1()
             self.search_pagina()
-            self.botao_user()
             for i in range(len(self.lista_basica)):
                 self.listbox_2.insert(tk.END, self.lista_basica[i])
             
@@ -543,7 +542,7 @@ class Tela_Login:
         self.cadastro_senha.grid_forget()
         self.cadastro_senha_cx.grid_forget()
         self.enter_cadastro.grid_forget()
-#        self.imglabel.grid_forget()
+        self.imglabel.grid_forget()
         self.nome_st()
         self.cadastro_geral()
         
@@ -572,7 +571,7 @@ class Tela_Login:
         self.scrollbar_x_1.grid_forget()
         self.scrollbar_y_1.grid_forget()
         self.botao_logout.grid_forget()
-#        self.imglabel_1.grid_forget()        
+        self.imglabel_1.grid_forget()        
     
     def limpar_1_search(self):
         self.botao_search.grid_forget()
@@ -585,7 +584,7 @@ class Tela_Login:
         self.scrollbar_x_2.grid_forget()
         self.scrollbar_y_2.grid_forget()
         self.botao_logout.grid_forget()
-#        self.imglabel_1.grid_forget()
+        self.imglabel_1.grid_forget()
         
     def limpar_2(self):
         self.slogan.grid_forget()
@@ -608,6 +607,8 @@ class Tela_Login:
         self.descricao_cx.grid_forget()
         
     def limpar_3(self):
+        if self.p == 1:
+            self.botao_email.grid_forget()
         self.slogan.grid_forget()
         self.user_name.grid_forget()
         self.descricao_produto.grid_forget()
@@ -616,8 +617,7 @@ class Tela_Login:
         self.botao_logout.grid_forget()
         self.botao_excluir.grid_forget() 
         self.info_descricao.grid_forget()
-        self.botao_email.grid_forget()
-#        self.imglabel_3.grid_forget()
+       # self.imglabel_3.grid_forget()
         
            
    
@@ -653,13 +653,7 @@ class Tela_Login:
         elif self.user_cad == "":
             self.cadastro_vazio()
 
-            
-    def botao_user(self):
-        if self.A == 0:
-            self.user_name.configure(text= self.user_log)
-        elif self.A == 1:
-            self.user_name.configure(text= self.user_cad)
-    
+
     def s1_pe0(self):
         self.limpar_1_search()
         self.pagina_0()
@@ -669,7 +663,6 @@ class Tela_Login:
         self.limpar_0()
         self.pagina_1()
         self.botao_user_log()
-        self.botao_user()
         self.entra_listbox_feed()
         
     def s0e1_cad(self):
@@ -677,19 +670,16 @@ class Tela_Login:
         self.limpar_0()
         self.pagina_1()
         self.botao_user_cad()
-        self.botao_user()
         self.entra_listbox_feed()
     
     def s1e1(self):
         self.limpar_1()
         self.pagina_1()
-        self.botao_user()
         self.entra_listbox_feed()
         
     def s1_pe1(self):
         self.limpar_1_search()
         self.pagina_1()
-        self.botao_user()
         self.entra_listbox_feed()
     
     def s1_pe1_p(self):
@@ -699,19 +689,16 @@ class Tela_Login:
     def s1e2(self):
         self.limpar_1()
         self.pagina_2()
-        self.botao_user()
         self.entra_listbox()
         
     def s1_pe2(self):
         self.limpar_1_search()
         self.pagina_2()
-        self.botao_user()
         self.entra_listbox()
                 
     def s1e3(self,event):
         self.limpar_1()
         self.pagina_3()
-        self.botao_user()
         self.listbox_1.curselection()
         self.achar_produto_s1e3()
         
@@ -723,7 +710,6 @@ class Tela_Login:
     def s1_pe3(self,event):
         self.limpar_1_search()
         self.pagina_3()
-        self.botao_user()
         self.listbox_2.curselection()
         self.achar_produto_s1_pe3()
         self.p = 1
@@ -736,7 +722,6 @@ class Tela_Login:
     def s2e1(self):
         self.limpar_2()
         self.pagina_1()
-        self.botao_user()
         self.entra_listbox_feed()
     
     def s2e2_confirma(self):
@@ -746,40 +731,43 @@ class Tela_Login:
             self.cadastro_produto_st()
             self.lista_prod_tot.append(self.produto)
             self.t_prod_u.append(self.produto)
-            self.prod_usu = self.fb.patch("/todos_os_produtos/geral",{"top":self.t_prod_u})
             self.produto_user = self.fb.get("/produto",self.produto)
             if self.user_cad != "":
                 if self.preco != "" or self.troca != "":
                     if self.produto_user == None:
                         produtos_f = self.fb.put("/produto",self.produto,{"nome":self.user_cad})
+                        self.lista_prod_tot_at = self.fb.patch("/user/{0}".format(self.user_cad),{"todos_produtos":self.lista_prod_tot})
+                        self.u_prod = self.fb.patch("/user/{0}".format(self.user_cad),{self.produto:{"preço":self.preco,"troca":self.troca,"descrição":self.descricao}})
+                        self.prod_usu = self.fb.patch("/todos_os_produtos/geral",{"top":self.t_prod_u})
+
                     else:
-                        produtos_f = self.fb.patch("/produto",self.produto,{"nome":self.user_cad})
-                    self.lista_prod_tot_at = self.fb.patch("/user/{0}".format(self.user_cad),{"todos_produtos":self.lista_prod_tot})
-                    self.u_prod = self.fb.patch("/user/{0}".format(self.user_cad),{self.produto:{"preço":self.preco,"troca":self.troca,"descrição":self.descricao}})
+                        toplevel1 = tk.Toplevel(self.window)
+                        label = tk.Label(toplevel1, text="Já existe um produto com esse nome!", font="Times 20 bold", fg="red", height=0, width=30)
+                        label.pack()
             elif self.user_log != "":
                 if self.preco != "" or self.troca != "":
                     if self.produto_user == None:
                         produtos_f = self.fb.put("/produto",self.produto,{"nome":self.user_log})
+                        self.lista_prod_tot_at = self.fb.patch("/user/{0}".format(self.user_log),{"todos_produtos":self.lista_prod_tot})
+                        self.u_prod = self.fb.patch("/user/{0}".format(self.user_log),{self.produto:{"preço":self.preco,"troca":self.troca,"descrição":self.descricao}})
+                        self.prod_usu = self.fb.patch("/todos_os_produtos/geral",{"top":self.t_prod_u})
                     else:
-                        produtos_f = self.fb.patch("/produto",self.produto,{"nome":self.user_log})
-                    self.lista_prod_tot_at = self.fb.patch("/user/{0}".format(self.user_log),{"todos_produtos":self.lista_prod_tot})
-                    self.u_prod = self.fb.patch("/user/{0}".format(self.user_log),{self.produto:{"preço":self.preco,"troca":self.troca,"descrição":self.descricao}})
+                        toplevel1 = tk.Toplevel(self.window)
+                        label = tk.Label(toplevel1, text="Já existe um produto com esse nome!", font="Times 20 bold", fg="red", height=0, width=30)
+                        label.pack()        
         self.entra_listbox_feed()
         self.limpar_2()
         self.pagina_2()
-        self.botao_user()
         self.entra_listbox()
         
     def s2e2(self):
         self.limpar_2()
         self.pagina_2()
-        self.botao_user()
         self.entra_listbox()
         
     def s2e3(self,event):
         self.limpar_2()
         self.pagina_3()
-        self.botao_user()
         self.achar_produto_s2e3() 
         
         #Botao excluir
@@ -790,13 +778,11 @@ class Tela_Login:
     def s3e1(self):
         self.limpar_3()
         self.pagina_1()
-        self.botao_user()
         self.entra_listbox_feed()
         
     def s3e2(self):
         self.limpar_3()
         self.pagina_2()
-        self.botao_user()
         self.entra_listbox()
     
     def s3e2_excluir(self):
@@ -821,7 +807,6 @@ class Tela_Login:
         print(self.fb.get("/user",self.user_log))
         self.limpar_3()
         self.pagina_2()
-        self.botao_user()
         self.entra_listbox()
         
     def s1e0(self):
@@ -944,4 +929,5 @@ class Tela_Login:
 
 
 Site = Tela_Login()
+
 Site.iniciar()   

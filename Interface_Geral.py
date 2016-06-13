@@ -2,7 +2,7 @@ from firebase import firebase
 import tkinter as tk
 import smtplib
 #from validate_email import validate_email
-#from PIL import ImageTk, Image
+from PIL import ImageTk, Image
 
 
 
@@ -177,11 +177,11 @@ class Tela_Login:
         self.enter_cadastro.bind("<Return>",self.s0e1_cad_enter)
         
         #Foto
-#        self.diretorio = "fotoproj.jpg"
-#        self.img = ImageTk.PhotoImage(Image.open(self.diretorio))
-#
-#        self.imglabel = tk.Label(self.window, image=self.img) 
-#        self.imglabel.grid(row=3, rowspan=6, column=0, columnspan=3)
+        self.diretorio = "fotoproj.jpg"
+        self.img = ImageTk.PhotoImage(Image.open(self.diretorio))
+
+        self.imglabel = tk.Label(self.window, image=self.img) 
+        self.imglabel.grid(row=3, rowspan=6, column=0, columnspan=3)
 
     def primeira_pagina(self):
         
@@ -250,10 +250,10 @@ class Tela_Login:
         self.listbox_1.configure(yscrollcommand=self.scrollbar_y_1.set)
         
         #Foto2
-#        self.diretorio_1 = "etiqueta.jpg"
-#        self.img_1 = ImageTk.PhotoImage(Image.open(self.diretorio_1))
-#        self.imglabel_1 = tk.Label(self.window, image=self.img_1) 
-#        self.imglabel_1.grid(row=3, rowspan=5, column=3, columnspan=5)
+        self.diretorio_1 = "etiqueta.jpg"
+        self.img_1 = ImageTk.PhotoImage(Image.open(self.diretorio_1))
+        self.imglabel_1 = tk.Label(self.window, image=self.img_1) 
+        self.imglabel_1.grid(row=3, rowspan=5, column=3, columnspan=5)
 #    
     def search_pagina(self):
         
@@ -317,10 +317,10 @@ class Tela_Login:
         self.listbox_2.configure(yscrollcommand=self.scrollbar_y_2.set)
         
         #Foto2
-#        self.diretorio_1 = "etiqueta.jpg"
-#        self.img_1 = ImageTk.PhotoImage(Image.open(self.diretorio_1))
-#        self.imglabel_1 = tk.Label(self.window, image=self.img_1) 
-#        self.imglabel_1.grid(row=3, rowspan=5, column=3, columnspan=5)
+        self.diretorio_1 = "etiqueta.jpg"
+        self.img_1 = ImageTk.PhotoImage(Image.open(self.diretorio_1))
+        self.imglabel_1 = tk.Label(self.window, image=self.img_1) 
+        self.imglabel_1.grid(row=3, rowspan=5, column=3, columnspan=5)
               
     def segunda_pagina(self):
             
@@ -561,7 +561,7 @@ class Tela_Login:
         self.cadastro_senha.grid_forget()
         self.cadastro_senha_cx.grid_forget()
         self.enter_cadastro.grid_forget()
-       # self.imglabel.grid_forget()
+        self.imglabel.grid_forget()
         self.nome_st()
         self.cadastro_geral()
         
@@ -590,7 +590,7 @@ class Tela_Login:
         self.scrollbar_x_1.grid_forget()
         self.scrollbar_y_1.grid_forget()
         self.botao_logout.grid_forget()
-       # self.imglabel_1.grid_forget()        
+        self.imglabel_1.grid_forget()        
     
     def limpar_1_search(self):
         self.botao_search.grid_forget()
@@ -603,7 +603,7 @@ class Tela_Login:
         self.scrollbar_x_2.grid_forget()
         self.scrollbar_y_2.grid_forget()
         self.botao_logout.grid_forget()
-    #    self.imglabel_1.grid_forget()
+        self.imglabel_1.grid_forget()
         
     def limpar_2(self):
         self.slogan.grid_forget()

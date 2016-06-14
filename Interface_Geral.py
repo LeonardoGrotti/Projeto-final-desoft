@@ -177,7 +177,7 @@ class Tela_Login:
         self.enter_cadastro.bind("<Return>",self.s0e1_cad_enter)
         
         #Foto
-        self.diretorio = "fotoproj.jpg"
+        self.diretorio ="etiqueta.jpg"
         self.img = ImageTk.PhotoImage(Image.open(self.diretorio))
 
         self.imglabel = tk.Label(self.window, image=self.img) 
@@ -250,7 +250,7 @@ class Tela_Login:
         self.listbox_1.configure(yscrollcommand=self.scrollbar_y_1.set)
         
         #Foto2
-        self.diretorio_1 = "etiqueta.jpg"
+        self.diretorio_1 = "fotoproj.jpg"
         self.img_1 = ImageTk.PhotoImage(Image.open(self.diretorio_1))
         self.imglabel_1 = tk.Label(self.window, image=self.img_1) 
         self.imglabel_1.grid(row=3, rowspan=5, column=3, columnspan=5)
@@ -317,7 +317,7 @@ class Tela_Login:
         self.listbox_2.configure(yscrollcommand=self.scrollbar_y_2.set)
         
         #Foto2
-        self.diretorio_1 = "etiqueta.jpg"
+        self.diretorio_1 = "fotoproj.jpg"
         self.img_1 = ImageTk.PhotoImage(Image.open(self.diretorio_1))
         self.imglabel_1 = tk.Label(self.window, image=self.img_1) 
         self.imglabel_1.grid(row=3, rowspan=5, column=3, columnspan=5)

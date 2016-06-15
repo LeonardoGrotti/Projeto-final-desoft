@@ -71,9 +71,6 @@ class Tela_Login:
         self.senha_cad = ""
         self.senha_cad_st = tk.StringVar()
         
-        self.confirma_senha = ""
-        self.confirma_senha_st = tk.StringVar()
-        
         self.senha_log = ""
         self.senha_log_st = tk.StringVar()
                 
@@ -91,17 +88,18 @@ class Tela_Login:
         self.mini_linha.grid(row=2, column=0, columnspan=6, sticky="nsew")
         self.mini_linha.configure(text="Desenvolvido por : Caue Citrin, Leonardo Grotti, Patrick Wiegeneric, Rodrigo Lino. Participações especiais: Fabio Ayres e Camila. Por um mundo mais sustentável",font="Times 10 bold" ,bg="gray18",fg="white")
        
+           #Label de cor
+        self.label_1 =tk.Label(self.window)
+        self.label_1.grid(row=0, rowspan=2, column=1, columnspan=4, sticky="nsew")
+        self.label_1.configure(bg="chartreuse3")
+               
        
         #Label Slogan
         self.slogan = tk.Label(self.window)
-        self.slogan.grid(row=0, rowspan=2, column=0, columnspan=2, sticky="ns")
+        self.slogan.grid(row=0, rowspan=2, column=0, columnspan=2, sticky="nws")
         self.slogan.configure(text="Save & Trade",font="Times 60 bold" ,bg="chartreuse3",fg="gray18")
        
-        #Label de cor
-        self.label_1 =tk.Label(self.window)
-        self.label_1.grid(row=0, rowspan=2, column=2, columnspan=3, sticky="nsew")
-        self.label_1.configure(bg="chartreuse3")
-        
+     
         #Label de cor 2
         self.label_1 =tk.Label(self.window)
         self.label_1.grid(row=1, column=2, columnspan=6, sticky="nsew")
@@ -179,18 +177,8 @@ class Tela_Login:
         self.enter_cadastro.grid(row=7, column=5, columnspan=6) 
         self.enter_cadastro.bind("<Return>",self.s0e1_cad_enter)
         
-         #Label confirma senha
-        self.confirma_senha_cad = tk.Label(self.window)
-        self.confirma_senha_cad.grid(row=7, column=3, columnspan=4, sticky="nsw")
-        self.confirma_senha_cad.configure(text="Senha(*): " ,font="Times 35 bold", bg="white")
-               
-       #caixa de texto confirma senha         
-        self.confirma_senha_cx = tk.Entry(self.window)
-        self.confirma_senha_cx.grid(row=7, column=4, columnspan=5, sticky="w")
-        self.confirma_senha_cx.configure(font="Times 25 bold" , textvariable = self.confirma_senha_st,show="*" )       
-        
         #Foto
-        self.diretorio ="etiqueta.jpg"
+        self.diretorio ="etiqueta1.jpg"
         self.img = ImageTk.PhotoImage(Image.open(self.diretorio))
 
         self.imglabel = tk.Label(self.window, image=self.img) 
@@ -547,20 +535,10 @@ class Tela_Login:
                 return True
         return False
         
-    def cad_existente(self):
-        self.limpar_1()
-        self.pagina_0()
-        self.login_fail.configure(text="Usuario já existente",font = "Times 18 bold",fg="red", bg= "white")
-     
     def cadastro_vazio(self):
         self.limpar_1()
         self.pagina_0()
         self.login_fail.configure(text="Faltaram dados",font = "Times 18 bold",fg="red", bg= "white")
-    
-    def senha_errada(self):
-        self.limpar_1()
-        self.pagina_0()
-        self.login_fail.configure(text="senhas diferentes",font="Times 18 bold", fg="red", bg= "white")
     
     def login_incorreto(self):
         self.limpar_1()
@@ -690,18 +668,12 @@ class Tela_Login:
             self.login_incorreto()
             
     def botao_user_cad(self):
-        if self.user_cad != "" and self.senha_cad != "" and self.email !=""  and self.confirma_senha == self.senha_cad:
-            if self.fb.get("/user",self.user_cad) == None:
-                self.A = 1
-                print('oi')
-                return self.A
-            else:
-                 self.cad_existente()
-                 print('ola')
-        elif self.user_cad == "" or self.senha_cad == "" or self.email == ""  :
+        if self.user_cad != "" and self.senha_cad !="" and self.email !="":
+            self.A = 1
+ 
+            return self.A
+        elif self.user_cad == "" or self.senha_cad == "" or self.email== "":
             self.cadastro_vazio()
-        elif self.confirma_senha != self.senha_cad:
-            self.senha_errada()
 
 
     def s1_pe0(self):

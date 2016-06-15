@@ -522,11 +522,16 @@ class Tela_Login:
             self.search_pagina()
             for i in range(len(self.lista_basica)):
                 self.listbox_2.insert(tk.END, self.lista_basica[i])
+                
+    def cadastro_existente(self):
+        self.limpar_1()
+        self.pagina_0()
+        self.login_fail.configure(text="Usuário existente",font = "Times 18 bold",fg="red", bg= "white")
             
     #Criando as funções de callback
     def cadastro_geral(self):
         if self.user_cad != "":
-            self.u_cad = self.fb.put("user",self.user_cad,{"senha":self.senha_cad,"email":self.email})
+            self.fb.put("user",self.user_cad,{"senha":self.senha_cad,"email":self.email})
         
     def verificar(self):
         self.u_log = self.fb.get("/user",self.user_log)
@@ -563,8 +568,9 @@ class Tela_Login:
         self.cadastro_senha_cx.grid_forget()
         self.enter_cadastro.grid_forget()
         self.imglabel.grid_forget()
+        
         self.nome_st()
-        self.cadastro_geral()
+#        self.cadastro_geral()
         
         #Botao excluir
         self.botao_excluir = tk.Button(self.window)
@@ -669,11 +675,14 @@ class Tela_Login:
             
     def botao_user_cad(self):
         if self.user_cad != "" and self.senha_cad !="" and self.email !="":
-            self.A = 1
- 
-            return self.A
+            if self.fb.get("/user",self.user_cad) != None:
+                self.cadastro_existente()
+            else:
+                self.A = 1
+                return self.A
         elif self.user_cad == "" or self.senha_cad == "" or self.email== "":
             self.cadastro_vazio()
+            
 
 
     def s1_pe0(self):
@@ -693,6 +702,8 @@ class Tela_Login:
         self.limpar_0()
         self.pagina_1()
         self.botao_user_cad()
+        if self.A == 1:
+            self.cadastro_geral()
         self.entra_listbox_feed()
     
     def s1e1(self):
@@ -764,7 +775,7 @@ class Tela_Login:
                 if self.user_cad != "":
                     if self.preco != "" or self.troca != "":
                         if self.produto_user == None:
-                            produtos_f = self.fb.put("/produto",self.produto,{"nome":self.user_cad})
+                            self.fb.put("/produto",self.produto,{"nome":self.user_cad})
                             self.lista_prod_tot_at = self.fb.patch("/user/{0}".format(self.user_cad),{"todos_produtos":self.lista_prod_tot})
                             self.u_prod = self.fb.patch("/user/{0}".format(self.user_cad),{self.produto:{"preço":self.preco,"troca":self.troca,"descrição":self.descricao}})
                             self.prod_usu = self.fb.patch("/todos_os_produtos/geral",{"top":self.t_prod_u})
@@ -776,7 +787,7 @@ class Tela_Login:
                 elif self.user_log != "":
                     if self.preco != "" or self.troca != "":
                         if self.produto_user == None:
-                            produtos_f = self.fb.put("/produto",self.produto,{"nome":self.user_log})
+                            self.fb.put("/produto",self.produto,{"nome":self.user_log})
                             self.lista_prod_tot_at = self.fb.patch("/user/{0}".format(self.user_log),{"todos_produtos":self.lista_prod_tot})
                             self.u_prod = self.fb.patch("/user/{0}".format(self.user_log),{self.produto:{"preço":self.preco,"troca":self.troca,"descrição":self.descricao}})
                             self.prod_usu = self.fb.patch("/todos_os_produtos/geral",{"top":self.t_prod_u})
@@ -819,24 +830,23 @@ class Tela_Login:
     
     def s3e2_excluir(self):
         if self.user_log != "":
-            self.delete_p_u = self.fb.delete("/user/{0}".format(self.user_log),self.nome_excluir)
+            self.fb.delete("/user/{0}".format(self.user_log),self.nome_excluir)
             self.lista_prod_tot = self.fb.get("/user/{0}".format(self.user_log),"todos_produtos")
-            self.d = self.fb.delete("/user/{0}".format(self.user_log),"todos_produtos")
+            self.fb.delete("/user/{0}".format(self.user_log),"todos_produtos")
             v = self.lista_prod_tot[self.listbox.curselection()[0]]
             del self.lista_prod_tot[self.listbox.curselection()[0]]
-            self.ins = self.fb.patch("/user/{0}".format(self.user_log),{"todos_produtos":self.lista_prod_tot})
+            self.fb.patch("/user/{0}".format(self.user_log),{"todos_produtos":self.lista_prod_tot})
         if self.user_cad != "":
-            self.delete_p_u = self.fb.delete("/user/{0}".format(self.user_cad),self.nome_excluir)
+            self.fb.delete("/user/{0}".format(self.user_cad),self.nome_excluir)
             self.lista_prod_tot = self.fb.get("/user/{0}".format(self.user_cad),"todos_produtos")
-            self.d = self.fb.delete("/user/{0}".format(self.user_cad),"todos_produtos")
+            self.fb.delete("/user/{0}".format(self.user_cad),"todos_produtos")
             v = self.lista_prod_tot[self.listbox.curselection()[0]]
             del self.lista_prod_tot[self.listbox.curselection()[0]]
-            self.ins = self.fb.patch("/user/{0}".format(self.user_cad),{"todos_produtos":self.lista_prod_tot})
+            self.fb.patch("/user/{0}".format(self.user_cad),{"todos_produtos":self.lista_prod_tot})
         self.t_prod_u = self.fb.get("/todos_os_produtos/geral","top")
-        self.d1 = self.fb.delete("/todos_os_produtos/geral","top")
+        self.fb.delete("/todos_os_produtos/geral","top")
         self.t_prod_u.remove(v)
-        self.ins1 = self.fb.patch("/todos_os_produtos/geral",{"top":self.t_prod_u})
-        print(self.fb.get("/user",self.user_log))
+        self.fb.patch("/todos_os_produtos/geral",{"top":self.t_prod_u})
         self.limpar_3()
         self.pagina_2()
         self.entra_listbox()
@@ -902,7 +912,6 @@ class Tela_Login:
         
         self.nome_excluir = self.t_prod_u[self.listbox_1.curselection()[0]]
         self.vendedor = self.fb.get("/produto/{0}".format(self.nome_excluir),"nome")
-        print(self.vendedor)
         self.preco_fb = self.fb.get("/user/{0}/{1}".format(self.vendedor,self.nome_excluir),"preço")
         self.troca_fb = self.fb.get("/user/{0}/{1}".format(self.vendedor,self.nome_excluir),"troca")
         self.descricao_fb = self.fb.get("/user/{0}/{1}".format(self.vendedor,self.nome_excluir),"descrição")
@@ -919,7 +928,7 @@ class Tela_Login:
         self.preco_fb = self.fb.get("/user/{0}/{1}".format(self.vendedor,self.lista_basica[self.listbox_2.curselection()[0]]),"preço")
         self.troca_fb = self.fb.get("/user/{0}/{1}".format(self.vendedor,self.lista_basica[self.listbox_2.curselection()[0]]),"troca")
         self.descricao_fb = self.fb.get("/user/{0}/{1}".format(self.vendedor,self.lista_basica[self.listbox_2.curselection()[0]]),"descrição")
-        self.email_fb = self.fb.get("/user/{0}".format(self.user_log),"email")
+        self.email_fb = self.fb.get("/user/{0}".format(self.vendedor),"email")
         self.descricao_produto.configure (text = "Produto: {0}".format(self.lista_basica[self.listbox_2.curselection()[0]]))
         self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1} ".format(self.preco_fb,self.troca_fb))
         self.info_email_produto.configure(text="E-mail: {0}".format(self.email_fb))
@@ -927,7 +936,7 @@ class Tela_Login:
         
     def enviar_email(self):
         if self.p == 1:
-            self.nome_excluir = self.t_prod_u[self.listbox_1.curselection()[0]]
+            self.nome_excluir = self.t_prod_u[self.listbox_2.curselection()[0]]
             self.vendedor = self.fb.get("/produto/{0}".format(self.nome_excluir),"nome")
             self.email_fb = self.fb.get("/user/{0}".format(self.vendedor),"email")
             if self.user_cad != "":

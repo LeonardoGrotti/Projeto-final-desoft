@@ -178,7 +178,7 @@ class Tela_Login:
         self.enter_cadastro.bind("<Return>",self.s0e1_cad_enter)
         
         #Foto
-        self.diretorio ="etiqueta1.jpg"
+        self.diretorio ="etiqueta.jpg"
         self.img = ImageTk.PhotoImage(Image.open(self.diretorio))
 
         self.imglabel = tk.Label(self.window, image=self.img) 
@@ -907,9 +907,9 @@ class Tela_Login:
         self.troca_fb = self.fb.get("/user/{0}/{1}".format(self.vendedor,self.nome_excluir),"troca")
         self.descricao_fb = self.fb.get("/user/{0}/{1}".format(self.vendedor,self.nome_excluir),"descrição")
         self.email_fb = self.fb.get("/user/{0}".format(self.vendedor),"email")
-        self.descricao_produto.configure (text = "Nome: {0}".format(self.t_prod_u[self.listbox_1.curselection()[0]]))
+        self.descricao_produto.configure (text = "Produto: {0}".format(self.t_prod_u[self.listbox_1.curselection()[0]]))
         self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1} ".format(self.preco_fb,self.troca_fb))
-        self.info_email_produto.configure(text="email: {0}".format(self.email_fb))
+        self.info_email_produto.configure(text="E-mail: {0}".format(self.email_fb))
         self.info_descricao.configure(text="Descrição: {0}".format(self.descricao_fb))
     
     def achar_produto_s1_pe3 (self):
@@ -920,9 +920,9 @@ class Tela_Login:
         self.troca_fb = self.fb.get("/user/{0}/{1}".format(self.vendedor,self.lista_basica[self.listbox_2.curselection()[0]]),"troca")
         self.descricao_fb = self.fb.get("/user/{0}/{1}".format(self.vendedor,self.lista_basica[self.listbox_2.curselection()[0]]),"descrição")
         self.email_fb = self.fb.get("/user/{0}".format(self.user_log),"email")
-        self.descricao_produto.configure (text = "Nome: {0}".format(self.lista_basica[self.listbox_2.curselection()[0]]))
+        self.descricao_produto.configure (text = "Produto: {0}".format(self.lista_basica[self.listbox_2.curselection()[0]]))
         self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1} ".format(self.preco_fb,self.troca_fb))
-        self.info_email_produto.configure(text="email: {0}".format(self.email_fb))
+        self.info_email_produto.configure(text="E-mail: {0}".format(self.email_fb))
         self.info_descricao.configure(text="Descrição: {0}".format(self.descricao_fb))   
         
     def enviar_email(self):

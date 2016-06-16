@@ -883,6 +883,7 @@ class Interface:
         self.fb.delete("/todos_os_produtos/geral","top")
         self.t_prod_u.remove(v)
         self.fb.patch("/todos_os_produtos/geral",{"top":self.t_prod_u})
+        self.fb.delete("/produto",self.nome_excluir)
         self.limpar_3()
         self.pagina_2()
         self.entra_listbox()

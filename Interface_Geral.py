@@ -1,15 +1,15 @@
-from firebase import firebase
-import tkinter as tk
+from firebase import firebase # Banco de dados online
+import tkinter as tk 
 import smtplib
 #from validate_email import validate_email
 from PIL import ImageTk, Image
 
 
 
-class Tela_Login:
+class Interface:
     def __init__(self):
         #firebase
-        self.fb = firebase.FirebaseApplication("https://trocavenda.firebaseio.com/")
+        self.fb = firebase.FirebaseApplication("https://trocavenda.firebaseio.com/") # Identificando o banco de dados que será utilizado
         
         #Interface
         self.window = tk.Tk()
@@ -34,52 +34,60 @@ class Tela_Login:
         #CORES
         self.window.configure(bg= "white")
         
-        #Baita Variavel necessaria
+        # Variável para verificar se o cadastro foi feito corretamente
         self.A = -1
         self.nome_excluir=0
         
-        #Label Login Fail
-        self.login_fail = tk.Label()
-        self.login_fail.grid(row=7, column=4, sticky="nsew")
-        self.login_fail.configure(text="", bg= "white")
-    
-        self.login_fail1 = tk.Label()
-        self.login_fail1.grid(row=0, column=5, columnspan=6, sticky="wnse")
-        self.login_fail1.configure(text="" ,bg= "chartreuse3")
+        # Label que indicará o erro que o usuário cometeu no cadastro
+        self.fail = tk.Label()
+        self.fail.grid(row=7, column=4, sticky="nsew")
+        self.fail.configure(text="", bg= "white")
+        
+        # Label que indicará o erro que o usuário cometeu no login
+        self.fail1 = tk.Label()
+        self.fail1.grid(row=0, column=5, columnspan=6, sticky="wnse")
+        self.fail1.configure(text="" ,bg= "chartreuse3")
         
         #lista de todos os produtos de todos os usuários
         L = self.fb.get("todos_os_produtos/geral","top")
-        if L == None:
+        if L == None: # Caso não exista produtos cadastrados no site
             self.t_prod_u = []
-        else:
+        else: # Caso exista
             self.t_prod_u = L
-        
-        self.zero_pagina()
         
         #lista de todos os produtos de um usuário
         self.lista_prod_tot = []
         
-        #dic dos produtos
+        #dicionário dos produtos
         self.produto_user = {}
         
         # variável de pesquisa
         self.p = 0
+        
+        # Função que inicia a página zero
+        self.zero_pagina()
                 
     #Criando paginas
         
     def zero_pagina(self):
+        
+        # forma de armazenar a senha inserida no cadastro
         self.senha_cad = ""
         self.senha_cad_st = tk.StringVar()
         
+        # forma de armazenar a senha inserida no login
         self.senha_log = ""
         self.senha_log_st = tk.StringVar()
-                
+        
+        # forma de armazenar o E-mail inserido no cadastro
         self.email = ""
         self.email_st = tk.StringVar()
         
+        # forma de armazenar o nome do usuário inserido no cadastro
         self.user_cad = ""
         self.user_cad_st = tk.StringVar()
         
+        # forma de armazenar o nome do usuário inserido no login
         self.user_log = ""
         self.user_log_st = tk.StringVar()
                 
@@ -88,7 +96,7 @@ class Tela_Login:
         self.mini_linha.grid(row=2, column=0, columnspan=6, sticky="nsew")
         self.mini_linha.configure(text="Desenvolvido por : Caue Citrin, Leonardo Grotti, Patrick Wiegeneric, Rodrigo Lino. Participações especiais: Fabio Ayres e Camila. Por um mundo mais sustentável",font="Times 10 bold" ,bg="gray18",fg="white")
        
-           #Label de cor
+        #Label de cor
         self.label_1 =tk.Label(self.window)
         self.label_1.grid(row=0, rowspan=2, column=1, columnspan=4, sticky="nsew")
         self.label_1.configure(bg="chartreuse3")
@@ -186,6 +194,7 @@ class Tela_Login:
 
     def primeira_pagina(self):
         
+        # Forma de armazenar a palavra ou letra chave usada na pesquisa de produtos
         self.search = ""
         self.search_st = tk.StringVar()
         
@@ -258,6 +267,7 @@ class Tela_Login:
 #    
     def search_pagina(self):
         
+        # Forma de armazenar a palavra ou letra chave usada na pesquisa de produtos
         self.search = ""
         self.search_st = tk.StringVar()
         
@@ -325,16 +335,19 @@ class Tela_Login:
               
     def segunda_pagina(self):
             
-        #criar stringvar
+        # Forma de armazenar o preço do produto cadastrado pelo usuário
         self.preco = ""
         self.preco_st = tk.StringVar()
         
+        # Forma de armazenar a troca do produto cadastrado pelo usuário
         self.troca = ""
         self.troca_st = tk.StringVar()
         
+        # Forma de armazenar o produto cadastrado pelo usuário
         self.produto = ""
         self.produto_st = tk.StringVar()
         
+        # Forma de armazenar a descrição do produto cadastrado pelo usuário
         self.descricao = ""
         self.descricao_st = tk.StringVar()
                 
@@ -486,74 +499,83 @@ class Tela_Login:
         self.info_descricao.grid(row=7, column=3, columnspan=6, sticky="nesw")
         self.info_descricao.configure( font="Times 20 bold",bg= "white", fg="gray18")
         
+    # Função que inicializa a Interface
     def iniciar(self):
         self.window.mainloop()
-        
+    
+    # Função que guarda o texto digitado pelo usuário em variáveis - informações do usuário
     def nome_st (self):
-        self.user_log = self.user_log_st.get()
-        self.senha_log = self.senha_log_st.get()
-        self.user_cad = self.user_cad_st.get()
-        self.senha_cad = self.senha_cad_st.get()
-        self.email = self.email_st.get()
+        self.user_log = self.user_log_st.get() # Variável do login do usuário
+        self.senha_log = self.senha_log_st.get() # Variável da senha do login do usuário
+        self.user_cad = self.user_cad_st.get() # Variável do cadastro do usuário
+        self.senha_cad = self.senha_cad_st.get() # Variável da senha do cadastro do usuário
+        self.email = self.email_st.get() # Variável do email do cadastro do usuário
     
-    #Cadastramento do produto
+    #Cadastramento do produto - informações do produto do usuário
     def cadastro_produto_st(self):
-        self.produto = self.produto_st.get()
-        self.preco = self.preco_st.get()
-        self.troca = self.troca_st.get()
-        self.descricao = self.descricao_st.get()
+        self.produto = self.produto_st.get() # Variável do produto cadastrado pelo usuário
+        self.preco = self.preco_st.get() # Variável do preço do produto cadastrado pelo usuário
+        self.troca = self.troca_st.get() # Variável da troca do produto cadastrado pelo usuário
+        self.descricao = self.descricao_st.get() # Variável do preço da descrição cadastrado pelo usuário
     
+    # Função que guarda o texto de pesquisa inserido pelo usuário em uma variável
     def pesquisa_st(self):
         self.search = self.search_st.get()
     
+    # Função que roda a pesquisa do usuário
     def search_play(self):
-        self.lista_basica = []
+        lista_pesquisa = []
         self.pesquisa_st()
-        if self.search != "":
+        if self.search != "": # Caso algo esteja sendo pesquisado
             self.t_prod_u = self.fb.get("/todos_os_produtos/geral","top")
             v = self.search[0].upper()+self.search[1:]
             v1 = self.search.lower()
             for i in self.t_prod_u:
-                if v in i:
-                    self.lista_basica.append(i)
+                if v in i: 
+                    lista_pesquisa.append(i)
                 if v1 in i:
-                    self.lista_basica.append(i)
+                    lista_pesquisa.append(i)
             self.limpar_1()
             self.search_pagina()
-            for i in range(len(self.lista_basica)):
-                self.listbox_2.insert(tk.END, self.lista_basica[i])
-                
+            for i in range(len(lista_pesquisa)):
+                self.listbox_2.insert(tk.END, lista_pesquisa[i])
+    
+    # Função que indica ao usuário que já existe um cadastro com certo nome
     def cadastro_existente(self):
         self.limpar_1()
         self.pagina_0()
-        self.login_fail.configure(text="Usuário existente",font = "Times 18 bold",fg="red", bg= "white")
+        self.fail.configure(text="Usuário existente",font = "Times 18 bold",fg="red", bg= "white")
             
-    #Criando as funções de callback
+    # Função que cadastra o usuário no site, guardando as informações de sua conta
     def cadastro_geral(self):
-        if self.user_cad != "":
+        if self.user_cad != "": # Caso o nome do cadastro seja diferente de nada
             self.fb.put("user",self.user_cad,{"senha":self.senha_cad,"email":self.email})
-        
+    
+    # Função que verifica se o login possue dados reais de nome e senha do usuário
     def verificar(self):
-        self.u_log = self.fb.get("/user",self.user_log)
-        if self.u_log != None:
-            if self.u_log["senha"]==self.senha_log:
+        u_log = self.fb.get("/user",self.user_log)
+        if u_log != None: # Caso o login inserido esteja armazenado no banco de dados online
+            if u_log["senha"]==self.senha_log:
                 return True
         return False
-        
+    
+    # Função que indica se algo no cadastro não foi completado
     def cadastro_vazio(self):
         self.limpar_1()
         self.pagina_0()
-        self.login_fail.configure(text="Faltaram dados",font = "Times 18 bold",fg="red", bg= "white")
+        self.fail.configure(text="Faltaram dados",font = "Times 18 bold",fg="red", bg= "white")
     
+    # Função que indica se o login está incorreto
     def login_incorreto(self):
         self.limpar_1()
         self.pagina_0()
-        self.login_fail1.configure(text="                   Login incorreto",font = "Times 12 bold",fg="red", bg= "chartreuse3")
+        self.fail1.configure(text="                   Login incorreto",font = "Times 12 bold",fg="red", bg= "chartreuse3")
     
+    # Função que limpa a página zero
     def limpar_0(self):
         self.slogan.grid_forget()
-        self.login_fail1.configure(text="")
-        self.login_fail.configure(text="")
+        self.fail1.configure(text="")
+        self.fail.configure(text="")
         self.login.grid_forget()
         self.login_senha.grid_forget()
         self.login_user_cx.grid_forget()
@@ -570,7 +592,6 @@ class Tela_Login:
         self.imglabel.grid_forget()
         
         self.nome_st()
-#        self.cadastro_geral()
         
         #Botao excluir
         self.botao_excluir = tk.Button(self.window)
@@ -581,11 +602,12 @@ class Tela_Login:
         #lista de todos os produtos de um usuário
         if self.user_log != "":
             LU = self.fb.get("/user/{0}".format(self.user_log),"todos_produtos")
-            if LU == None:
+            if LU == None: # Caso o usuário não tenha nenhum produto cadastrado
                 self.lista_prod_tot = []
-            else:
+            else: 
                 self.lista_prod_tot = LU
-        
+    
+    # Função que limpa a página 1
     def limpar_1(self):
         self.botao_search.grid_forget()
         self.search_cx.grid_forget()
@@ -599,6 +621,7 @@ class Tela_Login:
         self.botao_logout.grid_forget()
         self.imglabel_1.grid_forget()        
     
+    # Função que limpa a página 1 após a pesquisa
     def limpar_1_search(self):
         self.botao_search.grid_forget()
         self.search_cx.grid_forget()
@@ -611,7 +634,8 @@ class Tela_Login:
         self.scrollbar_y_2.grid_forget()
         self.botao_logout.grid_forget()
         self.imglabel_1.grid_forget()
-        
+    
+    # Função que limpa a página dois
     def limpar_2(self):
         self.slogan.grid_forget()
         self.user_name.grid_forget()
@@ -632,7 +656,8 @@ class Tela_Login:
         self.descricao_label.grid_forget()
         self.descricao_cx.grid_forget()
         self.faltaram_dados_p2.configure(text="", font="Times 20 bold",bg= "white", fg="gray18")
-        
+    
+    # Função que limpa a página 3
     def limpar_3(self):
         if self.p == 1 or self.p==2:
             self.botao_email.grid_forget()
@@ -647,56 +672,55 @@ class Tela_Login:
        # self.imglabel_3.grid_forget()
         
            
-   
+    # Função que gera a página zero
     def pagina_0(self):
         self.zero_pagina()
-        
+    
+    # Função que gera a página 1
     def pagina_1(self):
        self.primeira_pagina()
-        
+    
+    # Função que gera a página dois
     def pagina_2(self):
         self.segunda_pagina()
-        
+    
+    # Função que gera a página três
     def pagina_3(self):
         self.terceira_pagina()
-
+    
+    # Função que verifica se o login foi feito de forma correta
     def botao_user_log(self):
-        if self.user_log != "":
-            if self.senha_log != "":
-                if self.verificar() == True:
-                    self.A = 0
-                    return self.A
-                else:
-                    self.login_incorreto()
-            else:
-                self.login_incorreto()
-        elif self.user_log == "":
+        if self.user_log != "" and self.senha_log != "" and self.verificar() == True: 
+            self.A = 0
+            return self.A
+        else:
             self.login_incorreto()
-            
+    
+    # Função que verifica se o cadastro foi feito de forma correta
     def botao_user_cad(self):
-        if self.user_cad != "" and self.senha_cad !="" and self.email !="":
-            if self.fb.get("/user",self.user_cad) != None:
+        if self.user_cad != "" and self.senha_cad !="" and self.email !="": # Caso o cadastro tenha sido completado
+            if self.fb.get("/user",self.user_cad) != None: # Caso o cadastro já existe
                 self.cadastro_existente()
             else:
                 self.A = 1
                 return self.A
-        elif self.user_cad == "" or self.senha_cad == "" or self.email== "":
+        elif self.user_cad == "" or self.senha_cad == "" or self.email== "": # caso algo no cadastro não esteja completado
             self.cadastro_vazio()
             
-
-
+    # Função que apaga a página 1 de pesquisa e cria a página 0
     def s1_pe0(self):
         self.limpar_1_search()
         self.pagina_0()
             
-            
+    # Função que apaga a página 0 e cria a página 1 após o login
     def s0e1_log(self):
         self.lista_prod_tot = []
         self.limpar_0()
         self.pagina_1()
         self.botao_user_log()
         self.entra_listbox_feed()
-        
+    
+    # Função que apaga a página 0 e cria a página 1 após o cadastro
     def s0e1_cad(self):
         self.lista_prod_tot = []
         self.limpar_0()
@@ -706,31 +730,36 @@ class Tela_Login:
             self.cadastro_geral()
         self.entra_listbox_feed()
     
+    # Função que apaga a página 1 e a recria
     def s1e1(self):
         self.limpar_1()
         self.pagina_1()
         self.entra_listbox_feed()
-        
+    
+    # Função que apaga a página 1 de pesquisa e cria a página 1
     def s1_pe1(self):
         self.limpar_1_search()
         self.pagina_1()
         self.entra_listbox_feed()
     
-    
+    # Função que apaga a página 1 de pesquisa e a recria
     def s1_pe1_p(self):
         self.limpar_1_search()
         self.search_play()
     
+    # Função que apaga a página 1 e cria a página 2
     def s1e2(self):
         self.limpar_1()
         self.pagina_2()
         self.entra_listbox()
-        
+    
+    # Função que apaga a página 1 de pesquisa e cria a página 2
     def s1_pe2(self):
         self.limpar_1_search()
         self.pagina_2()
         self.entra_listbox()
-                
+    
+    # Função que apaga a página 1 e cria apágina 3 
     def s1e3(self,event):
         self.limpar_1()
         self.pagina_3()
@@ -743,6 +772,7 @@ class Tela_Login:
         self.botao_email.grid(row=8,column=5)
         self.botao_email.configure(text="E-mail", command=self.enviar_email,font="Times 18 bold",bg= "white")
     
+    # Função que apaga a página 1 de pesquisa e cria a página 3
     def s1_pe3(self,event):
         self.limpar_1_search()
         self.pagina_3()
@@ -754,12 +784,14 @@ class Tela_Login:
         self.botao_email = tk.Button(self.window)
         self.botao_email.grid(row=8,column=5)
         self.botao_email.configure(text="E-mail", command=self.enviar_email,font="Times 18 bold",bg= "white")
-        
+    
+    # Função que apaga a página 2 e cria a página 1
     def s2e1(self):
         self.limpar_2()
         self.pagina_1()
         self.entra_listbox_feed()
     
+    # Função que armazena o produto cadastrado e suas especificações
     def s2e2_confirma(self):
         self.cadastro_produto_st()
         if self.produto != "":
@@ -802,12 +834,13 @@ class Tela_Login:
                 self.entra_listbox()
             
         
-        
+    # Função que apaga a página 2 e a recria
     def s2e2(self):
         self.limpar_2()
         self.pagina_2()
         self.entra_listbox()
-        
+    
+    # Função que apaga a página 2 e cria ap página 3
     def s2e3(self,event):
         self.limpar_2()
         self.pagina_3()
@@ -817,17 +850,20 @@ class Tela_Login:
         self.botao_excluir = tk.Button(self.window)
         self.botao_excluir .grid(row=8,column=5)
         self.botao_excluir.configure(text="Excluir", command=self.s3e2_excluir,font="Times 18 bold",bg= "white")
-        
+    
+    # Função que apaga a página 3 e cria a página 1
     def s3e1(self):
         self.limpar_3()
         self.pagina_1()
         self.entra_listbox_feed()
-        
+    
+    # Função que apaga a página 3 e cria a página 2
     def s3e2(self):
         self.limpar_3()
         self.pagina_2()
         self.entra_listbox()
     
+    # Função que exclui um produto selecionado pelo usuário, apagando a página 3 e criando a página 2
     def s3e2_excluir(self):
         if self.user_log != "":
             self.fb.delete("/user/{0}".format(self.user_log),self.nome_excluir)
@@ -850,19 +886,23 @@ class Tela_Login:
         self.limpar_3()
         self.pagina_2()
         self.entra_listbox()
-        
+    
+    # Função que apaga a página 1 e cria a página 0
     def s1e0(self):
         self.limpar_1()
         self.pagina_0()
-        
+    
+    # Função que apaga a página 2 e cria a página 0
     def s2e0(self):
         self.limpar_2()
         self.pagina_0()
-        
+    
+    # Função que apaga a página 3 e cria a página 0
     def s3e0(self):
         self.limpar_3()
         self.pagina_0()
-        
+    
+    # Função que determina quais produtos vão aparecer na listbox privada, ou seja, apenas os produtos do usuário
     def entra_listbox (self):
         if self.lista_prod_tot != []:
             if self.user_log != "":
@@ -882,13 +922,15 @@ class Tela_Login:
                 if self.lista_prod_tot != []:
                     for i in range(len(self.lista_prod_tot)):
                         self.listbox.insert(tk.END, self.lista_prod_tot[i])
-                        
+    
+    # Função que determina quais produtos vão aparecer na listbox do feed de produtos, ou seja, todos os produtos de todos os usuários
     def entra_listbox_feed(self):
         self.prod_usu = self.fb.get("/todos_os_produtos/geral","top")
         if self.t_prod_u != []:
             for i in range(len(self.prod_usu)):
                 self.listbox_1.insert(tk.END, self.prod_usu[i])
-            
+    
+    # Função que identifica qual produto da listbox privado está sendo selecionado
     def achar_produto_s2e3 (self):
         if self.user_log != "":
             self.u_log_email = self.fb.get("/user/{0}".format(self.user_log),"email")
@@ -907,7 +949,8 @@ class Tela_Login:
             self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1}" .format(self.prod_total["preço"],self.prod_total["troca"]))
             self.info_email_produto.configure(text="E-mail: {0}".format(self.u_cad_email))
         self.info_descricao.configure(text="Descrição: {0}".format(self.prod_total["descrição"]))
-        
+    
+    # Função que identifica qual produto da listbox do feed de produtos está sendo selecionado
     def achar_produto_s1e3 (self):
         
         self.nome_excluir = self.t_prod_u[self.listbox_1.curselection()[0]]
@@ -921,6 +964,7 @@ class Tela_Login:
         self.info_email_produto.configure(text="E-mail: {0}".format(self.email_fb))
         self.info_descricao.configure(text="Descrição: {0}".format(self.descricao_fb))
     
+    # Função que identifica qual produto da listbox do feed de produtos na página 1 de pesquisa está sendo selecionado
     def achar_produto_s1_pe3 (self):
         
         self.nome_excluir = self.lista_basica[self.listbox_2.curselection()[0]]
@@ -933,7 +977,8 @@ class Tela_Login:
         self.info_preco_produto.configure(text="Preço: {0} \n \n Troca: {1} ".format(self.preco_fb,self.troca_fb))
         self.info_email_produto.configure(text="E-mail: {0}".format(self.email_fb))
         self.info_descricao.configure(text="Descrição: {0}".format(self.descricao_fb))   
-        
+    
+    # Função que envia um email ao usuário dono do produto
     def enviar_email(self):
         if self.p == 1:
             self.nome_excluir = self.t_prod_u[self.listbox_2.curselection()[0]]
@@ -968,7 +1013,7 @@ class Tela_Login:
         label = tk.Label(toplevel, text="Email enviado!", font="Times 25 bold", fg="blue", height=0, width=20)
         label.pack()
 
-
+    # Funções que definem a possibilidade de rodar outras funções a partir de certa ação, como pressionando o botão "enter"
     def s0e1_log_enter(self,event):
         self.s0e1_log()
         
@@ -996,6 +1041,6 @@ class Tela_Login:
     def s2e2_confirma_enter(self,event):
         self.s2e2_confirma()
 
-Site = Tela_Login()
+Site = Interface()
 
 Site.iniciar()   
